@@ -1,8 +1,8 @@
 package cn.gson.linyun.model.service.flnance;
 
 import cn.gson.linyun.model.mapper.flnance.FinanceItemMapper;
-import cn.gson.linyun.model.pojos.flnance.Alinkey;
 import cn.gson.linyun.model.pojos.flnance.FinanceItem;
+import cn.gson.linyun.model.pojos.workflow.Alinkey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

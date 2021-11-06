@@ -1,7 +1,7 @@
 package cn.gson.linyun.controller.flnance;
 
-import cn.gson.linyun.model.pojos.flnance.Alinkey;
 import cn.gson.linyun.model.pojos.flnance.FinanceItem;
+import cn.gson.linyun.model.pojos.workflow.Alinkey;
 import cn.gson.linyun.model.service.flnance.FinanceItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -13,7 +13,7 @@ axios.interceptors.request.use(config=>{
 	return config;
 })
 
-/* axios.interceptors.response.use(res=>{
+axios.interceptors.response.use(res=>{
 	//在得到服务器响应之后进行拦截
 	// console.log("拦截之前的响应结果：",res);
 	if(res.status==200){
@@ -31,7 +31,7 @@ axios.interceptors.request.use(config=>{
 		// });
 	}
 	return res.data;
-} */
-// )
+}
+)
 
 export default axios

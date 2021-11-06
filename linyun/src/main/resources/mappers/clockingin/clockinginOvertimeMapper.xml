@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.clockingin.IClockinginOvertimeMapper">
+
+
+
+    <resultMap id="overtimeMap" type="cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime">
+        <id column="overtime_id" property="overtimeId" />
+        <result column="overtime_start" property="overtimeStart" />
+        <result column="overtime_finish" property="overtimeFinish" />
+    </resultMap>
+
+    <!--查询当天是否有加班申请 selectOvertimeByEmpId-->
+    <select id="selectOvertimeByEmpId" resultMap="overtimeMap" parameterType="java.lang.Integer">
+      select
+       co.overtime_id,co.overtime_start,co.overtime_finish
+       from clockingin_overtime co
+        LEFT JOIN archives_emp ae on co.emp_id=ae.emp_id
+      where  ae.emp_id=#{empId} and to_days(co.overtime_start)=to_days(now())
+    </select>
+</mapper>

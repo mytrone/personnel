@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.system.ISystemAuthorityMapper">
+    <resultMap id="SystemAuthorityMap" type="cn.gson.linyun.model.pojos.system.SystemAuthority">
+        <id column="authority_id" property="authorityId"/>
+        <result column="authority_name" property="authorityName"/>
+        <result column="authority_access" property="authorityAccess"/>
+        <result column="authority_path" property="authorityPath"/>
+        <result column="authority_ioc" property="authorityIoc"/>
+        <result column="authority_parent_id" property="authorityParentId"/>
+    </resultMap>
+</mapper>
