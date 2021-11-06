@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.system.ISystemPostMapper">
+    <resultMap id="SystemPostMap" type="cn.gson.linyun.model.pojos.system.SystemPost">
+        <id column="post_id" property="postId"/>
+        <result column="post_name" property="postName"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="post_parent_id" property="postParentId"/>
+        <association property="systemDepartment" javaType="cn.gson.linyun.model.pojos.system.SystemDepartment">
+            <id column="department_id" property="departmentId"/>
+            <result column="department_name" property="departmentName"/>
+        </association>
+        <association property="postFather" javaType="cn.gson.linyun.model.pojos.system.SystemPost">
+            <result column="pname" property="postName"/>
+        </association>
+    </resultMap>
+    <!--查询职位表-->
+    <select id="selPost" resultMap="SystemPostMap">
+        select *,p1.post_name pname from system_post p left join system_post p1 on p.post_parent_id=p1.post_id
+    </select>
+
+    <!--新增职位表-->
+    <insert id="addPost">
+        insert into system_post(post_name,department_id,post_parent_id)values (#{postName},#{departmentId},#{postParentId})
+    </insert>
+    <!--修改职位-->
+    <update id="changePost">
+        update system_post set post_name=#{postName},department_id=#{departmentId},post_parent_id=#{postParentId} where post_id=#{postId}
+    </update>
+    <!--删除职位-->
+    <delete id="delPost">
+        delete * from system_post where post_id=#{postId}
+    </delete>
+</mapper>

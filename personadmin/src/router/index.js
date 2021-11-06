@@ -83,6 +83,35 @@ let routes = [
 					title: "用人申请"
 				}
 				}
+				},{
+				path: '/role',
+				component: () => import('@/components/Role.vue'),
+				name: 'Role',
+				meta: {
+					title: "角色管理"
+				}
+				},{
+				path: '/department',
+				component: () => import('@/components/Department.vue'),
+				name: 'Department',
+				meta: {
+					title: "部门管理"
+				}
+				},{
+				path: '/staff',
+				component: () => import('@/components/Staff.vue'),
+				name: 'Staff',
+				meta: {
+					title: "用户管理"
+				}
+				},{
+				path: '/post',
+				component: () => import('@/components/Post.vue'),
+				name: 'Post',
+				meta: {
+					title: "职位管理"
+				}
+				}
 		 ]
 	}
 ]
