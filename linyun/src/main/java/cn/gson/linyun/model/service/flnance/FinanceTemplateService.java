@@ -17,10 +17,12 @@ public class FinanceTemplateService {
     @Autowired
     FinanceTemplateMapper financeTemplateMaper;
     public void addTemplate(FinanceTemplate financeTemplate){
-        String danhao=  MyUtil.genrateNo("MB");//订单编号
-        financeTemplate.setTemplateSerial(danhao);//
-        List<FinanceItem>item=financeTemplate.getFinanceItem();//前台数组
-        financeTemplateMaper.addTemplate(financeTemplate);
+        System.out.println("ssss");
+        System.out.println(financeTemplate.getTemplateId());
+//        String danhao=  MyUtil.genrateNo("MB");//订单编号
+//        financeTemplate.setTemplateSerial(danhao);//
+//        List<FinanceItem>item=financeTemplate.getFinanceItem();//前台数组
+            financeTemplateMaper.addTemplate(financeTemplate);
     }
 
 

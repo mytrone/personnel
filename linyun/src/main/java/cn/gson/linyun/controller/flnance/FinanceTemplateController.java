@@ -14,7 +14,7 @@ public class FinanceTemplateController {
     FinanceTemplateService financeTemplateService;
     @RequestMapping("/addtemplate")
     public String addTemplatey(@RequestBody FinanceTemplate financeTemplate){
-
+        System.out.println(financeTemplate);
             financeTemplateService.addTemplate(financeTemplate);
             return "ok";
     }

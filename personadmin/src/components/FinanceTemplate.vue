@@ -267,7 +267,7 @@
 				
 				})
 			},
-			get
+			
 			delDrug2(index) { //删除编辑
 
 				this.financeTemplate.financeItem.splice(index, 1);
@@ -278,10 +278,10 @@
 				}
 			},
 			getTemplate(){//添加模板
-				this.$refs['hospital'].validate((valid) => {
+				this.$refs['financeTemplate'].validate((valid) => {
 					
 					if (valid) {
-						this.axios.post('/ju/zhe', this.hospital).then((v) => {
+						this.axios.post('/template/addtemplate', this.financeTemplate).then((v) => {
 							
 						}).catch(function() {
 

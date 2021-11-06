@@ -3,9 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceTemplateMapper">
     <!-- 新增模板表-->
-    <insert id="addTemplate">
+    <insert id="addTemplate"  useGeneratedKeys="true" keyProperty="template_id" keyColumn="template_id">
         insert  into  finance_template
-        values (0,1,#{alinkeyId},#{templateSerial},current_timestamp,#{templateName})
+        values (null,1,#{alinkeyId},#{templateSerial},current_timestamp,#{templateName})
     </insert>
 <!--    新增中间表-->
     <insert id="addRelationship">
