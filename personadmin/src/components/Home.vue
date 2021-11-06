@@ -67,10 +67,38 @@
                 <el-icon><document /></el-icon>
                 <span>Navigator Three</span>
               </el-menu-item>
-              <el-menu-item index="4">
-                <el-icon><setting /></el-icon>
-                <span>Navigator Four</span>
-              </el-menu-item>
+                <el-sub-menu index="4">
+                    <template #title>
+                        <el-icon style="margin-right: 15px">
+                            <setting />
+                        </el-icon>
+                        <span>绩效管理</span>
+                    </template>
+
+                    <el-menu-item index="4-1">
+                        <router-link to="financeItem">考核项目</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="4-2">
+                        <router-link to="financeTemplate">考核模板</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="4-3">
+                        <router-link to="financeCheck">员工考核</router-link>
+                    </el-menu-item>
+                </el-sub-menu>
+                <el-sub-menu index="5">
+                    <template #title>
+                        <el-icon style="margin-right: 15px">
+                            <setting />
+                        </el-icon>
+                        <span>薪资管理</span>
+                    </template>
+                    <el-menu-item index="5-1">
+                        <router-link to="financeSalarys">工资发放</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="5-2">
+                        <router-link to="financeSubmit">报销管理</router-link>
+                    </el-menu-item>
+                </el-sub-menu>
 			  <el-sub-menu index="6">
 			    <template #title>
 			      <el-icon style="margin-right: 15px"><setting /></el-icon>

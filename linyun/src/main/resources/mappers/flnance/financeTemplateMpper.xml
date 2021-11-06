@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceTemplateMapper">
+    <!-- 新增模板表-->
+    <insert id="addTemplate">
+        insert  into  finance_template
+        values (0,1,#{alinkeyId},#{templateSerial},current_timestamp,#{templateName})
+    </insert>
+<!--    新增中间表-->
+    <insert id="addRelationship">
+        insert into Relationship34 values (#{financeItemByItemId),#(financeTemplateByTemplateId))
+    </insert>
+</mapper>

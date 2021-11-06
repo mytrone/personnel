@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceItemMapper">
+<!--    查询-->
+    <insert id="allFinance">
+        insert  into  finance_item  values(0,#{itemName},#{itemExplain})
+    </insert>
+    <select id="sllFinance" resultType="FinanceItem">
+        select*from finance_item
+        <where>
+            <if test="itemName != null and '' != itemName">
+                or item_name like '%${itemName}%'
+            </if>
+        </where>
+    </select>
+<!--    删除项目-->
+    <delete id="deFinance">
+        delete  from   finance_item  where  item_id=#{itemId}
+    </delete>
+<!--    查询类别表-->
+    <select id="allAlinkey" resultType="Alinkey">
+        select*from alinkey where alinkey_father=16
+    </select>
+</mapper>

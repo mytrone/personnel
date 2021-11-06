@@ -9,7 +9,8 @@ import Login from '@/components/Login.vue'
 	component 路径对应子组件对象
 	mate 可选
 */
-let routes = [{
+let routes = [
+	{
 		path: '/login',
 		component: Login,
 		name: 'Login',
@@ -21,7 +22,7 @@ let routes = [{
 		path: '/',
 		component: Home,
 		name: 'Home',
-
+		
 		meta: {
 			title: "xxx后台管理系统"
 		},
@@ -32,42 +33,42 @@ let routes = [{
 				meta: {
 					title: "404"
 				}
-			}, {
+				},{
 				path: '/flowdesign',
 				component: () => import('@/components/FlowDesign.vue'),
 				name: 'Flowdesign',
 				meta: {
 					title: "流程设计"
 				}
-			}, {
+				},{
 				path: '/flowmonitoring',
 				component: () => import('@/components/FlowMonitoring.vue'),
 				name: 'Flowmonitoring',
 				meta: {
 					title: "流程监控"
 				}
-			}, {
+				},{
 				path: '/flowprocess',
 				component: () => import('@/components/FlowProcess.vue'),
 				name: 'Flowprocess',
 				meta: {
 					title: "我的申请"
 				}
-			}, {
+				},{
 				path: '/flowagency',
 				component: () => import('@/components/FlowAgency.vue'),
 				name: 'Flowagency',
 				meta: {
 					title: "代办流程"
 				}
-			}, {
+				},{
 				path: '/flowentrust',
 				component: () => import('@/components/FlowEntrust.vue'),
 				name: 'Flowentrust',
 				meta: {
 					title: "流程委托"
 				}
-			}, {
+				},{
 				path: '/flownotice',
 				component: () => import('@/components/FlowNotice.vue'),
 				name: 'FlowNotice',
@@ -95,6 +96,20 @@ let routes = [{
 				name: 'Department',
 				meta: {
 					title: "部门管理"
+				},{
+				path: '/financeTemplate',
+				component: () => import('@/components/FinanceTemplate.vue'),
+				name: 'FinanceTemplate',
+				meta: {
+					title: "考核模板"
+				}
+				},
+				{
+				path: '/financeItem',
+				component: () => import('@/components/FinanceItem.vue'),
+				name: 'FinanceItem',
+				meta: {
+					title: "考核项目"
 				}
 				},{
 				path: '/staff',
@@ -120,6 +135,33 @@ let routes = [{
 			}
 
 		]
+				},
+				{
+				path: '/financeCheck',
+				component: () => import('@/components/FinanceCheck.vue'),
+				name: 'FinanceCheck',
+				meta: {
+					title: "员工考核"
+				}
+				},
+				{
+				path: '/financeSubmit',
+				component: () => import('@/components/FinanceSubmit.vue'),
+				name: 'FinanceSubmit',
+				meta: {
+					title: "报销管理"
+				}
+				},{
+				path: '/financeSalarys',
+				component: () => import('@/components/FinanceSalarys.vue'),
+				name: 'FinanceSalarys',
+				meta: {
+					title: "工资发放"
+				}
+				}
+
+
+		 ]
 	}
 ]
 //2、导入路由对象
