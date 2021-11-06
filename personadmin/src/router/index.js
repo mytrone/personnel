@@ -75,7 +75,47 @@ let routes = [
 				meta: {
 					title: "抄送事宜"
 				}
+				},{
+				path: '/financeTemplate',
+				component: () => import('@/components/FinanceTemplate.vue'),
+				name: 'FinanceTemplate',
+				meta: {
+					title: "考核模板"
 				}
+				},
+				{
+				path: '/financeItem',
+				component: () => import('@/components/FinanceItem.vue'),
+				name: 'FinanceItem',
+				meta: {
+					title: "考核项目"
+				}
+				},
+				{
+				path: '/financeCheck',
+				component: () => import('@/components/FinanceCheck.vue'),
+				name: 'FinanceCheck',
+				meta: {
+					title: "员工考核"
+				}
+				},
+				{
+				path: '/financeSubmit',
+				component: () => import('@/components/FinanceSubmit.vue'),
+				name: 'FinanceSubmit',
+				meta: {
+					title: "报销管理"
+				}
+				},{
+				path: '/financeSalarys',
+				component: () => import('@/components/FinanceSalarys.vue'),
+				name: 'FinanceSalarys',
+				meta: {
+					title: "工资发放"
+				}
+				}
+				
+				
 		 ]
 	}
 ]

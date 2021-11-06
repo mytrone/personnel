@@ -1,20 +1,17 @@
 package cn.gson.linyun.model.pojos.flnance;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
-@Entity
-@Table(name = "finance_item", schema = "person", catalog = "")
+
 public class FinanceItem {
 
-    private Integer itemId;
-    private String itemName;
-    private String itemExplain;
+    private Integer itemId;//主键
+    private String itemName;//项目名
+    private String itemExplain;//项目说明
+    private Collection<Relationship34> relationship34sByItemId;
 
-
-
-    @Id
-    @Column(name = "Item_id")
     public Integer getItemId() {
         return itemId;
     }
@@ -23,8 +20,6 @@ public class FinanceItem {
         this.itemId = itemId;
     }
 
-    @Basic
-    @Column(name = "Item_name")
     public String getItemName() {
         return itemName;
     }
@@ -33,8 +28,6 @@ public class FinanceItem {
         this.itemName = itemName;
     }
 
-    @Basic
-    @Column(name = "item_explain")
     public String getItemExplain() {
         return itemExplain;
     }
@@ -44,15 +37,21 @@ public class FinanceItem {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinanceItem that = (FinanceItem) o;
-        return Objects.equals(itemId, that.itemId) && Objects.equals(itemName, that.itemName) && Objects.equals(itemExplain, that.itemExplain);
+    public String toString() {
+        return "FinanceItem{" +
+                "itemId=" + itemId +
+                ", itemName='" + itemName + '\'' +
+                ", itemExplain='" + itemExplain + '\'' +
+                '}';
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(itemId, itemName, itemExplain);
+
+    @OneToMany(mappedBy = "financeItemByItemId")
+    public Collection<Relationship34> getRelationship34sByItemId() {
+        return relationship34sByItemId;
+    }
+
+    public void setRelationship34sByItemId(Collection<Relationship34> relationship34sByItemId) {
+        this.relationship34sByItemId = relationship34sByItemId;
     }
 }

@@ -5,7 +5,7 @@ import Qs from 'qs'
 import {ElMessage } from 'element-plus'
 
 //统一的跨域前缀，其实就是你的SpringBoot的访问地址
-axios.defaults.baseURL="http://localhost:8086/"
+axios.defaults.baseURL="http://localhost:8889/"
 axios.defaults.timeout=100000
 
 axios.interceptors.request.use(config=>{
@@ -13,7 +13,7 @@ axios.interceptors.request.use(config=>{
 	return config;
 })
 
-axios.interceptors.response.use(res=>{
+/* axios.interceptors.response.use(res=>{
 	//在得到服务器响应之后进行拦截
 	// console.log("拦截之前的响应结果：",res);
 	if(res.status==200){
@@ -31,7 +31,7 @@ axios.interceptors.response.use(res=>{
 		// });
 	}
 	return res.data;
-}
-)
+} */
+// )
 
 export default axios
