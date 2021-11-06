@@ -9,8 +9,7 @@ import Login from '@/components/Login.vue'
 	component 路径对应子组件对象
 	mate 可选
 */
-let routes = [
-	{
+let routes = [{
 		path: '/login',
 		component: Login,
 		name: 'Login',
@@ -22,7 +21,7 @@ let routes = [
 		path: '/',
 		component: Home,
 		name: 'Home',
-		
+
 		meta: {
 			title: "xxx后台管理系统"
 		},
@@ -33,50 +32,58 @@ let routes = [
 				meta: {
 					title: "404"
 				}
-				},{
+			}, {
 				path: '/flowdesign',
 				component: () => import('@/components/FlowDesign.vue'),
 				name: 'Flowdesign',
 				meta: {
 					title: "流程设计"
 				}
-				},{
+			}, {
 				path: '/flowmonitoring',
 				component: () => import('@/components/FlowMonitoring.vue'),
 				name: 'Flowmonitoring',
 				meta: {
 					title: "流程监控"
 				}
-				},{
+			}, {
 				path: '/flowprocess',
 				component: () => import('@/components/FlowProcess.vue'),
 				name: 'Flowprocess',
 				meta: {
 					title: "我的申请"
 				}
-				},{
+			}, {
 				path: '/flowagency',
 				component: () => import('@/components/FlowAgency.vue'),
 				name: 'Flowagency',
 				meta: {
 					title: "代办流程"
 				}
-				},{
+			}, {
 				path: '/flowentrust',
 				component: () => import('@/components/FlowEntrust.vue'),
 				name: 'Flowentrust',
 				meta: {
 					title: "流程委托"
 				}
-				},{
+			}, {
 				path: '/flownotice',
 				component: () => import('@/components/FlowNotice.vue'),
 				name: 'FlowNotice',
 				meta: {
 					title: "抄送事宜"
 				}
+			}, {
+				path: '/homepage',
+				name: 'homepage',
+				component: () => import('@/components/HomePage.vue'),
+				meta: {
+					title: "首页"
 				}
-		 ]
+			}
+
+		]
 	}
 ]
 //2、导入路由对象
