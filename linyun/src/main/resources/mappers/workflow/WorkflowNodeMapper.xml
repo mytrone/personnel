@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指向对应的接口类，全称-->
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowNodeMapper">
+
+    <resultMap id="base" type="WorkflowNode">
+        <id property="nodeId" column="node_id"/>
+        <result property="nodeLast" column="node_last"/>
+        <association property="workflowFlow" javaType="WorkflowFlow">
+            <id property="flowId" column="flow_id"/>
+            <result property="flowName" column="flow_name"/>
+            <result property="flowState" column="flow_state"/>
+            <result property="flowUrl" column="flow_url"/>
+            <result property="flowTime" column="flow_time"/>
+        </association>
+        <association property="alinkey" javaType="Alinkey">
+            <id property="alinkeyId" column="alinkey_id"/>
+            <result property="alinkeyName" column="alinkey_name"/>
+        </association>
+
+    </resultMap>
+
+    <!--  根据编号查询类别自连表  -->
+    <insert id="Insert" >
+        insert into workflow_node values
+        <foreach collection="arr" separator="," item="rid">
+         (null,#{flowVo.id},#{rid},false )
+        </foreach>
+
+    </insert>
+
+<!--  根据流程查询节点  -->
+    <select id="SelectByFlow" resultMap="base">
+        SELECT * FROM workflow_node
+                          INNER JOIN workflow_flow
+                                     ON workflow_flow.`flow_id`=workflow_node.`flow_id`
+            INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id` where workflow_node.flow_id=#{id}
+    </select>
+
+    <!--  流程节点  -->
+    <delete id="Delete">
+        delete from workflow_node where workflow_node.flow_id=#{id}
+    </delete>
+
+
+</mapper>
