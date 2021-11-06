@@ -75,6 +75,13 @@ let routes = [
 				meta: {
 					title: "抄送事宜"
 				}
+				},{
+				path: '/recruit_yrensq',
+				component: () => import('@/components/Recruit_yrensq.vue'),
+				name: 'Recruit_yrensq',
+				meta: {
+					title: "用人申请"
+				}
 				}
 		 ]
 	}
