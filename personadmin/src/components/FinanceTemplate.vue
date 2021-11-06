@@ -198,13 +198,13 @@
 						this.financeItem.itemExplain = this.tableData[i].itemExplain;
 						this.axios.post("/finance/addFinance", this.financeItem).then((res) => {
 
-							if (res.data === "ok") {
+							if (res === "ok") {
 								this.$message.success("新增成功");
 								this.getQC()
 							} else {
 								this.$message.error("新增失败");
 							}
-							console.log(v.data)
+							
 						}).catch(function() {
 
 						})
@@ -218,7 +218,7 @@
 			},
 			getFinanceItem() {
 				this.axios.post("/finance/allFinance", this.financeItem).then((res) => {
-					this.item = res.data;
+					this.item = res;
 				}).catch(function() {
 
 				})
@@ -240,13 +240,13 @@
 
 					this.axios.post("/finance/deFinances", this.financeItem).then((res) => {
 
-						if (res.data === "ok") {
+						if (res === "ok") {
 							this.$message.success("删除成功");
 							this.getFinanceItem()
 						} else {
 							this.$message.error("删除失败");
 						}
-						console.log(v.data)
+						
 					}).catch(function() {
 
 					})
@@ -262,12 +262,12 @@
 				
 			getClickw(){//查询类别表
 				this.axios.post("/finance/allAlinkey").then((res) => {
-					this.sortw = res.data;
+					this.sortw = res;
 				}).catch(function() {
 				
 				})
 			},
-			get
+			
 			delDrug2(index) { //删除编辑
 
 				this.financeTemplate.financeItem.splice(index, 1);

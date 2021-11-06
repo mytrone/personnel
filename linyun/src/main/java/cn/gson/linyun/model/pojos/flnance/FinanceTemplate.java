@@ -1,6 +1,9 @@
 package cn.gson.linyun.model.pojos.flnance;
 
 
+import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
+import cn.gson.linyun.model.pojos.workflow.Alinkey;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;

@@ -1,7 +1,7 @@
 package cn.gson.linyun.model.mapper.flnance;
 
-import cn.gson.linyun.model.pojos.flnance.Alinkey;
 import cn.gson.linyun.model.pojos.flnance.FinanceItem;
+import cn.gson.linyun.model.pojos.workflow.Alinkey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -17,7 +17,7 @@
     <resultMap id="punchOneMap" type="cn.gson.linyun.model.pojos.clockingin.ClockinginPunch">
         <id column="punch_id" property="punchId" />
         <result column="punch_card" property="punchCard" />
-        <association property="alinkeyByAlinkeyId" javaType="cn.gson.linyun.model.pojos.clockingin.Alinkey">
+        <association property="alinkeyByAlinkeyId" javaType="cn.gson.linyun.model.pojos.workflow.Alinkey">
             <id column="alinkey_id" property="alinkeyId" />
             <result column="alinkey_name" property="alinkeyName" />
         </association>

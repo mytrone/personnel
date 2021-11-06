@@ -1,7 +1,11 @@
 package cn.gson.linyun.model.pojos.recruit;
 
+import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
+import cn.gson.linyun.model.pojos.flnance.FinanceTemplate;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 
@@ -17,6 +21,10 @@ public class ArchivesEmp {
     private Timestamp empsonDay;
     private Timestamp empsonBirthday;
     private Integer topId;
+
+    private Collection<ClockinginOvertime> clockinginOvertimesByEmpId;
+    private Collection<ClockinginOvertime> clockinginOvertimesByEmpId_0;
+    private Collection<FinanceTemplate> financeTemplatesByEmpId;
 
     public Integer getEmpId() {
         return empId;
@@ -107,14 +115,21 @@ public class ArchivesEmp {
         this.topId = topId;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ArchivesEmp that = (ArchivesEmp) o;
-        return Objects.equals(empId, that.empId) && Objects.equals(empName, that.empName) && Objects.equals(empsonSex, that.empsonSex) && Objects.equals(empsonCard, that.empsonCard) && Objects.equals(empsonEmail, that.empsonEmail) && Objects.equals(empsonTel, that.empsonTel) && Objects.equals(empsonBank, that.empsonBank) && Objects.equals(empsonEducation, that.empsonEducation) && Objects.equals(empsonDay, that.empsonDay) && Objects.equals(empsonBirthday, that.empsonBirthday) && Objects.equals(topId, that.topId);
+
+    public Collection<ClockinginOvertime> getClockinginOvertimesByEmpId() {
+        return clockinginOvertimesByEmpId;
     }
 
-    public int hashCode() {
-        return Objects.hash(empId, empName, empsonSex, empsonCard, empsonEmail, empsonTel, empsonBank, empsonEducation, empsonDay, empsonBirthday, topId);
+    public void setClockinginOvertimesByEmpId(Collection<ClockinginOvertime> clockinginOvertimesByEmpId) {
+        this.clockinginOvertimesByEmpId = clockinginOvertimesByEmpId;
     }
+
+    public Collection<ClockinginOvertime> getClockinginOvertimesByEmpId_0() {
+        return clockinginOvertimesByEmpId_0;
+    }
+
+    public void setClockinginOvertimesByEmpId_0(Collection<ClockinginOvertime> clockinginOvertimesByEmpId_0) {
+        this.clockinginOvertimesByEmpId_0 = clockinginOvertimesByEmpId_0;
+    }
+
 }

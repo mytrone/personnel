@@ -1,5 +1,8 @@
 package cn.gson.linyun.model.pojos.clockingin;
 
+import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
+import cn.gson.linyun.model.pojos.workflow.Alinkey;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;

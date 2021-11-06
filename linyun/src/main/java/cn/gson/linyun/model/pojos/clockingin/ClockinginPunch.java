@@ -1,5 +1,6 @@
 package cn.gson.linyun.model.pojos.clockingin;
 
+import cn.gson.linyun.model.pojos.workflow.Alinkey;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;

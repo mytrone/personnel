@@ -50,7 +50,7 @@
 						departmentName:this.value
 					}
 				}).then((v)=>{
-					this.departments=v.data
+					this.departments=v
 				})
 			},
 			//部门新增

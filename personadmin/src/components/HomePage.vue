@@ -101,13 +101,13 @@
 						empid: 1
 					}
 				}).then(res => {
-					if (res != null) {
+					if (res.data != null) {
 						console.log(res)
-						res.forEach(r=>{
+						res.data.forEach(r=>{
 							console.log(r,4)
 							r.punchCard=moment(r.punchCard).format("HH:mm:ss")
 						})
-						this.frequency = res
+						this.frequency = res.data
 					}
 
 				});
@@ -126,7 +126,7 @@
 					}
 				}
 				
-				/* this.axios.post("punch/addPunch", qs.stringify({
+				this.axios.post("punch/addPunch", qs.stringify({
 					date: this.nowDate + " " + this.hour,
 					empid: 1,
 					state: this.state
@@ -139,7 +139,7 @@
 						});
 						this.punch();
 					}
-				}); */
+				});
 			},
 			currentTime() {
 				setInterval(this.formatDate, 1000);

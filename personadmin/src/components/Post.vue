@@ -39,7 +39,7 @@
 				this.axios({
 					url:'system/selPost'
 				}).then((v)=>{
-					this.posts=v.data
+					this.posts=v
 					console.log(this.posts)
 				})
 			}			
