@@ -7,11 +7,23 @@
               active-text-color="#ffd04b"
               background-color="#545c64"
               class="el-menu-vertical-demo"
-              default-active="2"
+              default-active="99"
               text-color="#fff"
               @open="handleOpen"
               @close="handleClose"
             >
+
+                <el-menu-item index="99">
+                    <el-icon>
+                        <icon-menu />
+                    </el-icon>
+                    <!-- <span> -->
+                    <router-link to="homepage">
+                        首页
+                    </router-link>
+                    <!-- </span> -->
+                </el-menu-item>
+
               <el-sub-menu index="1">
                 <template #title>
                   <el-icon style="margin-right: 15px"><setting /></el-icon>
