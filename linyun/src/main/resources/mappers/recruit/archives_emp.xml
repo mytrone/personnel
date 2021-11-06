@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gson.linyun.model.mapper.recruit.ArchivesEmpMapper">
+    <resultMap id="base" type="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
+        <id column="empId" property="empId"/>
+        <id column="empName" property="empName"/>
+        <id column="empsonSex" property="empsonSex"/>
+        <id column="empsonCard" property="empsonCard"/>
+        <id column="empsonEmail" property="empsonEmail"/>
+        <id column="empsonTel" property="empsonTel"/>
+        <id column="empsonBank" property="empsonBank"/>
+        <id column="empsonEducation" property="empsonEducation"/>
+        <id column="empsonDay" property="empsonDay"/>
+        <id column="empsonBirthday" property="empsonBirthday"/>
+        <id column="topId" property="topId"/>
+    </resultMap>
+    <!--    <sql id="column">-->
+    <!--        odid, oid, pid, num, g_price-->
+    <!--    </sql>-->
+    <select id="selectAll" resultMap="base">
+        <!--        select <include refid="column"></include> from ordetails where oid=#{oid}-->
+        select * from archives_emp
+    </select>
+
+
+</mapper>

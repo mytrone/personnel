@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gson.linyun.model.mapper.recruit.RecruitRecruitapplyMapper">
+   <resultMap id="base" type="cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply">
+        <id column="recruitapplyId" property="recruitapplyId"/>
+        <id column="recruitapplyTitle" property="recruitapplyTitle"/>
+        <id column="recruitapplyPosition" property="recruitapplyPosition"/>
+        <id column="recruitapplyPnum" property="recruitapplyPnum"/>
+        <id column="recruitapplyEducationInf" property="recruitapplyEducationInf"/>
+        <id column="recruitapplyEason" property="recruitapplyEason"/>
+    </resultMap>
+
+    <insert id="insertRecruitapply" parameterType="cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply">
+        insert into recruit_recruitapply(
+            recruitapply_id,emp_id,recruitapply_title,recruitapply_position,recruitapply_Pnum
+            ,recruitapply_Education_Inf,recruitapply_Eason,recruitapply_Time,recruitapply_State
+        )
+        values (null,#{archivesEmpByEmpId.empId},#{recruitapplyTitle},
+                #{recruitapplyPosition},#{recruitapplyPnum},
+                #{recruitapplyEducationInf},#{recruitapplyEason},#{recruitapplyTime},#{recruitapplyState})
+    </insert>
+</mapper>

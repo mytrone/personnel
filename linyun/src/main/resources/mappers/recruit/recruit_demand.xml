@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gson.linyun.model.mapper.recruit.RecruitDemandMapper">
+    <resultMap id="base" type="cn.gson.linyun.model.pojos.recruit.RecruitDemand">
+        <id column="demandId" property="demandId"/>
+        <id column="demandName" property="demandName"/>
+        <id column="demandPositionInf" property="demandPositionInf"/>
+        <id column="demandWorkyear" property="demandWorkyear"/>
+        <id column="demandAddress" property="demandAddress"/>
+        <id column="demandTel" property="demandTel"/>
+        <id column="demandMoney" property="demandMoney"/>
+        <id column="demandTime" property="demandTime"/>
+        <id column="demandState" property="demandState"/>
+    </resultMap>
+
+    <insert id="insertDemand" parameterType="cn.gson.linyun.model.pojos.recruit.RecruitDemand">
+        insert into recruit_recruitapply(
+                                         demand_Id,recruitapply_Id,demand_Name,demand_Position_Inf,demand_Workyear,demand_Address
+                                        ,demand_Tel,demand_Money,demand_Time,demand_State
+        )
+        values (null,#{recruitRecruitapplyByRecruitapplyId.recruitapplyId},#{demandName},
+                #{demandPositionInf},#{demandWorkyear},
+                #{demandAddress},#{demandTel},#{demandMoney},#{demandTime},#{demandState})
+    </insert>
+</mapper>
