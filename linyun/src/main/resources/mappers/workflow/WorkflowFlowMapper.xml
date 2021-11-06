@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指向对应的接口类，全称-->
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowFlowMapper">
+
+    <resultMap id="base" type="WorkflowFlow">
+        <id property="flowId" column="flow_id"/>
+        <result property="flowName" column="flow_name"/>
+        <result property="flowState" column="flow_state"/>
+        <result property="flowUrl" column="flow_url"/>
+        <result property="flowTime" column="flow_time"/>
+            <association property="alinkey" javaType="Alinkey">
+                <id property="alinkeyId" column="alinkey_id"/>
+                <result property="alinkeyName" column="alinkey_name"/>
+            </association>
+     </resultMap>
+
+
+    <insert id="Insert" useGeneratedKeys="true" keyProperty="id">
+        insert  into workflow_flow values (null,
+                                           #{type},
+                                           #{name},
+                                           #{state},
+                                           #{web},
+                                           #{timestamp},
+                                           #{position})
+    </insert>
+
+
+<!--   查询所有流程 -->
+    <select id="SelectAll" resultMap="base">
+
+         SELECT * FROM workflow_flow INNER JOIN alinkey
+            ON workflow_flow.`alinkey_id`=alinkey.`alinkey_id`
+        <where>
+            <if test="name!=null and name!='' ">
+                 workflow_flow.flow_name like  concat('%',#{name},'%')
+            </if>
+
+        </where>
+
+    </select>
+
+<!--  删除流程  -->
+    <delete id="Delete">
+        delete from workflow_flow where workflow_flow.flow_id=#{id}
+    </delete>
+
+<!--  查询单条  -->
+    <select id="SelectByid" resultMap="base">
+        SELECT * FROM workflow_flow INNER JOIN alinkey
+               ON workflow_flow.`alinkey_id`=alinkey.`alinkey_id` where workflow_flow.flow_id=#{id}
+    </select>
+
+<!--  修改状态  -->
+    <update id="Update">
+        update workflow_flow set flow_state=#{flag}  where workflow_flow.flow_id=#{id}
+    </update>
+
+<!--  修改流程  -->
+    <update id="UpdateFlow">
+        update workflow_flow set flow_name=#{name},
+                                 flow_url=#{web},
+                                 flow_state=#{state},
+                                 alinkey_id=#{type},
+                                 flow_position=#{position}
+                                 where workflow_flow.flow_id=#{id}
+    </update>
+
+</mapper>
