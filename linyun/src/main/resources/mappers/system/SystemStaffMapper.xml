@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.system.ISystemStaffMapper">
+    <resultMap id="ystemStaffMap" type="cn.gson.linyun.model.pojos.system.SystemStaff">
+        <id column="staff_id" property="staffId"/>
+        <id column="staff_account" property="staffAccount"/>
+        <id column="staff_code" property="staffCode"/>
+        <id column="emp_id" property="empId"/>
+    </resultMap>
+</mapper>

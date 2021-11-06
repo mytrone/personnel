@@ -50,6 +50,24 @@
                 <el-icon><setting /></el-icon>
                 <span>Navigator Four</span>
               </el-menu-item>
+			  <el-sub-menu index="6">
+			    <template #title>
+			      <el-icon style="margin-right: 15px"><setting /></el-icon>
+			      <span>系统设置</span>
+			    </template>			    
+			      <el-menu-item index="6-1">
+			  					  <router-link to="staff">用户管理</router-link> 
+			  				</el-menu-item>
+			      <el-menu-item index="6-2">
+			      	  <router-link to="role">角色管理</router-link> 
+			      </el-menu-item>
+			    <el-menu-item index="6-3">
+			    	  <router-link to="department">部门管理</router-link> 
+			    </el-menu-item>
+			    <el-menu-item index="6-4">
+			    	  <router-link to="post">职位管理</router-link> 
+			    </el-menu-item>			    
+			  </el-sub-menu>
             </el-menu>
           
     </el-aside>
