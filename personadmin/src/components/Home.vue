@@ -62,6 +62,26 @@
                             <router-link to="recruit_yrensq">用人申请</router-link>
                         </el-menu-item>
                     </el-menu-item>
+					<el-menu-item index="2-2">
+					    <el-menu-item index="2-2">
+					        <router-link to="recruit_demand">发布招聘信息</router-link>
+					    </el-menu-item>
+					</el-menu-item>
+					<el-menu-item index="2-3">
+					    <el-menu-item index="2-3">
+					        <router-link to="recruit_demandSelect">查看招聘信息</router-link>
+					    </el-menu-item>
+					</el-menu-item>
+					<el-menu-item index="2-4">
+					    <el-menu-item index="2-4">
+					        <router-link to="recruit_recruitapplySelect">查看用人申请单</router-link>
+					    </el-menu-item>
+					</el-menu-item>
+					<el-menu-item index="2-5">
+					    <el-menu-item index="2-5">
+					        <router-link to="recruit_lookjl">查看简历</router-link>
+					    </el-menu-item>
+					</el-menu-item>
                 </el-sub-menu>
               <el-menu-item index="3" disabled>
                 <el-icon><document /></el-icon>

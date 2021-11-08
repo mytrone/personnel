@@ -5,12 +5,24 @@
 
 <mapper namespace="cn.gson.linyun.model.mapper.recruit.RecruitRecruitapplyMapper">
    <resultMap id="base" type="cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply">
-        <id column="recruitapplyId" property="recruitapplyId"/>
-        <id column="recruitapplyTitle" property="recruitapplyTitle"/>
-        <id column="recruitapplyPosition" property="recruitapplyPosition"/>
-        <id column="recruitapplyPnum" property="recruitapplyPnum"/>
-        <id column="recruitapplyEducationInf" property="recruitapplyEducationInf"/>
-        <id column="recruitapplyEason" property="recruitapplyEason"/>
+        <id column="recruitapply_id" property="recruitapplyId"/>
+        <id column="recruitapply_title" property="recruitapplyTitle"/>
+        <id column="recruitapply_position" property="recruitapplyPosition"/>
+        <id column="recruitapply_pnum" property="recruitapplyPnum"/>
+        <id column="recruitapply_education_Inf" property="recruitapplyEducationInf"/>
+        <id column="recruitapply_eason" property="recruitapplyEason"/>
+       <association property="recruitDemandByDemandId" javaType="cn.gson.linyun.model.pojos.recruit.RecruitDemand">
+           <id column="demand_id" property="demandId"/>
+           <id column="demand_name" property="demandName"/>
+           <id column="demand_position" property="demandPositionInf"/>
+           <id column="demand_position_Inf" property="demandPositionInf"/>
+           <id column="demand_workyear" property="demandWorkyear"/>
+           <id column="demand_address" property="demandAddress"/>
+           <id column="demand_tel" property="demandTel"/>
+           <id column="demand_money" property="demandMoney"/>
+           <id column="demand_time" property="demandTime"/>
+           <id column="demand_state" property="demandState"/>
+       </association>
     </resultMap>
 
     <insert id="insertRecruitapply" parameterType="cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply">
@@ -22,4 +34,10 @@
                 #{recruitapplyPosition},#{recruitapplyPnum},
                 #{recruitapplyEducationInf},#{recruitapplyEason},#{recruitapplyTime},#{recruitapplyState})
     </insert>
+
+    <select id="selectRecruitapply" resultType="cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply">
+        select * from recruit_recruitapply
+    </select>
+    
+
 </mapper>
