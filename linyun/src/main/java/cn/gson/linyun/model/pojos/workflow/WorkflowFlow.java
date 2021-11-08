@@ -29,5 +29,67 @@ public class WorkflowFlow {
 
     private Collection<ClockinginLeave> clockinginLeavesByFlow;
 
+    public int getFlowId() {
+        return flowId;
+    }
 
+    public void setFlowId(int flowId) {
+        this.flowId = flowId;
+    }
+
+    public String getFlowName() {
+        return flowName;
+    }
+
+    public void setFlowName(String flowName) {
+        this.flowName = flowName;
+    }
+
+    public Boolean getFlowState() {
+        return flowState;
+    }
+
+    public void setFlowState(Boolean flowState) {
+        this.flowState = flowState;
+    }
+
+    public String getFlowUrl() {
+        return flowUrl;
+    }
+
+    public void setFlowUrl(String flowUrl) {
+        this.flowUrl = flowUrl;
+    }
+
+    public Alinkey getAlinkey() {
+        return alinkey;
+    }
+
+    public void setAlinkey(Alinkey alinkey) {
+        this.alinkey = alinkey;
+    }
+
+    public Timestamp getFlowTime() {
+        return flowTime;
+    }
+
+    public void setFlowTime(Timestamp flowTime) {
+        this.flowTime = flowTime;
+    }
+
+    public Integer getFlowPosition() {
+        return flowPosition;
+    }
+
+    public void setFlowPosition(Integer flowPosition) {
+        this.flowPosition = flowPosition;
+    }
+
+    public Collection<ClockinginLeave> getClockinginLeavesByFlow() {
+        return clockinginLeavesByFlow;
+    }
+
+    public void setClockinginLeavesByFlow(Collection<ClockinginLeave> clockinginLeavesByFlow) {
+        this.clockinginLeavesByFlow = clockinginLeavesByFlow;
+    }
 }

@@ -30,14 +30,6 @@ public class ArchivesEmp {
     private Collection<FinanceTemplate> financeTemplatesByEmpId;
     private SystemPost systemPost;
 
-    public Collection<FinanceTemplate> getFinanceTemplatesByEmpId() {
-        return financeTemplatesByEmpId;
-    }
-
-    public void setFinanceTemplatesByEmpId(Collection<FinanceTemplate> financeTemplatesByEmpId) {
-        this.financeTemplatesByEmpId = financeTemplatesByEmpId;
-    }
-
     public SystemPost getSystemPost() {
         return systemPost;
     }

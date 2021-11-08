@@ -35,5 +35,59 @@ public class Alinkey {
 
     private Collection<FinanceTemplate> financeTemplatesByAlinkeyId;
 
+    public int getAlinkeyId() {
+        return alinkeyId;
+    }
 
+    public void setAlinkeyId(int alinkeyId) {
+        this.alinkeyId = alinkeyId;
+    }
+
+    public String getAlinkeyName() {
+        return alinkeyName;
+    }
+
+    public void setAlinkeyName(String alinkeyName) {
+        this.alinkeyName = alinkeyName;
+    }
+
+    public Integer getAlinkeyFather() {
+        return alinkeyFather;
+    }
+
+    public void setAlinkeyFather(Integer alinkeyFather) {
+        this.alinkeyFather = alinkeyFather;
+    }
+
+    public Collection<ClockinginPunch> getClockinginPunchesByAlinkeyId() {
+        return clockinginPunchesByAlinkeyId;
+    }
+
+    public void setClockinginPunchesByAlinkeyId(Collection<ClockinginPunch> clockinginPunchesByAlinkeyId) {
+        this.clockinginPunchesByAlinkeyId = clockinginPunchesByAlinkeyId;
+    }
+
+    public Collection<ClockinginOvertime> getClockinginOvertimesByAlinkeyId() {
+        return clockinginOvertimesByAlinkeyId;
+    }
+
+    public void setClockinginOvertimesByAlinkeyId(Collection<ClockinginOvertime> clockinginOvertimesByAlinkeyId) {
+        this.clockinginOvertimesByAlinkeyId = clockinginOvertimesByAlinkeyId;
+    }
+
+    public Collection<ClockinginLeave> getClockinginLeaves() {
+        return clockinginLeaves;
+    }
+
+    public void setClockinginLeaves(Collection<ClockinginLeave> clockinginLeaves) {
+        this.clockinginLeaves = clockinginLeaves;
+    }
+
+    public Collection<FinanceTemplate> getFinanceTemplatesByAlinkeyId() {
+        return financeTemplatesByAlinkeyId;
+    }
+
+    public void setFinanceTemplatesByAlinkeyId(Collection<FinanceTemplate> financeTemplatesByAlinkeyId) {
+        this.financeTemplatesByAlinkeyId = financeTemplatesByAlinkeyId;
+    }
 }

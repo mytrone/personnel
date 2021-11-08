@@ -82,10 +82,6 @@ public class SystemPost {
     this.postParentId = postParentId;
   }
 
-  public long getPostGrade() {
-    return postGrade;
-  }
-
   public void setPostGrade(long postGrade) {
     this.postGrade = postGrade;
   }

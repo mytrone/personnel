@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.sql.Date;
 import java.util.List;
 
 @RestController
