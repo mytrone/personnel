@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface WorkflowFlowMapper {
+public interface IWorkflowFlowMapper {
 
     /**
      * 查询所有流程
@@ -39,6 +39,8 @@ public interface WorkflowFlowMapper {
     WorkflowFlow SelectByid(Integer id);
 
 
+
+
     /**
      * Url查询单条记录
      * @param SelectByUrl
@@ -60,4 +62,17 @@ public interface WorkflowFlowMapper {
      */
     Integer UpdateFlow(FlowVo flowVo);
 
+
+    /**
+     * 根据url和职位查询流程
+     * @param id
+     * @return
+     */
+    List<WorkflowFlow> SelectByUrlID(@Param("url") String URL,@Param("poid") Integer id);
+
+    /**
+     * 停用流程
+     * @return
+     */
+    Integer UpdateZt(Integer id);
 }

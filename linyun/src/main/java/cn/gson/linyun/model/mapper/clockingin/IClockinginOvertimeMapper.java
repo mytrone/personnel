@@ -23,4 +23,7 @@ public interface IClockinginOvertimeMapper {
 
     Integer insertOvertime(ClockinginOvertime overtime);
 
+    /*根据主键查询selectOvertimeById*/
+    ClockinginOvertime selectOvertimeById(Integer empId);
+
 }

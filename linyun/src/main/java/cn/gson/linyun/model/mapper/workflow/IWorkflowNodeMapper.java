@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface WorkflowNodeMapper {
+public interface IWorkflowNodeMapper {
 
     /**
      * 根据流程创建节点

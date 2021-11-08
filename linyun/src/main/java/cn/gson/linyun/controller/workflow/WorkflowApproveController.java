@@ -60,6 +60,34 @@ public class WorkflowApproveController {
                 page.getName()));
     }
 
+    @PostMapping("byid")
+    /**
+     * 查询emp id申请流程
+     * @param name 流程名
+     * @return
+     */
+    public MyResult SelectByEmp(@RequestBody PageName page) {
+
+        return MyResult.SUCCESS_Object(workflowApproveService.SelectByEmp(page.getNo(),
+                page.getSize(),
+                page.getEmp(), page.getName()));
+    }
+
+
+    @PostMapping("byidsp")
+    /**
+     * 查询emp id申请流程  需要我办理的
+     * @param name 流程名
+     * @return
+     */
+    public MyResult SelectByEmpSp(@RequestBody PageName page) {
+
+        return MyResult.SUCCESS_Object(workflowApproveService.
+                SelectByEmpSp(page.getNo(),
+                page.getSize(),
+                page.getEmp(), page.getName()));
+    }
+
 
     @PostMapping("selectid")
     /**
@@ -69,6 +97,16 @@ public class WorkflowApproveController {
      */
     public MyResult select(@RequestParam(value = "id") Integer id) {
         return MyResult.SUCCESS_Object(workflowApproveService.SelectHistory(id));
+    }
+
+    @PostMapping("selectidappd")
+    /**
+     * 根据流程实例编号
+     * @param id
+     * @return
+     */
+    public MyResult SelectByApprove(@RequestParam(value = "id") Integer id) {
+        return MyResult.SUCCESS_Object(workflowApproveService.SelectByApprove(id));
     }
 
 

@@ -52,26 +52,16 @@
 				<el-input type="text" v-model="duration" size="small"></el-input>
 			</el-col>
 		</el-row>
-
+<template  v-if="d!=3" >
 		<el-row style="margin-top: 12px;">
 			<el-col style="text-align: right;line-height: 32px;" :span="3">
 				审批人：
 			</el-col>
 			<el-col :span="4">
-				<el-select v-model="value" placeholder="审批人">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-					</el-option>
-				</el-select>
+				<el-cascader v-model="spadmin" :options="options" :props="{ checkStrictly: false }" clearable />
 			</el-col>
-			<el-col style="text-align: right;line-height: 32px;" :span="3">
-				审批流程：
-			</el-col>
-			<el-col :span="4">
-				<el-select v-model="flowsId" placeholder="审批流程">
-					<el-option v-for="item in flows" :key="item.value" :label="item.label" :value="item.value">
-					</el-option>
-				</el-select>
-			</el-col>
+			
+			
 			<el-col style="text-align: right;line-height: 32px;" :span="3">
 
 			</el-col>
@@ -79,7 +69,7 @@
 
 			</el-col>
 		</el-row>
-
+</template>
 		<el-row style="margin-top: 12px;">
 			<el-col style="text-align: right;line-height: 32px;" :span="3">
 				说明：
@@ -102,7 +92,10 @@
 
 			</el-col>
 			<el-col style="text-align: right;" :span="5">
-				<el-button type="primary" size="mini" round @click="insertOver">保存</el-button>
+				<template v-if="d!=3">
+					<el-button type="primary" size="mini" round @click="insertOver">保存</el-button>
+				</template>
+				
 			</el-col>
 		</el-row>
 
@@ -121,6 +114,13 @@
 	export default {
 		data() {
 			return {
+				row:'',
+				d:'',
+				options: [],
+				spadmin:'',
+				boos:false,
+				flowsId: "",
+				
 				userName: "层旭",
 				dept: {
 					deptId: 7,
@@ -133,15 +133,7 @@
 				statr: "",
 				finsh: "",
 				duration: "",
-				options: [{
-						value: '1',
-						label: '审批人',
-					},
-					{
-						value: '2',
-						label: 'Option2',
-					}
-				],
+				
 				value: '',
 				flows: [{
 						value: '58',
@@ -152,16 +144,21 @@
 						label: 'Option2',
 					}
 				],
-				flowsId: "",
+				
 				explain: ""
 			}
 		},
 		methods: {
 			insertOver() {
+				
 				this.axios.post("overtime/insertOvertime", {
+					spr: this.spadmin[1],
+					boos:false,
+					
+					// 
 					empId: 1,
 					deptId: this.dept.deptId,
-					spr: this.value,
+					
 					typeName: "加班申请",
 					flowId: this.flowsId,
 					postId: this.post.postId,
@@ -187,9 +184,136 @@
 						})
 					}
 				});
+			}, 
+			
+			
+			
+			
+			/// 根据职位查询审批人
+			selectposition(val) {
+				
+				let prim = {
+					id: val
+				};
+
+				let qsprim = qs.stringify(prim);
+				this.axios.post("sp/grade", qsprim).then(res => {
+					
+					
+					if (res.code == 1) {
+						if(res.data.length>0){
+						let good = {
+							value: res.data[0].systemPost.postName,
+							label: res.data[0].systemPost.postName,
+							children: []
+						};
+						res.data.forEach(item => {
+							let goods = {
+								value: item.empId,
+								label: item.empName,
+							}
+							good.children.push(goods);
+						})
+						this.options.push(good);
+					}
+					}
+
+				})
+			},
+			//查询流程可以审批的职位
+			selectsp(val0) {
+				let prim = {
+					id: val0
+				};
+				
+				let qsprim = qs.stringify(prim);
+				this.axios.post("node/selectpo", qsprim).then(res => {
+					
+					if (res.code == 1) {
+						
+						if (res.data.length > 0) {
+							
+							this.selectposition(res.data[0].nodeLast);
+							this.flowsId=res.data[0].workflowFlow.flowId;
+
+						}
+
+					}
+
+				})
+			},
+
+			selectnode(val1,url) {
+				//查询职位层级
+				let prim = {
+					id: val1
+				};
+				let qsprim = qs.stringify(prim);
+				this.axios.post("system/select", qsprim).then(res => {
+					if (res.code == 1) {
+						
+						
+						this.position = res.obj;
+						console.log("这里返回的",res.obj);
+						this.selectUrl(url);
+					}
+
+				})
+			},
+			selectUrl(val2) {
+				//查询当前页面的流程
+				let prims = {
+					url: val2
+				};
+				
+				
+				let qsprims = qs.stringify(prims);
+				this.axios.post("flow/selecturl", qsprims).then(res => {
+					if (res.code == 1) {
+							let op=false;
+						res.obj.forEach(re => {
+							
+							if(re.flowPosition == this.d){
+								
+							if (re.flowPosition == this.position.postGrade &&
+								re.flowState == true ) {
+									op=true;
+								this.selectsp(re.flowId); //选择当前流程使用
+							}
+							}
+						})
+						
+						if(op==false){
+							if(this.d!=3){
+								ElMessage.error({
+									message: '没有你当前职位流程！！！'
+								});
+							}
+							
+							
+						} 
+						
+					}
+
+				})
 			}
+
 		},
 		mounted() {
+			this.d = 0; //当前职位 层级 //当前用户职位 0普通员工 1主管 2总经理 3董事长
+			if (this.d == 0) {
+				this.selectnode(1, this.$route.path); //当前用户职位 0普通员工 1主管 2总经理 3董事长
+			}
+			if (this.d == 1) {
+				this.selectnode(2, this.$route.path); //当前用户职位 0普通员工 1主管 2总经理 3董事长
+			}
+			if (this.d == 2) {
+				this.selectnode(3, this.$route.path); //当前用户职位 0普通员工 1主管 2总经理 3董事长
+			}
+			
+			
+			
+			
 
 		}
 	}

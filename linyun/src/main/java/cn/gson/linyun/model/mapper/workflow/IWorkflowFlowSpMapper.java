@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.sql.Timestamp;
 
 @Mapper
-public interface WorkflowFlowSpMapper {
+public interface IWorkflowFlowSpMapper {
 
     /**
      * 审批节点创建
@@ -26,6 +26,13 @@ public interface WorkflowFlowSpMapper {
                    @Param("row") String row,
                    @Param("time") Timestamp timestamp);
 
+    /**
+     * 修改审批人
+     * @param id
+     * @param emp
+     * @return
+     */
+    Integer UpdateEmp(@Param("id") Integer id,@Param("emp") Integer emp);
 
 
 }

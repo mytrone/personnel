@@ -53,9 +53,7 @@
 					<el-menu-item index="1-5">
 						<router-link to="flowentrust">委托流程</router-link>
 					</el-menu-item>
-					<el-menu-item index="1-6">
-						<router-link to="flownotice">抄送事宜</router-link>
-					</el-menu-item>
+					
 
               </el-sub-menu>
                 <el-sub-menu index="2">
@@ -186,36 +184,64 @@
 </template>
 
 <script lang="ts">
+	import qs from 'qs'
 	import {
-		defineComponent,
-		ref
-	} from 'vue'
-	import {
-		Message,
-		Menu,
-		Setting
+		Timer
 	} from '@element-plus/icons'
 
-	export default defineComponent({
+import { ElNotification } from 'element-plus'
+import { defineComponent, h } from 'vue'
+	export default {
 		components: {
-			Message,
-			Setting,
-			'icon-menu': Menu,
+			Timer,
 		},
-		setup() {
-			const item = {
-				date: '2016-05-02',
-				name: 'Tom',
-				address: 'No. 189, Grove St, Los Angeles',
-			}
-
-			const tableData = ref(Array(20).fill(item))
-
+		data() {
 			return {
-				tableData,
+				open1:true
 			}
-		},
-	})
+		
+		},methods:{
+			
+			open(){
+				
+				let prim = {
+					id: 2
+				};
+				let qsprim = qs.stringify(prim);
+				this.axios.post("noti/selectid", qsprim).then(res => {
+					if (res.code == 1) {
+						console.log("返回结果是啥",res);
+						res.data.forEach(r=>{
+							ElNotification({
+							        title: '有一条新消息',
+							        message: h('i', { style: 'color: teal' }, r.noticeNews),
+							      })
+								  
+						this.clon(r.noticeId);
+						})
+					}
+				})	  
+			},clon(val){
+				let prim = {
+					id: val,
+					emp:2
+				};
+				let qsprim = qs.stringify(prim);
+				this.axios.post("noti/update", qsprim).then(res => {
+					if (res.code == 1) {
+						
+						
+					}
+				})
+				
+			
+			}
+			
+		},created() {
+			this.open();
+		}
+	}
+	
 </script>
 
 <style>

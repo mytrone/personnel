@@ -60,13 +60,7 @@ public class RecruitRecruitapplyController {
         recruitRecruitapply.setRecruitapplyState(0);
 
         Integer i = service.insertRecruitapply(recruitRecruitapply);
-        WorkflowApproveVo workflowApproveVo=new WorkflowApproveVo();
-        workflowApproveVo.setApprove_table(recruitRecruitapply.getRecruitapplyId());
-        workflowApproveVo.setApprove_flow(58);//流程类型
-        workflowApproveVo.setApproveState(0);//状态默认  董事长审批直接过
-        workflowApproveVo.setSpPeople(2);//选择的审批人
-        workflowApproveVo.setArchivesEmpsq(recruitRecruitapply.getArchivesEmpByEmpId().getEmpId());//申请人
-        workflowApproveService.AddApprove(workflowApproveVo);
+
 
 
         if(i>0){

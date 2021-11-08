@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace指向对应的接口类，全称-->
-<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowNodeMapper">
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.IWorkflowNodeMapper">
 
     <resultMap id="base" type="WorkflowNode">
         <id property="nodeId" column="node_id"/>
@@ -53,7 +53,9 @@
         SELECT * FROM workflow_node
                           INNER JOIN workflow_flow
                                      ON workflow_flow.`flow_id`=workflow_node.`flow_id`
-            INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id` where workflow_node.flow_id=#{id}
+            INNER JOIN alinkey
+                ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+        where workflow_node.flow_id=#{id} GROUP BY alinkey.`alinkey_id`
     </select>
 
     <!--  流程节点  -->
@@ -68,7 +70,7 @@
                                      ON workflow_flow.`flow_id`=workflow_node.`flow_id`
                           INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
 
-        WHERE workflow_flow.`flow_id`=#{id}
+        WHERE workflow_flow.`flow_id`=#{id} AND workflow_flow.`flow_state`=1
     </select>
 
 

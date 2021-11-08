@@ -1,6 +1,7 @@
 package cn.gson.linyun.model.service.workflow;
 
-import cn.gson.linyun.model.mapper.workflow.AlinkeyMapper;
+
+import cn.gson.linyun.model.mapper.workflow.IAlinkeyMapper;
 import cn.gson.linyun.model.pojos.workflow.Alinkey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 public class AlinkeyService {
 
     @Autowired
-    AlinkeyMapper alinkeyMapper;
+    IAlinkeyMapper alinkeyMapper;
 
     /**
      * 根据编号查询类别

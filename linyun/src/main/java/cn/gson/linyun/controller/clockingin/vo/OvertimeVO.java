@@ -25,6 +25,18 @@ public class OvertimeVO {
     private Timestamp finish;
     private BigDecimal reason;
     private String explain;
+    private Boolean boos;
+
+
+
+
+    public Boolean getBoos() {
+        return boos;
+    }
+
+    public void setBoos(Boolean boos) {
+        this.boos = boos;
+    }
 
     public Integer getEmpId() {
         return empId;

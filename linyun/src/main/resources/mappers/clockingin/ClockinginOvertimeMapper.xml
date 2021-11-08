@@ -62,5 +62,18 @@
         #{overtimeDuration},#{overtimeReason},#{overtimeState})
     </insert>
 
+<!--  根据主键查询  -->
+    <select id="selectOvertimeById" resultMap="OverAllMap">
+        SELECT
+            ae.emp_id,ae.emp_name
+             ,co.overtime_id,co.overtime_start,co.overtime_finish
+             ,co.overtime_duration,co.overtime_reason
+             ,ak.alinkey_id,ak.alinkey_name
+        FROM archives_emp ae
+                 INNER JOIN clockingin_overtime co ON ae.emp_id=co.emp_id
+                 INNER JOIN alinkey ak ON co.alinkey_id=ak.alinkey_id
+        WHERE co.overtime_id=#{id}
+    </select>
+
 
 </mapper>

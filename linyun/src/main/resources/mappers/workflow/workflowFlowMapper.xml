@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace指向对应的接口类，全称-->
-<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowFlowMapper">
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.IWorkflowFlowMapper">
 
     <resultMap id="base" type="WorkflowFlow">
         <id property="flowId" column="flow_id"/>
@@ -73,6 +73,18 @@
                                  alinkey_id=#{type},
                                  flow_position=#{position}
                                  where workflow_flow.flow_id=#{id}
+    </update>
+<!-- 根据url和职位查询流程 -->
+    <select id="SelectByUrlID" resultMap="base">
+        SELECT * FROM workflow_flow
+                          INNER JOIN system_post ON system_post.`post_grade`=workflow_flow.`flow_position`
+        WHERE  workflow_flow.`flow_url`=#{url} AND  workflow_flow.`flow_state`=1 AND system_post.`post_grade`=#{poid}
+            ORDER BY flow_id DESC
+    </select>
+
+<!--  停用  -->
+    <update id="UpdateZt">
+        update workflow_flow set workflow_flow.`flow_state`=1 where  workflow_flow.flow_id=#{id}
     </update>
 
 </mapper>

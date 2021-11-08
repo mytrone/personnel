@@ -79,6 +79,13 @@ public class WorkflowFlowController {
         Timestamp timestamp = new Timestamp(new Date().getTime());
         flowVo.setTimestamp(timestamp);
         try {
+
+           List<WorkflowFlow> listflow=workflowFlowService.SelectByUrlID(flowVo.getWeb(),flowVo.getPosition());
+
+           if(listflow.size()>0){
+               workflowFlowService.Update(false, listflow.get(0).getFlowId());
+           }
+
             workflowFlowService.Insert(flowVo);
             List<Integer> list=new ArrayList<>();
             for (Alinkey alinkey : flowVo.getJieduan()) {
@@ -171,6 +178,18 @@ public class WorkflowFlowController {
     public MyResult selecturl(@RequestParam("url") String url) {
 
         return MyResult.SUCCESS_Object(workflowFlowService.SelectByUrl(url));
+    }
+
+
+    @PostMapping("selecturlid")
+    /**
+     * 根据url和职位查询流程
+     * @return
+     */
+    public MyResult selecturlid(@RequestParam("url") String url,
+                              @RequestParam("id") Integer id) {
+
+        return MyResult.SUCCESS_Object(workflowFlowService.SelectByUrlID(url,id));
     }
 
 

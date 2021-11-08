@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -23,5 +24,6 @@ public class WorkflowNotice {
     private Timestamp noticeTime;//时间
     private String noticeNews;//内容
     private ArchivesEmp archivesEmp;//创建人
+    private List<WorkflowPersonnel> personnelList;
 
 }

@@ -2,13 +2,14 @@ package cn.gson.linyun.model.mapper.workflow;
 
 import cn.gson.linyun.model.Vo.WorkflowApproveVo;
 import cn.gson.linyun.model.pojos.workflow.WorkflowApprove;
+import cn.gson.linyun.model.pojos.workflow.WorkflowFlow;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
-public interface WorkflowApproveMapper {
+public interface IWorkflowApproveMapper {
 
     /**
      * 根据申请编号 流程 查询
@@ -31,10 +32,31 @@ public interface WorkflowApproveMapper {
     List<WorkflowApprove> SelectAll(@Param("name") String name);
 
     /**
+     * 根据用户编号查询
+     * @return
+     */
+    List<WorkflowApprove> SelectByEmp(@Param("id") Integer id,@Param("name")String name);
+
+    /**
+     * 查询需要我办理的
+     * @return
+     */
+    List<WorkflowApprove> SelectByEmpSp(@Param("emp") Integer emp,
+
+                                        @Param("name")String name);
+
+    /**
      * 查询历史审批记录 根据流程实例编号
      * @return
      */
    WorkflowApprove SelectHistory(Integer id);
+
+    /**
+     * 根据流程实例编号查询记录
+     * @param id
+     * @return
+     */
+    List<WorkflowApprove> SelectByApprove(Integer id);
 
     /**
      * 修改状态

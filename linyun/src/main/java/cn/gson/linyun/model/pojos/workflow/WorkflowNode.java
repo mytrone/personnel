@@ -26,6 +26,14 @@ public class WorkflowNode {
     private SystemPost post;//职位层级
     private Collection<ClockinginOvertime> clockinginOvertimesByFlowId;/*加班申请*/
 
+    @Override
+    public String toString() {
+        return "WorkflowNode{" +
+                "nodeId=" + nodeId +
+                ", nodeLast=" + nodeLast +
+                '}';
+    }
+
     public int getNodeId() {
         return nodeId;
     }

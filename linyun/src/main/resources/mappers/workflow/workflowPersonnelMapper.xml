@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指向对应的接口类，全称-->
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.IWorkflowPersonnelMapper">
+    <!--  新建消息  -->
+    <insert id="Insert">
+        <foreach collection="emp_id" separator="," item="rid">
+    insert into workflow_personnel values (null,#{rid},#{notice_id},0)
+</foreach>
+    </insert>
+
+<!--  修改消息状态  -->
+    <update id="UpdateState">
+        update workflow_personnel set personne_state=1 where emp_id=#{emp} and notice_id=#{note}
+    </update>
+
+</mapper>

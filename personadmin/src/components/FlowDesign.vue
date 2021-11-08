@@ -24,19 +24,26 @@
 		</el-form>
 	</el-row>
 	<el-table :data="list" style="width: 100%">
-		<el-table-column label="编号" width="180">
+		<el-table-column label="编号" width="100">
 			<template #default="scope">
 
 				<span style="margin-left: 10px">{{ scope.row.flowId }}</span>
 			</template>
 		</el-table-column>
-		<el-table-column label="流程名称" width="180">
+		<el-table-column label="名称" width="200">
 			<template #default="scope">
 
-				<span style="margin-left: 10px">{{ scope.row.flowName }}</span>
+				<span>{{ scope.row.flowName }}</span>
 			</template>
 		</el-table-column>
-		<el-table-column label="web地址" width="180">
+		<el-table-column label="类别" width="100">
+			<template #default="scope">
+
+				<span style="margin-left: 10px">{{ scope.row.alinkey.alinkeyName }}</span>
+			</template>
+		</el-table-column>
+
+		<el-table-column label="web地址" width="280">
 			<template #default="scope">
 
 				<span style="margin-left: 10px">{{ scope.row.flowUrl }}</span>
@@ -52,16 +59,9 @@
 			<template #default="scope">
 
 				<span style="margin-left: 10px">
-				   <el-switch
-					  @click="OpenState(scope.$index, scope.row)"
-				      v-model="scope.row.flowState"
-				      inline-prompt
-				      active-color="#13ce66"
-				      inactive-color="#ff4949"
-				      active-text="Y"
-				      inactive-text="N"
-				    />
-				
+					<el-switch @click="OpenState(scope.$index, scope.row)" v-model="scope.row.flowState" inline-prompt
+						active-color="#13ce66" inactive-color="#ff4949" active-text="Y" inactive-text="N" />
+
 				</span>
 			</template>
 		</el-table-column>
@@ -77,11 +77,8 @@
 	<div class="demo-pagination-block">
 
 		<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-			:current-page="currentPage4"
-			:page-sizes="[5,10]"
-			:page-size="pagesize"
-			layout="total, sizes, prev, pager, next, jumper" 
-			:total="total">
+			:current-page="currentPage4" :page-sizes="[5,10]" :page-size="pagesize"
+			layout="total, sizes, prev, pager, next, jumper" :total="total">
 		</el-pagination>
 	</div>
 
@@ -108,8 +105,9 @@
 				</el-select>
 			</el-form-item>
 			<el-form-item label="审批节点">
-				<el-checkbox-group class="checkbox-group" flex="wrap:wrap"  v-model="handleArr">
-					<el-checkbox v-for="(item, index) in tableData" :disabled="item.disabled" @change="handleCheckedCitiesChange(item)" :label="item" :key="index" border>
+				<el-checkbox-group class="checkbox-group" flex="wrap:wrap" v-model="handleArr">
+					<el-checkbox v-for="(item, index) in tableData" :disabled="item.disabled"
+						@change="handleCheckedCitiesChange(item)" :label="item" :key="index" border>
 						{{ item.alinkeyName}}
 					</el-checkbox>
 				</el-checkbox-group>
@@ -131,12 +129,12 @@
 				<el-switch v-model="flow.state" active-color="#13ce66" inactive-color="#ff4949" />
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="onSubmit">Create</el-button>
+				<el-button type="primary" @click="selecturlid">Create</el-button>
 				<el-button @click="dialogVisible=false">Cancel</el-button>
 			</el-form-item>
 		</el-form>
 	</el-dialog>
-	
+
 	<el-dialog v-model="dialogVisibleUpdate" title="修改流程" width="60%">
 		<el-form ref="form" label-width="120px">
 			<el-form-item label="流程名称">
@@ -144,13 +142,13 @@
 			</el-form-item>
 			<el-form-item label="流程类型">
 				<el-select v-model="flowstype" placeholder="请选择类型">
-	
+
 					<template v-for="item in option">
 						<el-option :label="item.alinkeyName" :value="item.alinkeyId"></el-option>
 					</template>
 				</el-select>
-	
-	
+
+
 			</el-form-item>
 			<el-form-item label="发起职位 ">
 				<el-select v-model="OptionsPosition" placeholder="请选择职位">
@@ -160,24 +158,24 @@
 				</el-select>
 			</el-form-item>
 			<el-form-item label="审批节点">
-				<el-checkbox-group class="checkbox-group" flex="wrap:wrap"   v-model="handleArr">
-					<el-checkbox v-for="(item, index) in tableData"  
-					:label="item" :key="index" border  :disabled="item.disabled" @change="handleCheckedCitiesChange(item)" >
+				<el-checkbox-group class="checkbox-group" flex="wrap:wrap" v-model="handleArr">
+					<el-checkbox v-for="(item, index) in tableData" :label="item" :key="index" border
+						:disabled="item.disabled" @change="handleCheckedCitiesChange(item)">
 						{{ item.alinkeyName}}
 					</el-checkbox>
 				</el-checkbox-group>
 			</el-form-item>
 			<el-form-item label="已选节点">
-				
+
 				<template v-for="item in handleArrUpdate">
 					<span style="margin-right: 10px;">
 						{{item.alinkeyName}}
 					</span>
 				</template>
-	
+
 			</el-form-item>
-	
-	
+
+
 			<el-form-item label="Web地址">
 				<el-input v-model="flows.flowUrl"></el-input>
 			</el-form-item>
@@ -190,7 +188,7 @@
 			</el-form-item>
 		</el-form>
 	</el-dialog>
-	
+
 </template>
 
 <script lang="ts">
@@ -201,30 +199,31 @@
 	export default {
 		data() {
 			return {
-				Position:0,
-				handleArrUpdate:[],
-				flowstype:'',
-				flows:{},
+
+				Position: 0,
+				handleArrUpdate: [],
+				flowstype: '',
+				flows: {},
 				OptionP: [{
-					id: 1,
-					name: '普通员工',
-					type:0
-				}, {
-					id: 2,
-					name: '部门主管',
-					type:1
-				}, {
-					id: 3,
-					name: '总经理',
-					type:2
-				}
-				
+						id: 1,
+						name: '普通员工',
+						type: 0
+					}, {
+						id: 2,
+						name: '部门主管',
+						type: 1
+					}, {
+						id: 3,
+						name: '总经理',
+						type: 2
+					}
+
 				],
-				
+
 				option: [],
 				tableData: [],
 				list: [],
-				dialogVisibleUpdate:false,
+				dialogVisibleUpdate: false,
 				dialogVisible: false,
 				OptionsPosition: 1,
 				OptionsType: [],
@@ -243,111 +242,189 @@
 			}
 		},
 		methods: {
-			handleCheckedCitiesChange(value){
-				
-	
-				if(this.handleArr.length>1){
-					var end = this.handleArr[this.handleArr.length-2];
-					
-						if(end.alinkeyId>value.alinkeyId){
-							ElMessage.error({
-								message: '不符合规范！'
-							});
-							this.handleArr=[];
-						}
-					
-				}
-				
-				
-				
-			},
-			offSubmit(){
-				let prim = {
-					id:this.flows.flowId,
-					name: this.flows.flowName,
-					type:this.flowstype,
-					position:this.flowstype,
-					jieduan:this.handleArrUpdate,
-					web:this.flows.flowUrl,
-					state:this.flows.flowState
+			test(val) {
+				let prims = {
+					id: val
 				};
+				let qsprims = qs.stringify(prims);
+				this.axios.post("flow/updatezt", qsprims).then(res => {
+					if (res.code == 1) {
+						// this.selecturlid();
+						this.selectall();
+					} else {
+						this.selectall();
+					}
+
+				})
+
+			},
+
+			// 新增之前查询一下是否存在
+			selecturlid() {
+				let prim = {
+					url: this.flow.adds,
+					id: this.OptionsPosition
+				};
+				console.log(prim);
+				let qsprim = qs.stringify(prim);
+				this.axios.post("flow/selecturlid", qsprim).then(res => {
+					if (res.code == 1) {
+
+						if (res.obj == null || res.obj.length==0  ) {
+							this.onSubmit();
+						} else {
+								console.log("dawdawdaw",res.obj);
+							// this.test(res.obj.flowId);
+
+						}
+					}
+
+				})
+			},
+
+			handleCheckedCitiesChange(value) {
+
+
+				if (this.handleArr.length > 1) {
+					var end = this.handleArr[this.handleArr.length - 2];
+
+					if (end.alinkeyId > value.alinkeyId) {
+						ElMessage.error({
+							message: '不符合规范！'
+						});
+						this.handleArr = [];
+					}
+
+				}
+
+
+
+			},
+			offSubmit() {
+
+
+
+				let prim = {
+					id: this.flows.flowId,
+					name: this.flows.flowName,
+					type: this.flowstype,
+					position: this.Position,
+					jieduan: this.handleArrUpdate,
+					web: this.flows.flowUrl,
+					state: this.flows.flowState
+				};
+
+				console.log(prim, "ddddddddddd");
 				this.axios.post("flow/update", prim).then(res => {
-					if(res.code==1){
+					if (res.code == 1) {
 						ElMessage.success({
 							message: '修改流程完成！',
 							type: 'success'
 						});
-						this.dialogVisibleUpdate=false;
+						this.dialogVisibleUpdate = false;
 						this.selectall();
-					}else{
+					} else {
 						this.selectall();
 					}
-				
-				
+
+
 				});
 			},
 			
-			OpenState(index, row){
-				let prim={
-										id:row.flowId
-									};
-									let qsprim=qs.stringify(prim);
+			GoState(val){
+				
+				let prim = {
+					id: val
+				};
+				let qsprim = qs.stringify(prim);
 				this.axios.post("flow/updatezt", qsprim).then(res => {
-					if(res.code==1){
+					if (res.code == 1) {
 						ElMessage.success({
 							message: '修改完成！',
 							type: 'success'
 						});
 						this.selectall();
-					}else{
+					} else {
 						this.selectall();
 					}
-						
+				
 				})
 			},
-			
-			 handleEdit(index, row) {
-			      this.dialogVisibleUpdate=true;
-				  
-				  let prim={
-				  						id:row.flowId
-				  					};
-				  					let qsprim=qs.stringify(prim);
-				  this.axios.post("flow/select", qsprim).then(res => {
-				  	if(res.code==1){
-				  		this.flows=res.obj;
-						this.flowstype=this.flows.alinkey.alinkeyId;
-						
+
+			OpenState(index, row) {
+				console.log(row);
+				let prim1 = {
+					url: row.flowUrl,
+					id: row.flowPosition
+				};
+				console.log(prim1);
+				let qsprim1 = qs.stringify(prim1);
+				this.axios.post("flow/selecturlid", qsprim1).then(res => {
+					if (res.code == 1) {
+						if (res.obj == null || res.obj.length==0 ) {
+
+							this.GoState(row.flowId);
+
+						} else {
+							console.log(res,"dwadaw");
+							this.test(res.obj[0].flowId);
+							this.GoState(row.flowId);
+
+						}
+					}
+
+				})
+
+
+
+
+			},
+
+			handleEdit(index, row) {
+				this.dialogVisibleUpdate = true;
+
+				let prim = {
+					id: row.flowId
+				};
+				let qsprim = qs.stringify(prim);
+				this.axios.post("flow/select", qsprim).then(res => {
+					if (res.code == 1) {
+						console.log(res);
+						this.flows = res.obj;
+						this.flowstype = this.flows.alinkey.alinkeyId;
+						this.Position = this.flows.flowPosition;
 						this.axios.post("node/selectid", qsprim).then(reh => {
-							if(res.code==1){
-								reh.data.forEach(ress=>{
+							if (res.code == 1) {
+
+								reh.data.forEach(ress => {
 									this.handleArrUpdate.push(ress.alinkey);
-									
+
 								})
-												
+
+
 							}
-						 })
-				  	}
-				  })
-			    },
-			    handleDelete(index, row) {
-					let prim={
-						id:row.flowId
-					};
-					console.log(prim);
-					let qsprim=qs.stringify(prim);
-			      this.axios.post("flow/delect", qsprim).then(res => {
-			      	if(res.code==1){
-			      		ElMessage.success({
-			      			message: '流程删除完成！',
-			      			type: 'success'
-			      		});
-			      		this.selectall();
-			      	}
-			      		
-			      })
-			    },
-			
+						})
+					}
+				})
+			},
+			handleDelete(index, row) {
+				let prim = {
+					id: row.flowId
+				};
+				console.log(prim);
+				let qsprim = qs.stringify(prim);
+				this.axios.post("flow/delect", qsprim).then(res => {
+					if (res.code == 1) {
+						ElMessage.success({
+							message: '流程删除完成！',
+							type: 'success'
+						});
+						this.selectall();
+					}
+
+				})
+			},
+
 			search() {
 				this.selectall();
 			},
@@ -360,39 +437,40 @@
 				this.selectall();
 			},
 			onSubmit() {
-				
+
 				let prim = {
-					id:0,
+					id: 0,
 					name: this.flow.name,
-					type:this.OptionsType,
-					position:this.Position,
-					jieduan:this.handleArr,
-					web:this.flow.adds,
-					state:this.flow.state,
+					type: this.OptionsType,
+					position: this.Position,
+					jieduan: this.handleArr,
+					web: this.flow.adds,
+					state: this.flow.state,
 				};
-				console.log(prim,"参数是啥");
 				
-				this.axios.post("flow/add",prim).then(res => {
-					if(res.code==1){
-						prim.id=res.obj;
-			
-							ElMessage.success({
-								message: '流程创建完成！',
-								type: 'success'
-							});
-							
-							this.dialogVisible=false;
-							this.selectall();
-						
-						}
-							this.flow.name='';
-							this.OptionsType='';
-							this.OptionsPosition=1;
-							this.handleArr=[];
-							this.flow.adds='';
-					})
-					
-				
+
+
+				this.axios.post("flow/add", prim).then(res => {
+					if (res.code == 1) {
+						prim.id = res.obj;
+
+						ElMessage.success({
+							message: '流程创建完成！',
+							type: 'success'
+						});
+
+						this.dialogVisible = false;
+						this.selectall();
+
+					}
+					this.flow.name = '';
+					this.OptionsType = '';
+					this.OptionsPosition = 1;
+					this.handleArr = [];
+					this.flow.adds = '';
+				})
+
+
 			},
 			SelectType(ids) {
 				//查询类别
@@ -422,84 +500,93 @@
 					size: this.pagesize,
 					name: this.query.name
 				};
-				
+
 				this.axios.post("flow/all", PrimName).then(res => {
+					console.log("这里是啥", res);
 					this.list = res.obj.list;;
 					this.total = res.obj.total;
 					this.pageno = res.obj.pageNum;
 					this.pagesize = res.obj.pageSize;
 				})
 			}
-			
+
 		},
 		created() {
 			this.SelectType(1);
 			this.SelectTypeJd(5);
 			this.selectall();
-		},watch:{
-		
-		dialogVisibleUpdate(){
-			if(this.dialogVisibleUpdate==false){
-				this.handleArrUpdate=[];
-			}
-			
 		},
-		
-			handleArr(){
-				
-				
-				if(this.dialogVisibleUpdate==true){
-					this.handleArrUpdate=[];
-					this.handleArr.forEach(res=>{
+		watch: {
+
+			dialogVisibleUpdate() {
+				if (this.dialogVisibleUpdate == false) {
+					this.handleArrUpdate = [];
+				}
+
+			},
+
+			handleArr() {
+
+
+				if (this.dialogVisibleUpdate == true) {
+					this.handleArrUpdate = [];
+					this.handleArr.forEach(res => {
 						this.handleArrUpdate.push(res);
 					})
 				}
-				
-				
-				
-			},dialogVisible(){
-				if(this.dialogVisibleUpdate==false){
-					this.handleArr=[];
-					this.handleArrUpdate=[];
+
+
+
+			},
+			dialogVisible() {
+				if (this.dialogVisibleUpdate == false) {
+					this.handleArr = [];
+					this.handleArrUpdate = [];
 				}
-			},OptionsPosition(){
-				this.handleArr=[];
-				this.OptionP.forEach(res=>{
-					console.log(res,"这里便利的");
-					if(this.OptionsPosition==res.id){
-						console.log("OptionsPosition",this.OptionsPosition);
-						if(res.type==1){
-							this.Position=1;
-							this.tableData.forEach(rel=>{
-							if(rel.alinkeyId==6){
-									rel.disabled=true;
+			},
+			OptionsPosition() {
+
+				this.handleArr = [];
+				this.OptionP.forEach(res => {
+
+					if (this.OptionsPosition == res.id) {
+
+						if (res.type == 1) {
+							this.Position = 1;
+							this.tableData.forEach(rel => {
+								if (rel.alinkeyId == 6) {
+									rel.disabled = true;
+								} else {
+									rel.disabled = false;
 								}
 							})
-							
+
 						}
-						
-						if(res.type==2){
-							this.Position=2;
-							this.tableData.forEach(rel=>{
-							if(rel.alinkeyId==7 || rel.alinkeyId==6){
-									rel.disabled=true;
+						console.log(res.type);
+						if (res.type == 2) {
+							this.Position = 2;
+							this.tableData.forEach(rel => {
+								if (rel.alinkeyId == 7 || rel.alinkeyId == 6) {
+									rel.disabled = true;
+								} else {
+									rel.disabled = false;
 								}
 							})
-							
-							
+
+
 						}
-						if(res.type==0){
-							console.log("这里是");
-							this.Position=0;
-							this.tableData.forEach(rel=>{
-									rel.disabled=false;
+						if (res.type == 0) {
+
+							this.Position = 0;
+							this.tableData.forEach(rel => {
+								rel.disabled = false;
 							})
-							
+
 						}
-						
+
 					}
 				})
-				
+
 			}
 		}
 	}

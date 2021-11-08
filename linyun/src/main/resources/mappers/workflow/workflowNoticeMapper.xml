@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指向对应的接口类，全称-->
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.IWorkflowNoticeMapper">
+
+    <resultMap id="base" type="WorkflowNotice">
+        <id property="noticeId" column="notice_id"/>
+
+        <result property="noticeTime" column="notice_time"/>
+        <result property="noticeNews" column="notice_news"/>
+        <association property="archivesEmp" javaType="ArchivesEmp">
+            <id column="emp_id" property="empId"/>
+            <id column="emp_name" property="empName"/>
+            <id column="empson_sex" property="empsonSex"/>
+            <id column="empson_card" property="empsonCard"/>
+            <id column="empson_email" property="empsonEmail"/>
+            <id column="empson_tel" property="empsonTel"/>
+            <id column="empson_bank" property="empsonBank"/>
+            <id column="empson_education" property="empsonEducation"/>
+            <id column="empson_day" property="empsonDay"/>
+            <id column="empson_birthday" property="empsonBirthday"/>
+        </association>
+    </resultMap>
+
+<!--  新建消息  -->
+    <insert id="Insert"  useGeneratedKeys="true" keyProperty="noticeId" >
+        insert into workflow_notice values (null,#{archivesEmp},#{noticeTime},#{noticeNews})
+    </insert>
+
+<!--  根据用户编号查询消息  -->
+    <select id="SelectByid" resultMap="base">
+        SELECT * FROM  workflow_notice LEFT JOIN  workflow_personnel ON workflow_notice.`notice_id`=workflow_personnel.`notice_id`
+        WHERE workflow_personnel.`emp_id`=#{id} AND workflow_personnel.`personne_state` = 0
+    </select>
+
+</mapper>

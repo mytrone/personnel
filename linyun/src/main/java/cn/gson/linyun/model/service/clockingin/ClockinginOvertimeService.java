@@ -1,18 +1,21 @@
 package cn.gson.linyun.model.service.clockingin;
 
 import cn.gson.linyun.controller.clockingin.vo.OvertimeVO;
+import cn.gson.linyun.model.Vo.WorkflowApproveVo;
 import cn.gson.linyun.model.mapper.clockingin.IClockinginOvertimeMapper;
 import cn.gson.linyun.model.mapper.recruit.ArchivesEmpMapper;
 import cn.gson.linyun.model.mapper.system.ISystemDepartmentMapper;
 import cn.gson.linyun.model.mapper.system.ISystemPostMapper;
-import cn.gson.linyun.model.mapper.workflow.AlinkeyMapper;
-import cn.gson.linyun.model.mapper.workflow.WorkflowFlowMapper;
+
+import cn.gson.linyun.model.mapper.workflow.IAlinkeyMapper;
+import cn.gson.linyun.model.mapper.workflow.IWorkflowFlowMapper;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
 import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
 import cn.gson.linyun.model.pojos.system.SystemDepartment;
 import cn.gson.linyun.model.pojos.system.SystemPost;
 import cn.gson.linyun.model.pojos.workflow.Alinkey;
 import cn.gson.linyun.model.pojos.workflow.WorkflowFlow;
+import cn.gson.linyun.model.service.workflow.WorkflowApproveService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,7 @@ public class ClockinginOvertimeService {
     IClockinginOvertimeMapper iClockinginOvertimeMapper;
 
     @Autowired
-    AlinkeyMapper alinkeyMapper;/*类型*/
+    IAlinkeyMapper alinkeyMapper;/*类型*/
 
     @Autowired
     ArchivesEmpMapper empMapper;/*员工*/
@@ -42,11 +45,18 @@ public class ClockinginOvertimeService {
     ISystemDepartmentMapper departmentMapper;/*部门*/
 
     @Autowired
-    WorkflowFlowMapper flowMapper;
+    IWorkflowFlowMapper flowMapper;
+    @Autowired
+    WorkflowApproveService workflowApproveService;//流程实例Service
 
     /*查询当天是否有通过的加班申请 selectOvertimeByEmpId*/
     public List<ClockinginOvertime> selectOvertimeByEmpId(Integer empId){
         return iClockinginOvertimeMapper.selectOvertimeByEmpId(empId);
+    }
+
+    /*selectOvertimeById 主键查询*/
+    public ClockinginOvertime selectOvertimeById(Integer id){
+        return iClockinginOvertimeMapper.selectOvertimeById(id);
     }
 
     /*查询当前员工所有的加班申请 selectOverAllByEmpId*/
@@ -81,7 +91,25 @@ public class ClockinginOvertimeService {
 
         Integer integer = iClockinginOvertimeMapper.insertOvertime(overtime);/*新增加班申请记录*/
 
-        System.out.println("生成的加班编号"+overtime.getOvertimeId());
+        //        审批需要
+
+
+        WorkflowApproveVo workflowApproveVo=new WorkflowApproveVo();
+
+        workflowApproveVo.setApprovetable(overtime.getOvertimeId());
+        workflowApproveVo.setApproveflow(vo.getFlowId());//流程类型
+        if(vo.getBoos()==true){
+            workflowApproveVo.setApproveState(1);//董事长审批直接过
+        }else {
+            workflowApproveVo.setApproveState(0);//状态默认
+        }
+
+        workflowApproveVo.setSpPeople(vo.getSpr());//选择的审批人
+        workflowApproveVo.
+                setArchivesEmpsq(vo.getEmpId());//申请人
+        workflowApproveService.AddApprove(workflowApproveVo);
+
+
 
         return 1;
 //        return iClockinginOvertimeMapper.insertOvertime(overtime);

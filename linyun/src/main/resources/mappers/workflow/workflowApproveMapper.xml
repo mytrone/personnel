@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace指向对应的接口类，全称-->
-<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowApproveMapper">
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.IWorkflowApproveMapper">
 
     <resultMap id="basegood" type="WorkflowApprove">
         <id property="approveId" column="approve_id"/>
@@ -104,6 +104,34 @@
             <id column="empson_birthday" property="empsonBirthday"/>
 
         </association>
+        <collection property="spList" ofType="WorkflowFlowSp">
+            <id property="flowSpId" column="flow_sp_id"/>
+            <result property="flowSpTime" column="flow_sp_time"/>
+            <result property="flowSpRemarks" column="flow_sp_remarks"/>
+            <result property="flowSpState" column="flow_sp_state"/>
+            <association property="archivesEmpsp" javaType="ArchivesEmp">
+                <id column="emp_id" property="empId"/>
+                <id column="emp_name" property="empName"/>
+                <id column="empson_sex" property="empsonSex"/>
+                <id column="empson_card" property="empsonCard"/>
+                <id column="empson_email" property="empsonEmail"/>
+                <id column="empson_tel" property="empsonTel"/>
+                <id column="empson_bank" property="empsonBank"/>
+                <id column="empson_education" property="empsonEducation"/>
+                <id column="empson_day" property="empsonDay"/>
+                <id column="empson_birthday" property="empsonBirthday"/>
+
+            </association>
+            <association property="workflowNode" javaType="workflowNode">
+                <id property="nodeId" column="node_id"/>
+                <result property="nodeLast" column="node_last"/>
+                <association property="alinkey" javaType="Alinkey">
+                    <id property="alinkeyId" column="alinkey_id"/>
+                    <result property="alinkeyName" column="alinkey_name"/>
+                </association>
+            </association>
+        </collection>
+
     </resultMap>
 
 
@@ -130,13 +158,13 @@
         INNER JOIN  archives_emp ON archives_emp.`emp_id`=workflow_approve.`emp_id`
         LEFT JOIN  archives_emp AS emp ON emp.`emp_id`=workflow_approve.`arc_emp_id`
         INNER JOIN  workflow_node ON workflow_node.`node_id`=workflow_approve.`node_id`
-        INNER JOIN  recruit_recruitapply ON recruit_recruitapply.`recruitapply_id`=workflow_approve.`approve_table`
-        INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+         INNER JOIN workflow_flow_sp ON workflow_flow_sp.`node_id`=workflow_node.`node_id`
+            INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
                           <where>
 
                               <if test="name!=null and name!='' ">
 
-                                  recruit_recruitapply.`recruitapply_title` like  concat('%',#{name},'%')
+                                  workflow_flow.`flow_name` like  concat('%',#{name},'%')
 
                               </if>
 
@@ -150,23 +178,22 @@
                                              #{archivesEmpsq},
                                              #{workflowNode},
                                              #{archivesEmpsp},
-                                             #{approve_flow},
+                                             #{approveflow},
                                              #{approveState},
                                              #{approveTime},
-                                             #{approve_table}
+                                             #{approvetable}
                                              )
     </insert>
 
 <!--  查询历史审批记录 根据流程实例编号  -->
     <select id="SelectHistory" resultMap="basegood">
         SELECT * FROM   workflow_approve
-                            INNER JOIN workflow_flow ON  workflow_approve.`flow_id`=workflow_flow.`flow_id`
-
-
-                            LEFT JOIN workflow_node ON workflow_node.`node_id`=workflow_approve.`node_id`
+                            LEFT JOIN workflow_flow_sp ON workflow_flow_sp.`approve_id`=workflow_approve.`approve_id`
+                            INNER JOIN  workflow_node ON workflow_flow_sp.`node_id`=workflow_node.`node_id`
                             LEFT JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
-                            INNER JOIN  workflow_flow_sp ON workflow_flow_sp.`node_id`=workflow_node.`node_id`
                             INNER JOIN archives_emp   ON archives_emp.`emp_id`=workflow_flow_sp.`emp_id`
+                            INNER JOIN workflow_flow
+                                       ON workflow_flow.`flow_id`=workflow_approve.`flow_id`
         WHERE  workflow_approve.`approve_id`=#{id}
     </select>
 
@@ -179,6 +206,75 @@
     <update id="UpdateNode">
         update workflow_approve set node_id=#{node} where approve_id=#{id}
     </update>
+
+<!--根据用户查询-->
+    <select id="SelectByEmp" resultMap="base">
+
+        SELECT * FROM workflow_approve
+        INNER JOIN workflow_flow ON  workflow_approve.`flow_id`=workflow_flow.`flow_id`
+        INNER JOIN  archives_emp ON archives_emp.`emp_id`=workflow_approve.`emp_id`
+        LEFT JOIN  archives_emp AS emp ON emp.`emp_id`=workflow_approve.`arc_emp_id`
+        INNER JOIN  workflow_node ON workflow_node.`node_id`=workflow_approve.`node_id`
+
+
+            INNER JOIN workflow_flow_sp ON workflow_flow_sp.`node_id`=workflow_node.`node_id`
+        INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+
+
+        <where>
+            workflow_approve.emp_id=#{id}
+            <if test="name!=null and name!='' ">
+            and
+                workflow_flow.`flow_name` like  concat('%',#{name},'%')
+
+
+            </if>
+
+        </where>
+
+    </select>
+    <select id="SelectByEmpSp" resultMap="base">
+
+        SELECT * FROM workflow_approve
+        INNER JOIN workflow_flow ON  workflow_approve.`flow_id`=workflow_flow.`flow_id`
+        INNER JOIN  archives_emp ON archives_emp.`emp_id`=workflow_approve.`emp_id`
+        LEFT JOIN  archives_emp AS emp ON emp.`emp_id`=workflow_approve.`arc_emp_id`
+        INNER JOIN  workflow_node ON workflow_node.`node_id`=workflow_approve.`node_id`
+          INNER JOIN workflow_flow_sp ON workflow_flow_sp.`node_id`=workflow_node.`node_id`
+        INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+
+
+
+
+        <where>
+            workflow_flow_sp.`emp_id`=#{emp} AND workflow_flow_sp.`flow_sp_state` IS NULL
+            <if test="name!=null and name!='' ">
+            and
+                workflow_flow.`flow_name` like  concat('%',#{name},'%')
+
+
+            </if>
+
+        </where>
+
+    </select>
+
+<!--  格局workflow_approve 主键查询  -->
+    <select id="SelectByApprove" resultMap="basegood" >
+
+        SELECT * FROM workflow_approve
+                          INNER JOIN workflow_flow
+                                     ON workflow_flow.`flow_id`=workflow_approve.`flow_id`
+                          INNER JOIN workflow_node
+                                     ON workflow_approve.`node_id`=workflow_node.`node_id`
+                          INNER JOIN alinkey
+                                     ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+                          INNER JOIN  workflow_flow_sp ON workflow_flow_sp.`node_id`=workflow_node.`node_id`
+                          INNER JOIN archives_emp   ON archives_emp.`emp_id`=workflow_flow_sp.`emp_id`
+        WHERE workflow_approve.`approve_id`=#{id} GROUP BY alinkey.`alinkey_id`
+
+    </select>
+
 
 
 

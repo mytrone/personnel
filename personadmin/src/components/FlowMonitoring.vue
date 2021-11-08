@@ -2,7 +2,7 @@
 	<el-row class="JNPF-common-search-box" :gutter="16">
 		<el-form @submit.native.prevent>
 			<el-col :span="12">
-				<el-form-item label="流程标题">
+				<el-form-item label="流程名称">
 					<el-input v-model="query.name" placeholder="请输入" clearable> </el-input>
 				</el-form-item>
 			</el-col>
@@ -31,12 +31,7 @@
 				<span style="margin-left: 10px">{{ scope.row.approveId }}</span>
 			</template>
 		</el-table-column>
-		<el-table-column label="标题" width="180">
-			<template #default="scope">
-
-				<span style="margin-left: 10px">{{ scope.row.name }}</span>
-			</template>
-		</el-table-column>
+		
 		<el-table-column label="所属流程" width="180">
 			<template #default="scope">
 				<el-popover effect="light" trigger="hover" placement="top">
@@ -69,21 +64,17 @@
 		</el-table-column>
 		<el-table-column label="流程进度" width="130">
 			<template #default="scope">
-				<el-popover effect="light" trigger="hover" placement="top">
-					<template #reference>
-						<div class="name-wrapper">
-							<el-tag size="medium">{{ scope.row.approveState?"已结束":"进行中" }}</el-tag>
-						</div>
-					</template>
-				</el-popover>
+				<span style="margin-left: 10px">{{scope.row.approveState?"已结束":"进行中"  }}</span>
 			</template>
 		</el-table-column>
 		<el-table-column label="Operations">
 			<template #default="scope">
 				<el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
-				<el-button size="mini" @click="rowClick(scope.$index, scope.row)">详情查看</el-button>
+				<template v-if="scope.row.approveState==0">
+					<el-button size="mini" @click="rowClick(scope.$index, scope.row)">审批</el-button>
+				</template>
+				
 			</template>
-
 		</el-table-column>
 	</el-table>
 
@@ -98,7 +89,7 @@
 						<div class="mstz">流程审批</div>
 					</div>
 				</el-col>
-				<div class="spstate" v-if="pastate=='审批通过'">
+				<div class="spstate" v-if="ins=='1'">
 					<svg t="1634537166539" class="icon" viewBox="0 0 1358 1024" version="1.1"
 						xmlns="http://www.w3.org/2000/svg" p-id="3566" width="100" height="100">
 						<path
@@ -110,7 +101,7 @@
 							fill="#03BF50" opacity=".5" p-id="3568"></path>
 					</svg>
 				</div>
-				<div class="spstate" v-if="pastate=='已驳回'">
+				<div class="spstate" v-if="ins=='-1'">
 					<svg t="1634537251164" class="icon" viewBox="0 0 1024 1024" version="1.1"
 						xmlns="http://www.w3.org/2000/svg" p-id="5325" width="100" height="100">
 						<path
@@ -126,7 +117,7 @@
 							fill="#F04134" opacity=".5" p-id="5328"></path>
 					</svg>
 				</div>
-				<div class="spstate" v-if="pastate=='审批中'">
+				<div class="spstate" v-if="ins=='0'">
 					<svg t="1634537221225" class="icon" viewBox="0 0 1300 1024" version="1.1"
 						xmlns="http://www.w3.org/2000/svg" p-id="4404" width="100" height="100">
 						<path
@@ -215,6 +206,7 @@
 		},
 		data() {
 			return {
+				ins:{},
 				splist: [],
 				approveform: '',
 				drawer: false,
@@ -230,11 +222,14 @@
 		},
 		methods: { 
 			rowClick(index, row) {
+				console.log(row);
 				try {
 					this.$router.push({
-						path: row.approve_flow.flowUrl,
+						name: row.approve_flow.flowUrl,
 						params: {
-							table: row.approve_table
+							table: row.approveId,
+							approveId:row.approve_flow.flowId,
+							node:row.workflowNode.nodeId
 						}
 					});
 				} catch (err) {
@@ -248,7 +243,8 @@
 				let qsprim = qs.stringify(prim);
 				this.axios.post("approve/selectid", qsprim).then(res => {
 					if (res.code == 1) {
-						console.log(res,"低洼低洼的");
+						console.log("这里结果是啥",res.obj);
+						this.ins=res.obj.approveState;
 						this.splist = res.obj.spList;
 						this.splist.forEach(re=>{
 							if(re.flowSpTime==null){
@@ -369,7 +365,7 @@
 		height: 100px;
 		position: absolute;
 		top: 10px;
-		left: -110px;
+		left: 200px;
 	}
 
 	.gotop {

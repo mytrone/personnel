@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace指向对应的接口类，全称-->
-<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowFlowSpMapper">
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.IWorkflowFlowSpMapper">
 
     <resultMap id="base" type="WorkflowFlowSp">
 
@@ -53,6 +53,13 @@
                                     flow_sp_time=#{time},
                                     flow_sp_state=#{state}
                                     where flow_sp_id=#{id}
+    </update>
+
+<!--  修改审批人  -->
+    <update id="UpdateEmp">
+        update workflow_flow_sp set
+                                    emp_id=#{emp}
+        where flow_sp_id=#{id}
     </update>
 
 

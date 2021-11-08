@@ -9,6 +9,15 @@ public class PageName {
     private Integer no;
     private Integer size;
     private String name;
+    private Integer emp;
+
+    public Integer getEmp() {
+        return emp;
+    }
+
+    public void setEmp(Integer emp) {
+        this.emp = emp;
+    }
 
     public Integer getNo() {
         return no;

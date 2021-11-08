@@ -1,7 +1,8 @@
 package cn.gson.linyun.model.service.workflow;
 
 import cn.gson.linyun.model.Vo.FlowVo;
-import cn.gson.linyun.model.mapper.workflow.WorkflowNodeMapper;
+import cn.gson.linyun.model.mapper.workflow.IWorkflowNodeMapper;
+
 import cn.gson.linyun.model.pojos.workflow.WorkflowNode;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
 public class WorkflowNodeService {
 
     @Autowired
-    WorkflowNodeMapper workflowNodeMapper;
+    IWorkflowNodeMapper workflowNodeMapper;
 
     /**
      * 根据流程创建节点

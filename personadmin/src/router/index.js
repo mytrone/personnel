@@ -230,6 +230,13 @@ let routes = [{
 				meta:{
 					title:"请假申请"
 				}
+			},{
+				path: '/ClockinginOvertimeDes',
+				name: '/clockinginovertimeadd',
+				component: () => import('@/components/ClockinginOvertimeDes.vue'),
+				meta:{
+					title:"加班审批"
+				}
 			}
 
 		]

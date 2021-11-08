@@ -1,7 +1,8 @@
 package cn.gson.linyun.model.service.workflow;
 
 import cn.gson.linyun.model.Vo.FlowVo;
-import cn.gson.linyun.model.mapper.workflow.WorkflowFlowMapper;
+import cn.gson.linyun.model.mapper.workflow.IWorkflowFlowMapper;
+
 import cn.gson.linyun.model.pojos.workflow.WorkflowFlow;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -19,7 +20,7 @@ import java.util.List;
 public class WorkflowFlowService {
 
     @Autowired
-    WorkflowFlowMapper workflowFlowMapper;
+    IWorkflowFlowMapper workflowFlowMapper;
     @Autowired
     WorkflowNodeService workflowNodeService;
 
@@ -111,4 +112,23 @@ public class WorkflowFlowService {
         return workflowFlowMapper.UpdateFlow(vo);
     }
 
-}
+
+    /**
+     * 根据url和职位查询流程
+     * @param id
+     * @return
+     */
+    public  List<WorkflowFlow> SelectByUrlID(String URL,Integer id){
+        return workflowFlowMapper.SelectByUrlID(URL,id);
+    }
+
+
+    /**
+     * 停用流程
+     * @param id
+     * @return
+     */
+    public Integer UpdateZt(Integer id){
+        return workflowFlowMapper.UpdateZt(id);
+    }
+    }

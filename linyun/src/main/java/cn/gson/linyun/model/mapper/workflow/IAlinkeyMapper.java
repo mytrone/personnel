@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface AlinkeyMapper {
+public interface IAlinkeyMapper {
 
     /**
      * 根据编号查询类别
