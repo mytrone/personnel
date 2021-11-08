@@ -162,6 +162,24 @@
 			
 			subapprove(){
 				
+				if(this.opinion==''){
+					ElMessage.error({
+						message: '请填写理由！'
+						
+					});
+					return;
+				}
+				
+				if(this.flow.approveState==''){
+					ElMessage.error({
+						message: '同意或者拒绝！'
+						
+					});
+					return;
+				}
+				
+				
+				
 				if(this.spadmin[1] != undefined){
 					this.spadmin=this.spadmin[1];
 				}else{

@@ -153,7 +153,22 @@
 <!--  查询流程实例  -->
     <select id="SelectAll" resultMap="base">
 
-        SELECT * FROM workflow_approve
+        SELECT  workflow_approve.`approve_id`,
+        workflow_approve.`approve_state`,
+        workflow_approve.`approve_table`,
+        workflow_approve.`approve_time`,
+        workflow_approve.`arc_emp_id`,
+        workflow_approve.`emp_id`,
+        workflow_approve.`flow_id`,
+        workflow_approve.`node_id`,
+        workflow_flow.`alinkey_id`,
+        workflow_flow.`flow_name`,
+        workflow_flow.`flow_position`,
+        workflow_flow.`flow_state`,
+        workflow_flow.`flow_time`,
+        workflow_flow.`flow_url`,
+        archives_emp.`emp_name`,
+        alinkey.`alinkey_name` FROM workflow_approve
         INNER JOIN workflow_flow ON  workflow_approve.`flow_id`=workflow_flow.`flow_id`
         INNER JOIN  archives_emp ON archives_emp.`emp_id`=workflow_approve.`emp_id`
         LEFT JOIN  archives_emp AS emp ON emp.`emp_id`=workflow_approve.`arc_emp_id`
@@ -169,7 +184,7 @@
                               </if>
 
                           </where>
-
+        GROUP BY workflow_approve.`approve_id`  ORDER BY workflow_flow_sp.`flow_sp_id` DESC
     </select>
 
 <!--  创建流程实例  -->
