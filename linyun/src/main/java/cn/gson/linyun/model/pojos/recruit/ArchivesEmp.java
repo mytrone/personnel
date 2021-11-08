@@ -2,6 +2,7 @@ package cn.gson.linyun.model.pojos.recruit;
 
 import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
 import cn.gson.linyun.model.pojos.flnance.FinanceTemplate;
+import cn.gson.linyun.model.pojos.system.SystemPost;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -25,6 +26,23 @@ public class ArchivesEmp {
     private Collection<ClockinginOvertime> clockinginOvertimesByEmpId;
     private Collection<ClockinginOvertime> clockinginOvertimesByEmpId_0;
     private Collection<FinanceTemplate> financeTemplatesByEmpId;
+    private SystemPost systemPost;
+
+    public Collection<FinanceTemplate> getFinanceTemplatesByEmpId() {
+        return financeTemplatesByEmpId;
+    }
+
+    public void setFinanceTemplatesByEmpId(Collection<FinanceTemplate> financeTemplatesByEmpId) {
+        this.financeTemplatesByEmpId = financeTemplatesByEmpId;
+    }
+
+    public SystemPost getSystemPost() {
+        return systemPost;
+    }
+
+    public void setSystemPost(SystemPost systemPost) {
+        this.systemPost = systemPost;
+    }
 
     public Integer getEmpId() {
         return empId;

@@ -1,5 +1,7 @@
 package cn.gson.linyun.model.pojos.workflow;
 
+import cn.gson.linyun.model.pojos.system.SystemPost;
+import cn.gson.linyun.model.pojos.system.SystemStaff;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +21,5 @@ public class WorkflowNode {
     private Integer nodeLast;//是否最后
     private WorkflowFlow workflowFlow;//流程
     private Alinkey alinkey;//审批节点
+    private SystemPost post;//职位层级
 }

@@ -16,4 +16,11 @@ public class ArchivesEmpService {
         return mapper.selectAll();
     }
 
+    /**
+     * 职位层级查询员工
+     * @return
+     */
+    public List<ArchivesEmp> SelectByPostGrade(Integer id){
+        return mapper.SelectByPostGrade(id);
+    }
 }

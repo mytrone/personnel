@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指向对应的接口类，全称-->
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowApproveMapper">
+
+    <resultMap id="basegood" type="WorkflowApprove">
+        <id property="approveId" column="approve_id"/>
+        <result property="approveState" column="approve_state"/>
+        <result property="approveTime" column="approve_time"/>
+        <result property="name" column="recruitapply_title"/>
+        <association property="approve_flow" javaType="WorkflowFlow">
+            <id property="flowId" column="flow_id"/>
+            <result property="flowName" column="flow_name"/>
+            <result property="flowState" column="flow_state"/>
+            <result property="flowUrl" column="flow_url"/>
+            <result property="flowTime" column="flow_time"/>
+        </association>
+
+        <association property="archivesEmpsq" javaType="ArchivesEmp">
+            <id column="emp_id" property="empId"/>
+            <id column="emp_name" property="empName"/>
+            <id column="empson_sex" property="empsonSex"/>
+            <id column="empson_card" property="empsonCard"/>
+            <id column="empson_email" property="empsonEmail"/>
+            <id column="empson_tel" property="empsonTel"/>
+            <id column="empson_bank" property="empsonBank"/>
+            <id column="empson_education" property="empsonEducation"/>
+            <id column="empson_day" property="empsonDay"/>
+            <id column="empson_birthday" property="empsonBirthday"/>
+
+        </association>
+        <association property="workflowNode" javaType="workflowNode">
+            <id property="nodeId" column="node_id"/>
+            <result property="nodeLast" column="node_last"/>
+            <association property="alinkey" javaType="Alinkey">
+                <id property="alinkeyId" column="alinkey_id"/>
+                <result property="alinkeyName" column="alinkey_name"/>
+            </association>
+        </association>
+        <collection property="spList" ofType="WorkflowFlowSp">
+            <id property="flowSpId" column="flow_sp_id"/>
+            <result property="flowSpTime" column="flow_sp_time"/>
+            <result property="flowSpRemarks" column="flow_sp_remarks"/>
+            <result property="flowSpState" column="flow_sp_state"/>
+            <association property="archivesEmpsp" javaType="ArchivesEmp">
+                <id column="emp_id" property="empId"/>
+                <id column="emp_name" property="empName"/>
+                <id column="empson_sex" property="empsonSex"/>
+                <id column="empson_card" property="empsonCard"/>
+                <id column="empson_email" property="empsonEmail"/>
+                <id column="empson_tel" property="empsonTel"/>
+                <id column="empson_bank" property="empsonBank"/>
+                <id column="empson_education" property="empsonEducation"/>
+                <id column="empson_day" property="empsonDay"/>
+                <id column="empson_birthday" property="empsonBirthday"/>
+
+            </association>
+            <association property="workflowNode" javaType="workflowNode">
+                <id property="nodeId" column="node_id"/>
+                <result property="nodeLast" column="node_last"/>
+                <association property="alinkey" javaType="Alinkey">
+                    <id property="alinkeyId" column="alinkey_id"/>
+                    <result property="alinkeyName" column="alinkey_name"/>
+                </association>
+            </association>
+         </collection>
+
+    </resultMap>
+
+
+    <resultMap id="base" type="WorkflowApprove">
+        <id property="approveId" column="approve_id"/>
+        <result property="approveState" column="approve_state"/>
+        <result property="approveTime" column="approve_time"/>
+        <result property="name" column="recruitapply_title"/>
+        <result property="approve_table" column="approve_table"/>
+        <association property="approve_flow" javaType="WorkflowFlow">
+            <id property="flowId" column="flow_id"/>
+            <result property="flowName" column="flow_name"/>
+            <result property="flowState" column="flow_state"/>
+            <result property="flowUrl" column="flow_url"/>
+            <result property="flowTime" column="flow_time"/>
+        </association>
+
+        <association property="workflowNode" javaType="workflowNode">
+            <id property="nodeId" column="node_id"/>
+            <result property="nodeLast" column="node_last"/>
+            <association property="alinkey" javaType="Alinkey">
+                <id property="alinkeyId" column="alinkey_id"/>
+                <result property="alinkeyName" column="alinkey_name"/>
+            </association>
+        </association>
+        <association property="archivesEmpsq" javaType="ArchivesEmp">
+            <id column="emp_id" property="empId"/>
+            <id column="emp_name" property="empName"/>
+            <id column="empson_sex" property="empsonSex"/>
+            <id column="empson_card" property="empsonCard"/>
+            <id column="empson_email" property="empsonEmail"/>
+            <id column="empson_tel" property="empsonTel"/>
+            <id column="empson_bank" property="empsonBank"/>
+            <id column="empson_education" property="empsonEducation"/>
+            <id column="empson_day" property="empsonDay"/>
+            <id column="empson_birthday" property="empsonBirthday"/>
+
+        </association>
+    </resultMap>
+
+
+
+
+
+
+
+    <!--   根据申请编号 流程编号 查询 -->
+    <select id="SelectBYid" resultMap="base">
+        SELECT * FROM workflow_approve
+                          INNER JOIN workflow_flow ON  workflow_approve.`flow_id`=workflow_flow.`flow_id` -- 连接流程表
+                          INNER JOIN  archives_emp ON archives_emp.`emp_id`=workflow_approve.`emp_id` -- 连接申请人
+                          LEFT JOIN  archives_emp AS emp ON emp.`emp_id`=workflow_approve.`arc_emp_id` -- 委托人
+                          INNER JOIN  workflow_node ON workflow_node.`node_id`=workflow_approve.`node_id` -- 节点
+        WHERE workflow_approve.approve_table=#{id} AND workflow_approve.`flow_id`=#{flow}
+    </select>
+
+<!--  查询流程实例  -->
+    <select id="SelectAll" resultMap="base">
+
+        SELECT * FROM workflow_approve
+        INNER JOIN workflow_flow ON  workflow_approve.`flow_id`=workflow_flow.`flow_id`
+        INNER JOIN  archives_emp ON archives_emp.`emp_id`=workflow_approve.`emp_id`
+        LEFT JOIN  archives_emp AS emp ON emp.`emp_id`=workflow_approve.`arc_emp_id`
+        INNER JOIN  workflow_node ON workflow_node.`node_id`=workflow_approve.`node_id`
+        INNER JOIN  recruit_recruitapply ON recruit_recruitapply.`recruitapply_id`=workflow_approve.`approve_table`
+        INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+                          <where>
+
+                              <if test="name!=null and name!='' ">
+
+                                  recruit_recruitapply.`recruitapply_title` like  concat('%',#{name},'%')
+
+                              </if>
+
+                          </where>
+
+    </select>
+
+<!--  创建流程实例  -->
+    <insert id="Insert" useGeneratedKeys="true" keyProperty="approveId">
+        insert into workflow_approve values (null,
+                                             #{archivesEmpsq},
+                                             #{workflowNode},
+                                             #{archivesEmpsp},
+                                             #{approve_flow},
+                                             #{approveState},
+                                             #{approveTime},
+                                             #{approve_table}
+                                             )
+    </insert>
+
+<!--  查询历史审批记录 根据流程实例编号  -->
+    <select id="SelectHistory" resultMap="basegood">
+        SELECT * FROM   workflow_approve
+                            INNER JOIN workflow_flow ON  workflow_approve.`flow_id`=workflow_flow.`flow_id`
+
+
+                            LEFT JOIN workflow_node ON workflow_node.`node_id`=workflow_approve.`node_id`
+                            LEFT JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+                            INNER JOIN  workflow_flow_sp ON workflow_flow_sp.`node_id`=workflow_node.`node_id`
+                            INNER JOIN archives_emp   ON archives_emp.`emp_id`=workflow_flow_sp.`emp_id`
+        WHERE  workflow_approve.`approve_id`=#{id}
+    </select>
+
+<!--  修改状态  -->
+    <update id="Update">
+        update workflow_approve set approve_state=#{state} where approve_id=#{id}
+    </update>
+
+<!--  修改节点  -->
+    <update id="UpdateNode">
+        update workflow_approve set node_id=#{node} where approve_id=#{id}
+    </update>
+
+
+
+</mapper>

@@ -29,4 +29,13 @@ public class SystemPostService {
     public void delPost(int postId){
         iSystemPostMapper.delPost(postId);
     }
+
+    /**
+     * 根据编号查询
+     * @param id
+     * @return
+     */
+    public SystemPost SelectByid(Integer id){
+        return iSystemPostMapper.SelectByid(id);
+    }
 }

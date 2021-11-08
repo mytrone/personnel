@@ -48,6 +48,12 @@
 				<el-menu-item index="1-6">
 					  <router-link to="flownotice">抄送事宜</router-link>
 				</el-menu-item>
+				<el-menu-item index="1-7">
+					  <router-link to="apply">审批人选择</router-link>
+				</el-menu-item>
+				<el-menu-item index="1-8">
+					  <router-link to="applys">下一个审批人</router-link>
+				</el-menu-item>
 
               </el-sub-menu>
                 <el-sub-menu index="2">

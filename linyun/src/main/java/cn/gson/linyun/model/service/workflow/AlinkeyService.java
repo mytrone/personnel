@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+/**
+ * 类型Service
+ */
 public class AlinkeyService {
 
     @Autowired

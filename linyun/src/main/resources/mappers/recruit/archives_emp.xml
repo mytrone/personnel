@@ -17,12 +17,44 @@
         <id column="empsonBirthday" property="empsonBirthday"/>
         <id column="topId" property="topId"/>
     </resultMap>
+
+    <resultMap id="test" type="ArchivesEmp">
+
+            <id column="emp_id" property="empId"/>
+            <id column="emp_name" property="empName"/>
+            <id column="empson_sex" property="empsonSex"/>
+            <id column="empson_card" property="empsonCard"/>
+            <id column="empson_email" property="empsonEmail"/>
+            <id column="empson_tel" property="empsonTel"/>
+            <id column="empson_bank" property="empsonBank"/>
+            <id column="empson_education" property="empsonEducation"/>
+            <id column="empson_day" property="empsonDay"/>
+            <id column="empson_birthday" property="empsonBirthday"/>
+            <association property="systemPost" javaType="SystemPost">
+                <id column="post_id" property="postId"/>
+                <result column="post_name" property="postName"/>
+            </association>
+
+
+    </resultMap>
+
     <!--    <sql id="column">-->
     <!--        odid, oid, pid, num, g_price-->
     <!--    </sql>-->
     <select id="selectAll" resultMap="base">
         <!--        select <include refid="column"></include> from ordetails where oid=#{oid}-->
         select * from archives_emp
+    </select>
+
+<!--  职位层级查询员工  -->
+    <select id="SelectByPostGrade" resultMap="test">
+        SELECT * FROM archives_emp  INNER JOIN  system_post ON archives_emp.`post_id`=system_post.`post_id`
+        WHERE system_post.post_grade=#{id}
+    </select>
+
+<!--  根据职位查询  -->
+    <select id="SelectByPostPo" resultMap="test">
+        select * from  archives_emp WHERE archives_emp.post_id=#{id}
     </select>
 
 

@@ -45,7 +45,6 @@ public class WorkflowFlowController {
      */
     @PostMapping("update")
     public MyResult update(@RequestBody FlowVo flowVo) {
-        System.out.println(flowVo.toString()+"333333333333");
         try {
             List<Integer> list=new ArrayList<>();
             for (Alinkey alinkey : flowVo.getJieduan()) {
@@ -161,6 +160,17 @@ public class WorkflowFlowController {
     public MyResult select(@RequestParam("id")Integer id) {
 
         return MyResult.SUCCESS_Object(workflowFlowService.SelectByid(id));
+    }
+
+
+    @PostMapping("selecturl")
+    /**
+     * 根据url查询流程
+     * @return
+     */
+    public MyResult selecturl(@RequestParam("url") String url) {
+
+        return MyResult.SUCCESS_Object(workflowFlowService.SelectByUrl(url));
     }
 
 

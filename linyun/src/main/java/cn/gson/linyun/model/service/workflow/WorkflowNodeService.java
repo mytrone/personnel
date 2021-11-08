@@ -13,6 +13,9 @@ import java.util.List;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
+/**
+ * 流程节点Service
+ */
 public class WorkflowNodeService {
 
     @Autowired
@@ -63,6 +66,15 @@ public class WorkflowNodeService {
      */
     public List<WorkflowNode> SelectByFlow(Integer id){
         return workflowNodeMapper.SelectByFlow(id);
+    }
+
+    /**
+     * 根据职位层级查询已经设计好的流程节点
+     * @param id
+     * @return
+     */
+    public List<WorkflowNode> SelectByPosition(Integer id){
+        return workflowNodeMapper.SelectByPosition(id);
     }
 
 

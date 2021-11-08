@@ -30,11 +30,15 @@
     			<el-input v-model="form.xueli"></el-input>
     		</div>
     	</el-form-item>
+		
     	<el-form-item label="理由">
     		<div style="width: 290px;">
     			<el-input v-model="form.eason"></el-input>
     		</div>
     	</el-form-item>
+		
+	
+		
     </el-row>
     <el-form-item>
       <el-button type="primary" @click="add()">提交</el-button>
@@ -61,6 +65,9 @@ export default {
     }
   },
   methods: {
+	  
+	 
+	  
     add() {
 		console.log("水水水水水",this.form)
       this.axios.post("recruitRecruitapply/insertRecruitapply",{

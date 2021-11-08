@@ -1,6 +1,8 @@
 package cn.gson.linyun.model.pojos.system;
 
 
+import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
+
 import java.util.List;
 
 public class SystemPost {
@@ -11,6 +13,15 @@ public class SystemPost {
   private long postParentId;
   private SystemPost postFather;
   private SystemDepartment systemDepartment;
+  private Integer PostGrade;
+
+  public Integer getPostGrade() {
+    return PostGrade;
+  }
+
+  public void setPostGrade(Integer postGrade) {
+    PostGrade = postGrade;
+  }
 
   public long getPostId() {
     return postId;

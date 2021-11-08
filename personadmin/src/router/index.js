@@ -160,6 +160,24 @@ let routes = [{
 					title: "工资发放"
 				}
 
+			},
+			{
+				path: '/apply',
+				component: () => import('@/components/FlowApply.vue'),
+				name: 'apply',
+				meta: {
+					title: "申请审批"
+				}
+
+			},
+			{
+				path: '/applys',
+				component: () => import('@/components/FlowApplys.vue'),
+				name: 'applys',
+				meta: {
+					title: "下一个审批人"
+				}
+
 			}
 
 		]

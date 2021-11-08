@@ -1,9 +1,13 @@
 package cn.gson.linyun.controller.recruit;
 
+import cn.gson.linyun.model.Vo.WorkflowApproveVo;
+import cn.gson.linyun.model.Vo.WorkflowFlowSpVo;
 import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
 import cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply;
 import cn.gson.linyun.model.pojos.recruit.vo.RecruitRecruitapplyVO;
 import cn.gson.linyun.model.service.recruit.RecruitRecruitapplyService;
+import cn.gson.linyun.model.service.workflow.WorkflowApproveService;
+import cn.gson.linyun.model.service.workflow.WorkflowNodeService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
-import java.sql.Date;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/recruitRecruitapply")
 public class RecruitRecruitapplyController {
     @Autowired
     RecruitRecruitapplyService service;
+    @Autowired
+    WorkflowApproveService workflowApproveService;//流程实例Service
+
 
     @RequestMapping("/insertRecruitapply")
     public Integer add(@RequestBody RecruitRecruitapplyVO vo){
@@ -44,6 +51,15 @@ public class RecruitRecruitapplyController {
         recruitRecruitapply.setRecruitapplyState(0);
 
         Integer i = service.insertRecruitapply(recruitRecruitapply);
+        WorkflowApproveVo workflowApproveVo=new WorkflowApproveVo();
+        workflowApproveVo.setApprove_table(recruitRecruitapply.getRecruitapplyId());
+        workflowApproveVo.setApprove_flow(58);//流程类型
+        workflowApproveVo.setApproveState(0);//状态默认  董事长审批直接过
+        workflowApproveVo.setSpPeople(2);//选择的审批人
+        workflowApproveVo.setArchivesEmpsq(recruitRecruitapply.getArchivesEmpByEmpId().getEmpId());//申请人
+        workflowApproveService.AddApprove(workflowApproveVo);
+
+
         if(i>0){
             return 1;
         }else {

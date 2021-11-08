@@ -2,11 +2,9 @@ package cn.gson.linyun.controller.system;
 
 import cn.gson.linyun.model.pojos.system.SystemPost;
 import cn.gson.linyun.model.service.system.SystemPostService;
+import cn.gson.linyun.model.utils.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +32,9 @@ public class SystemPostController {
     @RequestMapping("/delPost")
     public void delPost(int postId){
         systemPostService.delPost(postId);
+    }
+    @PostMapping("select")
+    public MyResult SELECT(@RequestParam("id")Integer id){
+        return MyResult.SUCCESS_Object(systemPostService.SelectByid(id)) ;
     }
 }
