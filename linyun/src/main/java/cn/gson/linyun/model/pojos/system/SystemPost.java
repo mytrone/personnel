@@ -15,6 +15,7 @@ public class SystemPost {
   private long departmentId;
   private String postName;
   private long postParentId;
+  private long postGrade;
   private SystemPost postFather;
   private SystemDepartment systemDepartment;
   private Integer PostGrade;
@@ -79,6 +80,14 @@ public class SystemPost {
 
   public void setPostParentId(long postParentId) {
     this.postParentId = postParentId;
+  }
+
+  public long getPostGrade() {
+    return postGrade;
+  }
+
+  public void setPostGrade(long postGrade) {
+    this.postGrade = postGrade;
   }
 
   public SystemPost getPostFather() {

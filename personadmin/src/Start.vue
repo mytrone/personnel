@@ -33,6 +33,13 @@
 				
 			}
 		},
+		mounted() {
+		  window.addEventListener('beforeunload', () => {
+		    //this.$store.state.children={}		
+		    //刷新前将目前登录的用户保存到sessionStorage中
+		    sessionStorage.setItem('state', JSON.stringify(this.$store.state))
+		  })
+		}
 		
 	}
 </script>

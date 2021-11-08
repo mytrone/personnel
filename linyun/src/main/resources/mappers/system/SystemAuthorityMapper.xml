@@ -10,4 +10,12 @@
         <result column="authority_ioc" property="authorityIoc"/>
         <result column="authority_parent_id" property="authorityParentId"/>
     </resultMap>
+    <!--查看一级路由-->
+    <select id="selAuthority" resultMap="SystemAuthorityMap">
+        select * from system_authority where system_authority.authority_parent_id is null
+    </select>
+    <!--根据父级id查找路由子集级-->
+    <select id="selChild" resultMap="SystemAuthorityMap">
+        select * from system_authority where system_authority.authority_parent_id=#{authorityParentId}
+    </select>
 </mapper>

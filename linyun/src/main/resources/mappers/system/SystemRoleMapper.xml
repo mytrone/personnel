@@ -7,4 +7,42 @@
         <result column="role_name" property="roleName"/>
         <result column="role_text" property="roleText"/>
     </resultMap>
+    <!--新增角色-->
+    <insert id="addRole">
+        insert into system_role(role_name,role_text) values (#{roleName},#{roleText})
+        <selectKey keyProperty="roleId" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <!--查询角色-->
+    <select id="selRole" resultMap="SystemRoleMap">
+        select * from system_role where 1=1
+        <if test="roleName!='' and roleName!=null">
+            and role_name=#{roleName}
+        </if>
+    </select>
+    <!--新增角色-权限表-->
+    <insert id="addRoleAuthority">
+        insert into system_role_authority values(#{roleId},#{authorityId})
+    </insert>
+    <!--删除角色-->
+    <delete id="delRole">
+        delete from system_role where role_id=#{roleId}
+    </delete>
+    <!--删除角色-权限-->
+    <delete id="delRoleAuthority">
+        delete from system_role_authority where role_id=#{roleId}
+    </delete>
+    <!--查询角色的权限-->
+    <select id="selRoleAuthority" resultType="java.lang.Integer">
+        select authority_id from system_role_authority where role_id=#{roleId}
+    </select>
+    <!--修改角色-->
+    <update id="changeRole">
+        update system_role set role_name=#{roleName},role_text=#{roleText} where role_id=#{roleId}
+    </update>
+    <!--根据用户编号查询角色-->
+    <select id="selRoleByStaffId" resultMap="SystemRoleMap">
+        select * from system_role where role_id in (select role_id from system_staff_role where staff_id=#{staffid})
+    </select>
 </mapper>

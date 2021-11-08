@@ -25,6 +25,6 @@ app.use(VueAxios, axios)
 /* 4、加载路由 */
 app.use(router)
 /* 4、加载vuex */
-// app.use(store)
+app.use(store)
 /* 最后、挂载元素 */
 app.mount('#app')
