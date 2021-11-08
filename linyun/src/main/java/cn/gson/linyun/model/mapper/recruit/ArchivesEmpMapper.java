@@ -8,5 +8,23 @@ import java.util.List;
 @Mapper
 public interface ArchivesEmpMapper {
     List<ArchivesEmp> selectAll();
+
+    /**
+     * 职位层级查询员工
+     * @param id
+     * @return
+     */
+    List<ArchivesEmp> SelectByPostGrade(Integer id);
+
+    /**
+     * 根据职位查询
+     * @param id
+     * @return
+     */
+    ArchivesEmp SelectByPostPo(Integer id);
+
+
+    /*根据员工编号查询 selectEmpById*/
+    ArchivesEmp selectEmpById(Integer empId);
 }
 

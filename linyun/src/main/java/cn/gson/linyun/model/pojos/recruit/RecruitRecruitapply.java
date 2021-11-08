@@ -1,5 +1,7 @@
 package cn.gson.linyun.model.pojos.recruit;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -12,7 +14,10 @@ public class RecruitRecruitapply {
     private Integer recruitapplyPnum;
     private String recruitapplyEducationInf;
     private String recruitapplyEason;
+    //时间转换格式
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Timestamp recruitapplyTime;
+
     private Integer recruitapplyState;
     private ArchivesEmp archivesEmpByEmpId;
     private RecruitDemand recruitDemandByDemandId;

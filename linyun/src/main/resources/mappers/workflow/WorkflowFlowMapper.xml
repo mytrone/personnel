@@ -10,6 +10,7 @@
         <result property="flowState" column="flow_state"/>
         <result property="flowUrl" column="flow_url"/>
         <result property="flowTime" column="flow_time"/>
+        <result property="flowPosition" column="flow_position"/>
             <association property="alinkey" javaType="Alinkey">
                 <id property="alinkeyId" column="alinkey_id"/>
                 <result property="alinkeyName" column="alinkey_name"/>
@@ -51,6 +52,12 @@
     <select id="SelectByid" resultMap="base">
         SELECT * FROM workflow_flow INNER JOIN alinkey
                ON workflow_flow.`alinkey_id`=alinkey.`alinkey_id` where workflow_flow.flow_id=#{id}
+    </select>
+
+    <!--  SelectByUrl查询单条  -->
+    <select id="SelectByUrl" resultMap="base">
+        SELECT * FROM workflow_flow INNER JOIN alinkey
+               ON workflow_flow.`alinkey_id`=alinkey.`alinkey_id` where workflow_flow.flow_url=#{id}
     </select>
 
 <!--  修改状态  -->

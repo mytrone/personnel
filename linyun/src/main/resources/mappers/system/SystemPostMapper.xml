@@ -16,6 +16,12 @@
             <result column="pname" property="postName"/>
         </association>
     </resultMap>
+
+    <resultMap id="base" type="SystemPost">
+        <id column="post_id" property="postId"/>
+        <result column="post_name" property="postName"/>
+        <result column="post_grade" property="PostGrade"/>
+    </resultMap>
     <!--查询职位表-->
     <select id="selPost" resultMap="SystemPostMap">
         select *,p1.post_name pname,sd.department_name dname from system_post p
@@ -25,6 +31,15 @@
             <if test="param!=''">
                 and sd.department_id=#{param}
             </if>
+    </select>
+
+    <resultMap id="postMap" type="cn.gson.linyun.model.pojos.system.SystemPost">
+        <id column="post_id" property="postId" />
+        <result column="post_name" property="postName" />
+    </resultMap>
+    <!--根据类型查询 selectByPostId postId-->
+    <select id="selectByPostId" resultMap="postMap">
+        select post_id,post_name from system_post where post_id=#{postId}
     </select>
 
     <!--新增职位表-->
@@ -39,4 +54,8 @@
     <delete id="delPost">
         delete  from system_post where post_id=#{postId}
     </delete>
+<!-- 根据编号查询 -->
+    <select id="SelectByid" resultMap="base">
+        select * from system_post where post_id=#{id}
+    </select>
 </mapper>

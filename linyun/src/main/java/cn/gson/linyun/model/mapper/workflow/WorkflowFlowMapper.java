@@ -38,6 +38,14 @@ public interface WorkflowFlowMapper {
      */
     WorkflowFlow SelectByid(Integer id);
 
+
+    /**
+     * Url查询单条记录
+     * @param SelectByUrl
+     * @return
+     */
+    List<WorkflowFlow> SelectByUrl(String SelectByUrl);
+
     /**
      * 根据编号修改
      * @param id

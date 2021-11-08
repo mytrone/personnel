@@ -25,6 +25,13 @@ public interface WorkflowNodeMapper {
     List<WorkflowNode> SelectByFlow(Integer id);
 
     /**
+     * 根据职位层级查询已经设计好的流程节点
+     * @param id
+     * @return
+     */
+    List<WorkflowNode> SelectByPosition(Integer id);
+
+    /**
      * 流程节点
      * @param id
      * @return

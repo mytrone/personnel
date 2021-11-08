@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceCheckMpper">
+    <resultMap id="lefgl" type="cn.gson.linyun.model.pojos.flnance.FinanceTemplate">
+        <id column="check_id" property="checkId"/>
+        <result column="check_points" property="checkPoints"/>
+        <result column="check_remark" property="checkRemark"/>
+        <result column="check_template" property="checkTemplate"/>
+        <result column="check_serial" property="checkSerial"/>
+        <result column="check_date" property="check_date"/>
+        <association property="EmpList" javaType="ArchivesEmp">
+            <id column="emp_id" property="empId"/>
+            <result column="emp_name" property="empName"/>
+        </association>
+    </resultMap>
+    <select id="allEmp" resultType="ArchivesEmp">
+        select*from  archives_emp
+    </select>
+    <insert id="addEmp">
+        insert into  finance_check values(null,#{empId},1,#{checkPoints},#{checkRemark},#{checkTemplate},#{checkSerial},current_timestamp)
+    </insert>
+    <select id="allCheckson" resultMap="lefgl">
+        select *from finance_check  gj left join    archives_emp  mp on gj.emp_id=mp.emp_id
+        <where>
+            <if test="checkSerial != null and '' != checkSerial">
+                or check_serial like '%${checkSerial}%'
+            </if>
+        </where>
+    </select>
+</mapper>

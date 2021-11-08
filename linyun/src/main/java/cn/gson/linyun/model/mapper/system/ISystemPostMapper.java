@@ -15,4 +15,15 @@ public interface ISystemPostMapper {
     void changePost(SystemPost post);
     //删除职位
     void delPost(int postId);
+
+    /**
+     * 根据编号查询
+     * @param id
+     * @return
+     */
+    SystemPost SelectByid(Integer id);
+
+    /*根据类型查询 selectByPostId postId*/
+    SystemPost selectByPostId(Integer postId);
+
 }

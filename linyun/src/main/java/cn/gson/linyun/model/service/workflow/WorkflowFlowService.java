@@ -13,6 +13,9 @@ import java.util.List;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
+/**
+ * 流程Service
+ */
 public class WorkflowFlowService {
 
     @Autowired
@@ -79,6 +82,16 @@ public class WorkflowFlowService {
      */
     public WorkflowFlow SelectByid(Integer id){
         return workflowFlowMapper.SelectByid(id);
+    }
+
+
+    /**
+     * url查询单条
+     * @param url
+     * @return
+     */
+    public List<WorkflowFlow> SelectByUrl(String url){
+        return workflowFlowMapper.SelectByUrl(url);
     }
 
     /**
