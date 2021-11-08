@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface FinanceItemMapper {
-    public void allFinance(FinanceItem financeItem);
-    public List<FinanceItem> sllFinance(FinanceItem financeItem);
-    public void deFinance(FinanceItem financeItem);
-    public List<Alinkey>allAlinkey();
+    public void allFinance(FinanceItem financeItem);//新增项目表
+    public List<FinanceItem> sllFinance(FinanceItem financeItem);//查询项目表
+    public void deFinance(FinanceItem financeItem);//删除项目
+    public List<Alinkey>allAlinkey();//查询考核类别表
 }

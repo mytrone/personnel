@@ -3,12 +3,95 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceTemplateMapper">
     <!-- 新增模板表-->
-    <insert id="addTemplate"  useGeneratedKeys="true" keyProperty="template_id" keyColumn="template_id">
+    <resultMap id="lefg" type="cn.gson.linyun.model.pojos.flnance.FinanceTemplate">
+        <id column="template_id" property="templateId"/>
+        <result column="template_serial" property="templateSerial"/>
+        <result column="template_name" property="templateName"/>
+        <result column="template_date" property="templateDate"/>
+        <association property="archivesEmpByEmpId" javaType="ArchivesEmp">
+            <id column="emp_id" property="empId"/>
+            <result column="emp_name" property="empName"/>
+        </association>
+        <association property="alinkeyByAlinkeyId" javaType="Alinkey">
+            <id column="alinkey_id" property="alinkeyId"/>
+            <result column="alinkey_name" property="alinkeyName"/>
+        </association>
+<!--        <collection property="financeItem" ofType="FinanceItem" >-->
+<!--            <id column="item_id" property="itemId"/>-->
+<!--            <result column="item_name" property="itemName"/>-->
+<!--            <result column="item_explain" property="itemExplain"/>-->
+<!--        </collection>-->
+    </resultMap>
+    <resultMap id="lefgr" type="cn.gson.linyun.model.pojos.flnance.FinanceTemplate">
+        <id column="template_id" property="templateId"/>
+        <result column="template_serial" property="templateSerial"/>
+        <result column="template_name" property="templateName"/>
+        <result column="template_date" property="templateDate"/>
+        <association property="archivesEmpByEmpId" javaType="ArchivesEmp">
+            <id column="emp_id" property="empId"/>
+            <result column="emp_name" property="empName"/>
+        </association>
+        <association property="alinkeyByAlinkeyId" javaType="Alinkey">
+            <id column="alinkey_id" property="alinkeyId"/>
+            <result column="alinkey_name" property="alinkeyName"/>
+        </association>
+                <collection property="financeItem" ofType="FinanceItem" >
+                    <id column="item_id" property="itemId"/>
+                    <result column="item_name" property="itemName"/>
+                    <result column="item_explain" property="itemExplain"/>
+                    <result column="item_score" property="itemScore"/>
+                </collection>
+    </resultMap>
+    <insert id="addTemplate"  useGeneratedKeys="true" keyProperty="templateId" parameterType="cn.gson.linyun.model.pojos.flnance.FinanceTemplate">
         insert  into  finance_template
-        values (null,1,#{alinkeyId},#{templateSerial},current_timestamp,#{templateName})
+        values (null,1,#{alinkeyId},#{templateSerial},current_timestamp,#{templateName},0)
     </insert>
 <!--    新增中间表-->
     <insert id="addRelationship">
-        insert into Relationship34 values (#{financeItemByItemId),#(financeTemplateByTemplateId))
+        insert into Relationship_34 values (#{financeItemByItemId.itemId},#{financeTemplateByTemplateId.templateId})
     </insert>
+<!--    查询模板表-->
+    <select id="alltemplate" resultMap="lefg">
+        select *from finance_template kl
+                         left join  alinkey am on am.alinkey_id=kl.alinkey_id
+                         left join  archives_emp  lh on lh.emp_id=kl.emp_id
+
+        <where>
+                 <if test="templateSerial != null and '' != templateSerial">
+                    or template_serial like '%${templateSerial}%'
+                </if>
+                <if test="templateName != null and '' != templateName">
+                    or template_name like '%${templateName}%'
+                </if>
+        </where>
+         having  template_state=0
+    </select>
+    <select id="alltemplates" resultMap="lefgr">
+        select *from finance_template kl
+        left join Relationship_34 km on kl.template_id=km.template_id
+        left join   finance_item mk on km.item_id=mk.item_id
+        left join  alinkey am on am.alinkey_id=kl.alinkey_id
+        left join  archives_emp  lh on lh.emp_id=kl.emp_id
+
+
+        <where>
+            <if test="templateSerial != null and '' != templateSerial">
+                or template_serial like '%${templateSerial}%'
+            </if>
+            <if test="templateName != null and '' != templateName">
+                or template_name like '%${templateName}%'
+            </if>
+        </where>
+        having  template_state=0
+    </select>
+<!--    状态删除模板-->
+    <update id="uplTemplate">
+        update  finance_template set template_state=1 where template_id=#{templateId}
+    </update>
+    <delete id="demiddel">
+        delete  from Relationship_34  where template_id=#{financeTemplateByTemplateId.templateId}
+    </delete>
+    <select id="allmiddel" resultType="FinanceItem">
+        select * from Relationship_34 mn left join finance_item lm on mn.item_id=lm.item_id where mn.template_id =#{templateId}
+    </select>
 </mapper>

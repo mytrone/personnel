@@ -23,17 +23,15 @@
 				<el-table-column label="项目说明" prop="itemExplain">
 					<template v-slot:default="scope">
 						<el-input v-model="scope.row.itemExplain"></el-input>
-						<!-- <el-popover effect="light" trigger="hover" placement="top">
-								<template #default>
-									<p>姓名: {{ scope.row.name }}</p>
-									<p>住址: {{ scope.row.address }}</p>
-								</template>
-								<template #reference>
-									<div class="name-wrapper">
-										<el-tag size="medium">{{ scope.row.name }}</el-tag>
-									</div>
-								</template>
-							</el-popover> -->
+						
+					</template>
+				</el-table-column>
+				<el-table-column label="项目分数" prop="itemScore">
+					<template v-slot:default="scope">
+						<el-input-number v-model="scope.row.itemScore"
+							controls-position="right"
+							:min="1" :max="10" style="width: 100px">
+						</el-input-number>
 					</template>
 				</el-table-column>
 				<el-table-column label="操作">
@@ -117,6 +115,7 @@
 					itemId: '', //id
 					itemName: '', //项目名
 					itemExplain: '', //项目说明
+					itemScore:''//项目分数
 				}
 
 
@@ -138,6 +137,7 @@
 					for (var i = 0; i < this.tableData.length; i++) {
 						this.financeItem.itemName = this.tableData[i].itemName;
 						this.financeItem.itemExplain = this.tableData[i].itemExplain;
+						this.financeItem.itemScore = this.tableData[i].itemScore;
 						this.axios.post("/finance/addFinance", this.financeItem).then((res) => {
 
 							if (res === "ok") {

@@ -17,14 +17,43 @@ public class FinanceTemplateService {
     @Autowired
     FinanceTemplateMapper financeTemplateMaper;
     public void addTemplate(FinanceTemplate financeTemplate){
-        System.out.println("ssss");
-        System.out.println(financeTemplate.getTemplateId());
-//        String danhao=  MyUtil.genrateNo("MB");//订单编号
-//        financeTemplate.setTemplateSerial(danhao);//
-//        List<FinanceItem>item=financeTemplate.getFinanceItem();//前台数组
-            financeTemplateMaper.addTemplate(financeTemplate);
+
+
+        String number=  MyUtil.genrateNo("MB");//随机生成模板编号
+        financeTemplate.setTemplateSerial(number);//放入模板实体类
+        financeTemplateMaper.addTemplate(financeTemplate);//新增并且返回主键
+
+        List<FinanceItem>item=financeTemplate.getFinanceItem();//接收前台关系数组或者集合
+        for (FinanceItem l:item) {//循环
+
+            FinanceItem km=new FinanceItem();//新建项目对象
+            km.setItemId(l.getItemId());//在循环中赋值项目id
+
+            Relationship34 intermediate= new Relationship34();//新建中间表对象
+            intermediate.setFinanceTemplateByTemplateId(financeTemplate);//赋值模板对象的自增主键
+            intermediate.setFinanceItemByItemId(km);//赋值项目对象
+
+            financeTemplateMaper.addRelationship(intermediate);//新增中间表
+        }
+
     }
+    public List<FinanceTemplate>alltemplate(FinanceTemplate financeTemplate){
+        return financeTemplateMaper.alltemplate(financeTemplate);
+    }
+    public  void delTemplate(FinanceTemplate financeTemplate){//删除模板表
+        Relationship34 intermediate= new Relationship34();//新建中间表对象
+       intermediate.setFinanceTemplateByTemplateId(financeTemplate);//赋值模板对象的自增主键
+        financeTemplateMaper.demiddel(intermediate);//删除中间表
+        System.out.println(financeTemplate.getTemplateId());
+        financeTemplateMaper.uplTemplate(financeTemplate);//删除模板表
 
 
+    }//查询模板下的项目
+    public List<FinanceItem>allmiddel(FinanceTemplate financeTemplate){
+        return financeTemplateMaper.allmiddel(financeTemplate);
+    }//模板项目查询
+    public List<FinanceTemplate>alltemplates(){
+        return financeTemplateMaper.alltemplates();
+    }
 
 }
