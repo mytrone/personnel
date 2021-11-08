@@ -39,8 +39,8 @@
 		<el-form ref="staff" :rules="staffRule" :model="staff">
 			<el-row :gutter="20">
 				<el-col :span="10">
-					<el-form-item prop="empId" label="用户档案">
-						<el-input v-model="staff.empId"></el-input>
+					<el-form-item prop="empId" label="档案编号">
+						<el-input :disabled="disabd" v-model="staff.empId"></el-input>
 					</el-form-item>
 				</el-col>
 				<el-col :span="10">
@@ -95,6 +95,8 @@
 				},
 				//控制弹框的打开
 				dialogVisible:false,
+				//控制档案编号输入框
+				disabd:false,
 				//接受勾选的角色id
 				roleIds:[],
 				//接受后台传递来的用户
@@ -202,6 +204,7 @@
 			},
 			//将对象属性传给表单
 			changeStaff(val){
+				this.disabd=true,
 				this.roleIds=[],
 				this.staff.staffId=val.staffId,
 				this.staff.empId=val.empId,
@@ -239,6 +242,7 @@
 					staffCode:'',
 					staffState:''
 				},
+				this.disabd=false,
 				this.dialogVisible=false,
 				this.$refs.multipleTable.clearSelection();
 			},
