@@ -7,9 +7,10 @@
         <result column="post_name" property="postName"/>
         <result column="department_id" property="departmentId"/>
         <result column="post_parent_id" property="postParentId"/>
+        <result column="post_grade" property="postGrade"/>
         <association property="systemDepartment" javaType="cn.gson.linyun.model.pojos.system.SystemDepartment">
             <id column="department_id" property="departmentId"/>
-            <result column="department_name" property="departmentName"/>
+            <result column="dname" property="departmentName"/>
         </association>
         <association property="postFather" javaType="cn.gson.linyun.model.pojos.system.SystemPost">
             <result column="pname" property="postName"/>
@@ -17,19 +18,25 @@
     </resultMap>
     <!--查询职位表-->
     <select id="selPost" resultMap="SystemPostMap">
-        select *,p1.post_name pname from system_post p left join system_post p1 on p.post_parent_id=p1.post_id
+        select *,p1.post_name pname,sd.department_name dname from system_post p
+            left join system_post p1 on p.post_parent_id=p1.post_id
+            inner join system_department sd
+            on p.department_id = sd.department_id where 1=1
+            <if test="param!=''">
+                and sd.department_id=#{param}
+            </if>
     </select>
 
     <!--新增职位表-->
     <insert id="addPost">
-        insert into system_post(post_name,department_id,post_parent_id)values (#{postName},#{departmentId},#{postParentId})
+        insert into system_post(post_name,department_id,post_parent_id,post_grade)values (#{postName},#{departmentId},#{postParentId},#{postGrade})
     </insert>
     <!--修改职位-->
     <update id="changePost">
-        update system_post set post_name=#{postName},department_id=#{departmentId},post_parent_id=#{postParentId} where post_id=#{postId}
+        update system_post set post_name=#{postName},department_id=#{departmentId},post_parent_id=#{postParentId},post_grade=#{postGrade} where post_id=#{postId}
     </update>
     <!--删除职位-->
     <delete id="delPost">
-        delete * from system_post where post_id=#{postId}
+        delete  from system_post where post_id=#{postId}
     </delete>
 </mapper>

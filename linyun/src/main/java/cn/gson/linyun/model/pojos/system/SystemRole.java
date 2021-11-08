@@ -3,16 +3,16 @@ package cn.gson.linyun.model.pojos.system;
 
 public class SystemRole {
 
-  private long roleId;
+  private int roleId;
   private String roleName;
   private String roleText;
 
 
-  public long getRoleId() {
+  public int getRoleId() {
     return roleId;
   }
 
-  public void setRoleId(long roleId) {
+  public void setRoleId(int roleId) {
     this.roleId = roleId;
   }
 

@@ -14,8 +14,8 @@ public class SystemPostService {
     @Autowired
     ISystemPostMapper iSystemPostMapper;
     //查看职位
-    public List<SystemPost> selPost(){
-        return iSystemPostMapper.selPost();
+    public List<SystemPost> selPost(String param){
+        return iSystemPostMapper.selPost(param);
     }
     //新增职位
     public void addPost(SystemPost systemPost){

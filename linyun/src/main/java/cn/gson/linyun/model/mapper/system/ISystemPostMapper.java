@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface ISystemPostMapper {
     //查看职位
-    List<SystemPost> selPost();
+    List<SystemPost> selPost(String param);
     //新增职位
     void addPost(SystemPost systemPost);
     //修改职位
