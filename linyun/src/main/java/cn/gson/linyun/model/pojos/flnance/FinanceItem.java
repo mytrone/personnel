@@ -10,7 +10,16 @@ public class FinanceItem {
     private Integer itemId;//主键
     private String itemName;//项目名
     private String itemExplain;//项目说明
+    private int  itemScore;//项目分数
     private Collection<Relationship34> relationship34sByItemId;
+
+    public int getItemScore() {
+        return itemScore;
+    }
+
+    public void setItemScore(int itemScore) {
+        this.itemScore = itemScore;
+    }
 
     public Integer getItemId() {
         return itemId;

@@ -5,8 +5,8 @@ import javax.persistence.*;
 
 public class Relationship34 {
 
-    private FinanceItem financeItemByItemId;
-    private FinanceTemplate financeTemplateByTemplateId;
+    private FinanceItem financeItemByItemId;//项目id
+    private FinanceTemplate financeTemplateByTemplateId;//末班主键
 
 
 

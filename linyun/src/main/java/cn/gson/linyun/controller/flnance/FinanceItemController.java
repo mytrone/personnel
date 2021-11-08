@@ -17,13 +17,13 @@ public class FinanceItemController {
     FinanceItemService financeItemService;
     @RequestMapping("/addFinance")//新增项目表
     public String allFinance(@RequestBody FinanceItem financeItem){
-        try {
+//        try {
             financeItemService.allFinance(financeItem);
             return "ok";//新增成功
-        } catch (Exception e) {
-
-            return "fail";
-        }
+//        } catch (Exception e) {
+//
+//            return "fail";
+//        }
 
 
 
@@ -32,14 +32,14 @@ public class FinanceItemController {
     public List<FinanceItem> sllFinance(@RequestBody FinanceItem financeItem){//查询项目表
           return financeItemService.sllFinance(financeItem);
     }
-    @RequestMapping("/deFinances")//删除路径
+    @RequestMapping("/deFinances")//删除项目
     public String deFinance(@RequestBody FinanceItem financeItem){
         try {
             financeItemService.deFinance(financeItem);
-                return "ok";//删除成功
+                return "ok";//删除成功返回前台OK判断
             } catch (Exception e) {
 
-                return "fail";//失败
+                return "fail";//失败返回前台fail判断
             }
     }
     @RequestMapping("/allAlinkey")//查询考核类别表
