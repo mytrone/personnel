@@ -1,14 +1,13 @@
 package cn.gson.linyun.model.pojos.recruit;
 
-import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
-import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
-import cn.gson.linyun.model.pojos.clockingin.ClockinginPunch;
+import cn.gson.linyun.model.pojos.clockingin.*;
 import cn.gson.linyun.model.pojos.flnance.FinanceTemplate;
 import cn.gson.linyun.model.pojos.system.SystemPost;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -29,6 +28,24 @@ public class ArchivesEmp {
     private Collection<ClockinginOvertime> clockinginOvertimesByEmpId_0;
     private Collection<FinanceTemplate> financeTemplatesByEmpId;
     private SystemPost systemPost;
+    private Collection<ClockinginBusiness> clockinginBusinesses;//出差申请
+    private Collection<ClockinginReimburse> clockinginReimburses;//报销申请
+
+    public Collection<ClockinginBusiness> getClockinginBusinesses() {
+        return clockinginBusinesses;
+    }
+
+    public void setClockinginBusinesses(Collection<ClockinginBusiness> clockinginBusinesses) {
+        this.clockinginBusinesses = clockinginBusinesses;
+    }
+
+    public Collection<ClockinginReimburse> getClockinginReimburses() {
+        return clockinginReimburses;
+    }
+
+    public void setClockinginReimburses(Collection<ClockinginReimburse> clockinginReimburses) {
+        this.clockinginReimburses = clockinginReimburses;
+    }
 
     public SystemPost getSystemPost() {
         return systemPost;

@@ -9,12 +9,15 @@
         <result column="emp_id" property="empId"/>
         <result column="staff_state" property="staffState"/>
         <association property="archivesEmp" javaType="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
+            <id column="emp_id" property="empId" />
             <result column="emp_name" property="empName"/>
         </association>
         <association property="department" javaType="cn.gson.linyun.model.pojos.system.SystemDepartment">
+            <id column="department_id" property="departmentId" />
             <result column="department_name" property="departmentName" />
         </association>
         <association property="post" javaType="cn.gson.linyun.model.pojos.system.SystemPost">
+            <id column="post_id" property="postId" />
             <result column="post_name" property="postName" />
         </association>
     </resultMap>

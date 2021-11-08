@@ -3,6 +3,7 @@ package cn.gson.linyun.model.pojos.workflow;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginPunch;
+import cn.gson.linyun.model.pojos.clockingin.ClockinginReimburse;
 import cn.gson.linyun.model.pojos.flnance.FinanceTemplate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +32,15 @@ public class Alinkey {
     private Collection<ClockinginOvertime> clockinginOvertimesByAlinkeyId;
 
     private Collection<ClockinginLeave> clockinginLeaves;
+    private Collection<ClockinginReimburse> clockinginReimburses;//报销申请
 
+    public Collection<ClockinginReimburse> getClockinginReimburses() {
+        return clockinginReimburses;
+    }
+
+    public void setClockinginReimburses(Collection<ClockinginReimburse> clockinginReimburses) {
+        this.clockinginReimburses = clockinginReimburses;
+    }
 
     private Collection<FinanceTemplate> financeTemplatesByAlinkeyId;
 

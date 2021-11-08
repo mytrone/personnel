@@ -104,6 +104,9 @@
                     <el-menu-item index="3-2">
                         <router-link to="clockinginleave">请假申请记录</router-link>
                     </el-menu-item>
+					<el-menu-item index="3-3">
+						<router-link to="clockinginreimburse">报销申请</router-link>
+					</el-menu-item>
                 </el-sub-menu>
                 <el-sub-menu index="4">
                     <template #title>

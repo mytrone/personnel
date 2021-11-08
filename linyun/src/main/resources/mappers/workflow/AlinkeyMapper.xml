@@ -19,4 +19,14 @@
         select alinkey_id,alinkey_name from alinkey where alinkey_name=#{name}
     </select>
 
+    <resultMap id="selectAlinkeyByIdMap" type="Alinkey">
+        <id column="alinkey_id" property="alinkeyId" />
+        <result column="alinkey_name" property="alinkeyName" />
+    </resultMap>
+    <!--根据类型查询子类 selectByAlinkeyId alinkeyId-->
+    <select id="selectByAlinkeyId" resultMap="selectAlinkeyByIdMap" parameterType="java.lang.Integer">
+        select ay.alinkey_id,ay.alinkey_name from alinkey ak
+         LEFT JOIN alinkey ay on ak.alinkey_id=ay.alinkey_father where  ak.alinkey_id=#{alinkeyId}
+    </select>
+
 </mapper>

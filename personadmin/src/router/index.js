@@ -88,28 +88,28 @@ let routes = [{
 				meta: {
 					title: "发布招聘信息"
 				}
-			},{
+			}, {
 				path: '/recruit_demandSelect',
 				component: () => import('@/components/Recruit_demandSelect.vue'),
 				name: 'Recruit_demandSelect',
 				meta: {
 					title: "查看招聘信息"
 				}
-			},{
+			}, {
 				path: '/recruit_recruitapplySelect',
 				component: () => import('@/components/Recruit_recruitapplySelect.vue'),
 				name: 'Recruit_recruitapplySelect',
 				meta: {
 					title: "查看用人申请单"
 				}
-			},{
+			}, {
 				path: '/recruit_lookjl',
 				component: () => import('@/components/Recruit_lookjl.vue'),
 				name: 'Recruit_lookjl',
 				meta: {
 					title: "查看简历"
 				}
-			},{
+			}, {
 				path: '/role',
 				component: () => import('@/components/Role.vue'),
 				name: 'Role',
@@ -219,17 +219,30 @@ let routes = [{
 				path: '/clockinginovertimeadd',
 				name: 'clockinginovertimeadd',
 				component: () => import('@/components/ClockinginOvertimeAdd.vue'),
-				meta:{
-					title:"加班申请"
+				meta: {
+					title: "加班申请"
 				}
 			},
 			{
-				path:"/clockinginleave",
-				name:"clockinginleave",
-				component:()=> import("@/components/ClockinginLeave.vue"),
-				meta:{
-					title:"请假申请"
+				path: "/clockinginleave",
+				name: "clockinginleave",
+				component: () => import("@/components/ClockinginLeave.vue"),
+				meta: {
+					title: "请假申请"
 				}
+			},
+			{
+				path: "/clockinginleaveadd",
+				name: "clockinginleavemadd",
+				component: () => import("@/components/ClockinginLeaveAdd.vue"),
+				meta: {
+					title: "请假申请新增"
+				}
+			},
+			{
+				path: "/clockinginreimburse",
+				name: "clockinginreimburse",
+				component: () => import("@/components/ClockinginReimburse.vue")
 			}
 
 		]

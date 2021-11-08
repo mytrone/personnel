@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--/*报销申请*/-->
+<mapper namespace="cn.gson.linyun.model.mapper.clockingin.IClockinginReimburseMapper">
+    <!--<select id="selectAll" resultType="">
+
+    </select>-->
+    <!--新增报销申请记录 insertReimburse-->
+    <insert id="insertReimburse" useGeneratedKeys="true" keyProperty="reimburseId"
+            parameterType="cn.gson.linyun.model.pojos.clockingin.ClockinginReimburse">
+        insert into clockingin_reimburse
+          values (null,#{alinkeyId.alinkeyId},#{empId.empId},#{flowId.flowId},current_timestamp,#{clockinginBusiness.businessId},#{reimburseMoney},#{reimburseState},#{reimburseTitle});
+    </insert>
+
+    <resultMap id="reimMap"
+               type="cn.gson.linyun.model.pojos.clockingin.ClockinginReimburse">
+        <id column="reimburse_id" property="reimburseId" />
+        <result column="reimburse_data" property="reimburseData" />
+        <result column="reimburse_money" property="reimburseMoney" />
+        <result column="reimburse_state" property="reimburseState" />
+        <result column="reimburse_title" property="reimburseTitle" />
+        <collection property="clockinginDetails" ofType="cn.gson.linyun.model.pojos.clockingin.ClockinginDetails"
+        select="cn.gson.linyun.model.mapper.clockingin.IClockinginDetailsMapper.selectById" column="reimburse_id">
+
+        </collection>
+    </resultMap>
+    <!--查询 报销申请 selectRim-->
+    <select id="selectRim" resultMap="reimMap">
+        select reimburse_id
+        ,reimburse_data
+        ,reimburse_money
+        ,reimburse_state,
+         reimburse_title
+         from clockingin_reimburse
+    </select>
+
+</mapper>

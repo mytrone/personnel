@@ -26,6 +26,10 @@
             <id column="flow_id" property="flowId" />
             <result column="flow_name" property="flowName" />
         </association>
+        <association property="alinkeyId" javaType="Alinkey">
+            <id column="alinkey_id" property="alinkeyId" />
+            <result column ="alinkey_name" property="alinkeyName" />
+        </association>
     </resultMap>
 <!--查询当前员工所有请假信息 selectAllByEmpId-->
     <select id="selectAllByEmpId" resultMap="LeaveMap" parameterType="java.lang.Integer">
@@ -35,13 +39,36 @@
      ae.emp_id,ae.emp_name,
      sd.department_id,sd.department_name,
      sp.post_id,sp.post_name,
-    wf.flow_id,wf.flow_name
+    wf.flow_id,wf.flow_name,
+    ay.alinkey_id,ay.alinkey_name
 
      from clockingin_leave ckl
       INNER JOIN system_department sd on ckl.department_id=sd.department_id
     INNER JOIN system_post sp on ckl.post_id=sp.post_id
      INNER JOIN workflow_flow wf on ckl.flow_id=wf.flow_id
-    INNER JOIN archives_emp ae on ckl.emp_id=ae.emp_id where ckl.emp_id=#{empId}
+    INNER JOIN archives_emp ae on ckl.emp_id=ae.emp_id
+    INNER JOIN alinkey ay on ckl.alinkey_id=ay.alinkey_id
+     where ckl.emp_id=#{empId}
+
+     <if test="datastart != null and datastart != ''">
+         and ckl.leave_start >= #{datastart}
+     </if>
+     <if test="datafinish != null and datafinish != ''">
+         and ckl.leave_finish &lt;= #{datafinish}
+     </if>
+
      ORDER BY ckl.leave_start DESC
     </select>
+
+    <!--新增请假信息 insertLeave-->
+    <insert id="insertLeave" useGeneratedKeys="true" keyProperty="leaveId" parameterType="ClockinginLeave">
+        insert into clockingin_leave values
+         (
+         null,#{alinkeyId.alinkeyId},#{empId.empId},#{arcEmpId.empId},
+         #{postId.postId},#{flowId.flowId},#{departmentId.departmentId},
+         current_timestamp,#{leaveStart},#{leaveFinish},#{leaveReason},
+         #{leaveDays}
+         )
+    </insert>
+
 </mapper>

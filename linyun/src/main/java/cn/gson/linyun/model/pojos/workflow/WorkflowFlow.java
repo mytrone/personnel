@@ -1,6 +1,8 @@
 package cn.gson.linyun.model.pojos.workflow;
 
+import cn.gson.linyun.model.pojos.clockingin.ClockinginBusiness;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
+import cn.gson.linyun.model.pojos.clockingin.ClockinginReimburse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -28,6 +31,24 @@ public class WorkflowFlow {
     private Integer flowPosition;
 
     private Collection<ClockinginLeave> clockinginLeavesByFlow;
+    private Collection<ClockinginBusiness> clockinginBusinesses;//出差申请
+    private Collection<ClockinginReimburse> clockinginReimburses;//报销申请
+
+    public Collection<ClockinginBusiness> getClockinginBusinesses() {
+        return clockinginBusinesses;
+    }
+
+    public void setClockinginBusinesses(Collection<ClockinginBusiness> clockinginBusinesses) {
+        this.clockinginBusinesses = clockinginBusinesses;
+    }
+
+    public Collection<ClockinginReimburse> getClockinginReimburses() {
+        return clockinginReimburses;
+    }
+
+    public void setClockinginReimburses(Collection<ClockinginReimburse> clockinginReimburses) {
+        this.clockinginReimburses = clockinginReimburses;
+    }
 
     public int getFlowId() {
         return flowId;

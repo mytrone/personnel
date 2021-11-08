@@ -26,6 +26,25 @@ public class OvertimeVO {
     private BigDecimal reason;
     private String explain;
 
+    private Integer alinkId;
+    private Integer reasons;
+
+    public Integer getReasons() {
+        return reasons;
+    }
+
+    public void setReasons(Integer reasons) {
+        this.reasons = reasons;
+    }
+
+    public Integer getAlinkId() {
+        return alinkId;
+    }
+
+    public void setAlinkId(Integer alinkId) {
+        this.alinkId = alinkId;
+    }
+
     public Integer getEmpId() {
         return empId;
     }

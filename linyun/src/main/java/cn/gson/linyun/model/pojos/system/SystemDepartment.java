@@ -1,10 +1,12 @@
 package cn.gson.linyun.model.pojos.system;
 
 
+import cn.gson.linyun.model.pojos.clockingin.ClockinginBusiness;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
 
 import java.util.Collection;
+import java.util.List;
 
 public class SystemDepartment {
 
@@ -16,8 +18,18 @@ public class SystemDepartment {
 
   private Collection<ClockinginLeave> clockinginLeavesByDepartment;
 
+  private List<ClockinginBusiness> clockinginBusinesses;//出差申请
+
   public Collection<ClockinginLeave> getClockinginLeavesByDepartment() {
     return clockinginLeavesByDepartment;
+  }
+
+  public List<ClockinginBusiness> getClockinginBusinesses() {
+    return clockinginBusinesses;
+  }
+
+  public void setClockinginBusinesses(List<ClockinginBusiness> clockinginBusinesses) {
+    this.clockinginBusinesses = clockinginBusinesses;
   }
 
   public void setClockinginLeavesByDepartment(Collection<ClockinginLeave> clockinginLeavesByDepartment) {

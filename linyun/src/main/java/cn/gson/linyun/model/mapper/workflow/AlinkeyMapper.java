@@ -16,4 +16,8 @@ public interface AlinkeyMapper {
 
     /*根据名称查询 selectAlinkeyByName*/
     Alinkey selectAlinkeyByName(String name);
+
+   /*根据类型查询子类 selectByAlinkeyId alinkeyId*/
+    List<Alinkey> selectByAlinkeyId(Integer alinkeyId);
+
 }

@@ -4,6 +4,7 @@ import cn.gson.linyun.model.mapper.workflow.AlinkeyMapper;
 import cn.gson.linyun.model.pojos.workflow.Alinkey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * 类型Service
  */
+@Transactional(rollbackFor = Exception.class)
 public class AlinkeyService {
 
     @Autowired
@@ -27,5 +29,10 @@ public class AlinkeyService {
     /*根据名称查询 selectAlinkeyByName*/
     public Alinkey selectAlinkeyByName(String name){
         return alinkeyMapper.selectAlinkeyByName(name);
+    }
+
+    /*根据类型查询子类 selectByAlinkeyId alinkeyId*/
+    public List<Alinkey> selectByAlinkeyId(Integer alinkeyId){
+        return alinkeyMapper.selectByAlinkeyId(alinkeyId);
     }
 }
