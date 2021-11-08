@@ -1,6 +1,7 @@
 package cn.gson.linyun.model.pojos.recruit.vo;
 
 import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
+import cn.gson.linyun.model.pojos.recruit.RecruitDemand;
 import cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply;
 
 public class RecruitRecruitapplyVO {
@@ -10,6 +11,7 @@ public class RecruitRecruitapplyVO {
     private String recruitapplyEducationInf;
     private String recruitapplyEason;
     private ArchivesEmp archivesEmpByEmpId;
+    private RecruitDemand recruitDemandByDemandId;
 
     @Override
     public String toString() {
@@ -21,6 +23,14 @@ public class RecruitRecruitapplyVO {
                 ", recruitapplyEason='" + recruitapplyEason + '\'' +
                 ", archivesEmpByEmpId=" + archivesEmpByEmpId +
                 '}';
+    }
+
+    public RecruitDemand getRecruitDemandByDemandId() {
+        return recruitDemandByDemandId;
+    }
+
+    public void setRecruitDemandByDemandId(RecruitDemand recruitDemandByDemandId) {
+        this.recruitDemandByDemandId = recruitDemandByDemandId;
     }
 
     public String getRecruitapplyTitle() {

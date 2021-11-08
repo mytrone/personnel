@@ -40,6 +40,6 @@
     <select id="selectRecruitapply" resultType="cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply">
         select * from recruit_recruitapply
     </select>
-    
+
 
 </mapper>

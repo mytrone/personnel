@@ -2,11 +2,6 @@
 	<h3>用人申请单</h3>
 	<div class="bod">
 		<el-form ref="form" :model="form" label-width="100px">
-			<!-- <el-form-item label="申请人">
-			<div style="width: 120px;">
-				<el-input v-model="form.name"></el-input>
-			</div>
-		</el-form-item> -->
 			<el-form-item label="申请标题">
 				<div style="width: 420px;">
 					<el-input v-model="form.title"></el-input>
@@ -23,12 +18,10 @@
 				</div>
 			</el-form-item>
 			<el-form-item label="学历信息">
-				<div style="width: 420px;">
 					<el-select v-model="form.xueli" placeholder="请选择">
 						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 						</el-option>
 					</el-select>
-				</div>
 			</el-form-item>
 
 			<el-form-item label="理由">
@@ -37,10 +30,6 @@
 					</el-input>
 				</div>
 			</el-form-item>
-
-
-
-			<!-- </el-row> -->
 			<el-form-item>
 				<el-button type="primary" @click="add()">提交申请</el-button>
 				<el-button type="primary" @click="qinkong()">清空信息</el-button>
@@ -87,9 +76,6 @@
 			}
 		},
 		methods: {
-
-
-
 			qinkong() {
 				this.form = {}
 			},
@@ -105,7 +91,8 @@
 				}).then(res => {
 					console.log("res", res)
 					if (res == 1) {
-						alert("新增成功");
+						this.form = {}
+						this.$message('申请成功');
 					} else {
 						alert("新增失败");
 					}
@@ -124,7 +111,4 @@
 		width: 50%;
 	}
 
-	body {
-		text-align: center
-	}
 </style>

@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 public class RecruitDemandVO {
     private String demandName;
+    private Integer rId;
     private String demandPosition;
     private String demandPositionInf;
     private String demandWorkyear;
@@ -26,6 +27,14 @@ public class RecruitDemandVO {
                 ", demandMoney='" + demandMoney + '\'' +
                 ", recruitRecruitapplyByRecruitapplyId=" + recruitRecruitapplyByRecruitapplyId +
                 '}';
+    }
+
+    public Integer getrId() {
+        return rId;
+    }
+
+    public void setrId(Integer rId) {
+        this.rId = rId;
     }
 
     public String getDemandName() {

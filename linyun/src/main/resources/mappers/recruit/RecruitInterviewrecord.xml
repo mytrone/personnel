@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gson.linyun.model.mapper.recruit.RecruitInterviewrecordMapper">
+    <resultMap id="base" type="cn.gson.linyun.model.pojos.recruit.RecruitInterviewrecord">
+        <id column="interviewrecord_id" property="interviewrecordId"/>
+        <id column="interviewrecord_name" property="interviewrecordName"/>
+        <id column="interviewrecord_interviewer" property="interviewrecordInterviewer"/>
+        <id column="Interviewrecord_time" property="interviewrecordTime"/>
+        <id column="Interviewrecord_number" property="interviewrecordNumber"/>
+    </resultMap>
+
+    <insert id="insertInterviewrecord" parameterType="cn.gson.linyun.model.pojos.recruit.RecruitInterviewrecord">
+        insert into recruit_Interviewrecord(
+            Interviewrecord_id,Interviewrecord_name,Interviewrecord_number
+        )
+        values (null,#{interviewrecordName},#{interviewrecordNumber})
+    </insert>
+
+    <select id="selectInterviewrecord" resultType="cn.gson.linyun.model.pojos.recruit.RecruitInterviewrecord">
+        select * from recruit_Interviewrecord
+    </select>
+
+</mapper>

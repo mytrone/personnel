@@ -6,6 +6,7 @@ import cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply;
 import cn.gson.linyun.model.pojos.recruit.vo.RecruitDemandVO;
 import cn.gson.linyun.model.pojos.recruit.vo.RecruitRecruitapplyVO;
 import cn.gson.linyun.model.service.recruit.RecruitDemandService;
+import cn.gson.linyun.model.service.recruit.RecruitRecruitapplyService;
 import com.sun.org.glassfish.external.probe.provider.annotations.ProbeParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +21,18 @@ import java.util.List;
 @RequestMapping("/recruitDemand")
 public class RecruitDemandController {
     @Autowired
-    RecruitDemandService service;
+    RecruitDemandService recruitDemandService;
+    @Autowired
+    RecruitRecruitapplyService recruitRecruitapplyService;
 
     @RequestMapping("/selectDemand")
     public List<RecruitDemand> selectDemand(){
-        return service.selectDemand();
+        return recruitDemandService.selectDemand();
     }
     @RequestMapping("/selectDemandId")
     public List<RecruitDemand> selectDemandId(@ProbeParam(value = "demandId") Integer demandId){
         System.out.println("牛牛牛"+demandId);
-        return service.selectDemandId(demandId);
+        return recruitDemandService.selectDemandId(demandId);
     }
 
     @RequestMapping("/insertDemand")
@@ -38,13 +41,15 @@ public class RecruitDemandController {
         //Timestamp获取当前系统时间
         Timestamp tim = new Timestamp(System.currentTimeMillis());
         System.out.println("水水水水"+vo);
+
         RecruitRecruitapply recruitRecruitapply=new RecruitRecruitapply();
-        recruitRecruitapply.setRecruitapplyId(1);
-        System.out.println(recruitRecruitapply.getRecruitapplyId());
-        //发布人
-        recruitDemand.setDemandName("当前登陆人");
+//        recruitRecruitapply.setRecruitapplyId(vo.getRecruitRecruitapplyByRecruitapplyId().getRecruitapplyId());
         //用人申请表id
 //        recruitDemand.setRecruitRecruitapplyByRecruitapplyId(recruitRecruitapply);
+
+        //发布人
+        recruitDemand.setDemandName("当前登陆人");
+
         //职位
         recruitDemand.setDemandPosition(vo.getDemandPosition());
         //职位信息
@@ -63,7 +68,8 @@ public class RecruitDemandController {
         //需求状态，状态默认为0，待审核
         recruitDemand.setDemandState(0);
 
-        Integer i = service.insertDemand(recruitDemand);
+        Integer i = recruitDemandService.insertDemand(recruitDemand);
+
         if(i>0){
             return 1;
         }else {

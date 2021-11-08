@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @RestController
 @RequestMapping("/recruitLookjl")
 public class RecruitLookjlController {
     @Autowired
     RecruitLookjlService service;
+
+    @RequestMapping("/selectRecruitLookjl")
+    public List<RecruitLookjl> selectRecruitLookjl(){
+        System.out.println("进入方法");
+        return service.selectRecruitLookjl();
+    }
+
 
     @RequestMapping("/insertrecruitLookjl")
     public Integer add(@RequestBody RecruitLookjlVO vo) {

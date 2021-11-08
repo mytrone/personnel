@@ -72,7 +72,7 @@
                     </el-menu-item>
 					<el-menu-item index="2-2">
 					    <el-menu-item index="2-2">
-					        <router-link to="recruit_demand">发布招聘信息</router-link>
+					        <router-link to="recruit_demand">面试记录</router-link>
 					    </el-menu-item>
 					</el-menu-item>
 					<el-menu-item index="2-3">

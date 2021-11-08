@@ -19,6 +19,7 @@ public class RecruitRecruitapplyService {
         return mapper.selectRecruitapply();
     }
 
+
     public Integer insertRecruitapply(RecruitRecruitapply recruitRecruitapply){
         Integer i = mapper.insertRecruitapply(recruitRecruitapply);
         if (i>0){

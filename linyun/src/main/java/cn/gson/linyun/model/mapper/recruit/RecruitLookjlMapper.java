@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface RecruitLookjlMapper {
     Integer insertRecruitLookjl(RecruitLookjl recruitLookjl);
+    List<RecruitLookjl> selectRecruitLookjl();
 }

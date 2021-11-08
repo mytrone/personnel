@@ -9,5 +9,6 @@ import java.util.List;
 @Mapper
 public interface RecruitRecruitapplyMapper {
     Integer insertRecruitapply(RecruitRecruitapply recruitRecruitapply);
+
     List<RecruitRecruitapply> selectRecruitapply();
 }

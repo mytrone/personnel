@@ -27,21 +27,8 @@
 	 </el-dialog>
 	 <el-dialog title="招聘详情" v-model="centerDialogVisible" width="60%">
 	 	<span>
-	 		<!-- {{check}} -->
-	 		<!-- <el-row>
-	 			<el-col>
-	 				招聘详情
-	 			</el-col>
-	 		</el-row> -->
 	 		<el-row style="margin-top: 21px;">
-	 			<el-col class="el-co" :span="3">
-	 				公司名称：
-	 			</el-col>
-	 			<el-col :span="4">
-	 				<div class="one">
-	 					
-	 				</div>
-	 			</el-col>
+	 			
 	 			<el-col class="el-co" :span="3">
 	 				招聘岗位：
 	 			</el-col>
@@ -69,7 +56,6 @@
 	 			</el-col>
 	 			<el-col :span="4">
 	 				<div class="one">
-	 					<!-- {{xinxi.demandPnum}}  &nbsp;人 -->
 	 				</div>
 	 			</el-col>
 	 			<el-col class="el-co" :span="3">
@@ -85,7 +71,7 @@
 				</el-col>
 				<el-col :span="4">
 					<div class="one">
-						<!-- {{check.positiontableByPositiontableId.positiontableName}} -->
+						
 					</div>
 				</el-col>
 	 		</el-row>
@@ -126,37 +112,18 @@
     <el-table
       :data="tableData"
       style="width: 100%">
-      <!-- <el-table-column
-        prop="demandName"
-        label="发布人"
-        width="180">
-      </el-table-column> -->
 	  <el-table-column
 	    prop="demandPosition"
 	    label="招聘岗位"
 	    width="180">
 	  </el-table-column>
-      <!-- <el-table-column
-        prop="demandPositionInf"
-        label="岗位信息"
-        width="180">
-      </el-table-column> -->
-	  <!-- <el-table-column
-	    prop="recruitRecruitapplyByRecruitapplyId.recruitapplyPnum"
-	    label="需求人数"
-	    width="180">
-	  </el-table-column> -->
       <el-table-column
         prop="demandAddress"
         label="地址">
       </el-table-column>
-	  <!-- <el-table-column
-	    prop="demandTel"
-	    label="联系方式(电话)">
-	  </el-table-column> -->
 	  <el-table-column
-	    prop="demandAddress"
-	    label="地址">
+	    prop="demandMoney"
+	    label="薪资范围">
 	  </el-table-column>
 	  <el-table-column
 	    prop="demandTime"
@@ -207,6 +174,9 @@ export default {
     }
   },
   methods: {
+	  open() {
+	          this.$message('发布成功');
+	        },
 	//投递简历
 	resumeson(){
 		this.axios.post("recruitLookjl/insertrecruitLookjl",{
@@ -216,7 +186,8 @@ export default {
 		).then(res=>{
 			console.log("res",res)
 			if (res == 1) {
-			    alert("新增成功");
+				this.form = {}
+			    this.open()
 			} else {
 			    alert("新增失败");
 			}
@@ -232,16 +203,14 @@ export default {
 			}
 		}).then(res => {
             this.xinxi =row
-            console.log("xinxi",res);
           })
 		this.centerDialogVisible=true
 	},
-    selectAll(){
-    	this.axios.post("recruitDemand/selectDemand").then(res=>{
-    		this.tableData=res
-    		console.log("tableData",this.tableData)
-    	})
-    }
+	selectAll(){
+		this.axios.post("recruitDemand/selectDemand").then(res=>{
+			this.tableData=res
+		})
+	},
   },created() {
 	  this.selectAll()
   }

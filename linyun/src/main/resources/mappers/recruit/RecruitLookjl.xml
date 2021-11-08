@@ -17,5 +17,9 @@
         values (null,#{lookjlName},#{lookjlStudy})
     </insert>
 
+    <select id="selectRecruitLookjl" resultType="cn.gson.linyun.model.pojos.recruit.RecruitLookjl">
+        select * from recruit_lookjl
+    </select>
+
 
 </mapper>
