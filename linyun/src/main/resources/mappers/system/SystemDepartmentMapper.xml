@@ -10,7 +10,7 @@
     <select id="selDepartment" resultMap="SystemDepartmentMap">
         select * from system_department where 1=1
         <if test="departmentName!=null and departmentName!=''">
-            and department_name='${departmentName}'
+            and department_name like'%${departmentName}%'
         </if>
     </select>
     <!--部门新增-->
