@@ -1,6 +1,9 @@
 package cn.gson.linyun.model.pojos.system;
 
 
+import javax.persistence.OneToMany;
+import java.util.List;
+
 public class SystemAuthority {
 
   private long authorityId;
@@ -9,7 +12,7 @@ public class SystemAuthority {
   private String authorityPath;
   private String authorityIoc;
   private long authorityParentId;
-
+  private List<SystemAuthority> authorityChilds;
 
   public long getAuthorityId() {
     return authorityId;
@@ -63,5 +66,12 @@ public class SystemAuthority {
   public void setAuthorityParentId(long authorityParentId) {
     this.authorityParentId = authorityParentId;
   }
+  @OneToMany
+  public List<SystemAuthority> getAuthorityChilds() {
+    return authorityChilds;
+  }
 
+  public void setAuthorityChilds(List<SystemAuthority> authorityChilds) {
+    this.authorityChilds = authorityChilds;
+  }
 }

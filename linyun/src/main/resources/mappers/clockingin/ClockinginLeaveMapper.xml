@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.clockingin.IClockinginLeaveMapper">
+
+    <resultMap id="LeaveMap" type="cn.gson.linyun.model.pojos.clockingin.ClockinginLeave">
+        <id column="leave_id" property="leaveId" />
+        <result column ="leave_name" property="leaveName" />
+        <result column ="leave_start" property="leaveStart" />
+        <result column ="leave_finish" property="leaveFinish" />
+        <result column ="leave_days" property="leaveDays" />
+        <result column ="leave_reason" property="leaveReason" />
+        <association property="empId" javaType="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
+            <id column="emp_id" property="empId" />
+            <result column="emp_name" property="empName" />
+        </association>
+        <association property="departmentId" javaType="cn.gson.linyun.model.pojos.system.SystemDepartment">
+            <id column="department_id" property="departmentId" />
+            <result column="department_name" property="departmentName" />
+        </association>
+        <association property="postId" javaType="cn.gson.linyun.model.pojos.system.SystemPost">
+            <id column="post_id" property="postId" />
+            <result column="post_name" property="postName" />
+        </association>
+        <association property="flowId" javaType="cn.gson.linyun.model.pojos.workflow.WorkflowFlow">
+            <id column="flow_id" property="flowId" />
+            <result column="flow_name" property="flowName" />
+        </association>
+    </resultMap>
+<!--查询当前员工所有请假信息 selectAllByEmpId-->
+    <select id="selectAllByEmpId" resultMap="LeaveMap" parameterType="java.lang.Integer">
+    select
+     ckl.leave_id,ckl.leave_name,ckl.leave_start,
+     ckl.leave_finish,ckl.leave_days,ckl.leave_reason,
+     ae.emp_id,ae.emp_name,
+     sd.department_id,sd.department_name,
+     sp.post_id,sp.post_name,
+    wf.flow_id,wf.flow_name
+
+     from clockingin_leave ckl
+      INNER JOIN system_department sd on ckl.department_id=sd.department_id
+    INNER JOIN system_post sp on ckl.post_id=sp.post_id
+     INNER JOIN workflow_flow wf on ckl.flow_id=wf.flow_id
+    INNER JOIN archives_emp ae on ckl.emp_id=ae.emp_id where ckl.emp_id=#{empId}
+     ORDER BY ckl.leave_start DESC
+    </select>
+</mapper>

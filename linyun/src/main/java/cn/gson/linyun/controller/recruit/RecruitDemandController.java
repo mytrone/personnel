@@ -6,18 +6,31 @@ import cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply;
 import cn.gson.linyun.model.pojos.recruit.vo.RecruitDemandVO;
 import cn.gson.linyun.model.pojos.recruit.vo.RecruitRecruitapplyVO;
 import cn.gson.linyun.model.service.recruit.RecruitDemandService;
+import com.sun.org.glassfish.external.probe.provider.annotations.ProbeParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @RestController
 @RequestMapping("/recruitDemand")
 public class RecruitDemandController {
     @Autowired
     RecruitDemandService service;
+
+    @RequestMapping("/selectDemand")
+    public List<RecruitDemand> selectDemand(){
+        return service.selectDemand();
+    }
+    @RequestMapping("/selectDemandId")
+    public List<RecruitDemand> selectDemandId(@ProbeParam(value = "demandId") Integer demandId){
+        System.out.println("牛牛牛"+demandId);
+        return service.selectDemandId(demandId);
+    }
 
     @RequestMapping("/insertDemand")
     public Integer add(@RequestBody RecruitDemandVO vo){
@@ -29,7 +42,11 @@ public class RecruitDemandController {
         recruitRecruitapply.setRecruitapplyId(1);
         System.out.println(recruitRecruitapply.getRecruitapplyId());
         //发布人
-        recruitDemand.setDemandName(vo.getDemandName());
+        recruitDemand.setDemandName("当前登陆人");
+        //用人申请表id
+//        recruitDemand.setRecruitRecruitapplyByRecruitapplyId(recruitRecruitapply);
+        //职位
+        recruitDemand.setDemandPosition(vo.getDemandPosition());
         //职位信息
         recruitDemand.setDemandPositionInf(vo.getDemandPositionInf());
         //工作经验（年）

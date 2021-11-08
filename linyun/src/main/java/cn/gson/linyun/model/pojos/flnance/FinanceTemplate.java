@@ -20,11 +20,28 @@ public class FinanceTemplate {
   private String templateSerial;//模板编号
   private Timestamp templateDate;//创建时间
   private String templateName;//模板名
+  private int templateState;//模板名
   private ArchivesEmp archivesEmpByEmpId;//用户对象
   private Alinkey alinkeyByAlinkeyId;//类别对象
 
   private Collection<Relationship34> relationship34sByTemplateId;//中间表新增
   private List<FinanceItem> financeItem;
+
+  public String getTemplateName() {
+    return templateName;
+  }
+
+  public void setTemplateName(String templateName) {
+    this.templateName = templateName;
+  }
+
+  public int getTemplateState() {
+    return templateState;
+  }
+
+  public void setTemplateState(int templateState) {
+    this.templateState = templateState;
+  }
 
   @OneToMany
   public List<FinanceItem> getFinanceItem() {
@@ -42,7 +59,6 @@ public class FinanceTemplate {
   public void setTemplateId(int templateId) {
     this.templateId = templateId;
   }
-
 
 
   public long getEmpId() {
@@ -77,13 +93,7 @@ public class FinanceTemplate {
     this.templateDate = templateDate;
   }
 
-  public String getTemplateName() {
-    return templateName;
-  }
 
-  public void setTemplateName(String templateName) {
-    this.templateName = templateName;
-  }
 
   @ManyToOne
   @JoinColumn(name = "emp_id", referencedColumnName = "emp_id")

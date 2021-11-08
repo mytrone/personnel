@@ -6,26 +6,24 @@ import java.sql.Timestamp;
 
 public class RecruitDemandVO {
     private String demandName;
+    private String demandPosition;
     private String demandPositionInf;
     private String demandWorkyear;
     private String demandAddress;
     private String demandTel;
     private String demandMoney;
-    private Timestamp demandTime;
-    private Integer demandState;
     private RecruitRecruitapply recruitRecruitapplyByRecruitapplyId;
 
     @Override
     public String toString() {
         return "RecruitDemandVO{" +
                 "demandName='" + demandName + '\'' +
+                ", demandPosition='" + demandPosition + '\'' +
                 ", demandPositionInf='" + demandPositionInf + '\'' +
                 ", demandWorkyear='" + demandWorkyear + '\'' +
                 ", demandAddress='" + demandAddress + '\'' +
                 ", demandTel='" + demandTel + '\'' +
                 ", demandMoney='" + demandMoney + '\'' +
-                ", demandTime=" + demandTime +
-                ", demandState=" + demandState +
                 ", recruitRecruitapplyByRecruitapplyId=" + recruitRecruitapplyByRecruitapplyId +
                 '}';
     }
@@ -37,6 +35,15 @@ public class RecruitDemandVO {
     public void setDemandName(String demandName) {
         this.demandName = demandName;
     }
+
+    public String getDemandPosition() {
+        return demandPosition;
+    }
+
+    public void setDemandPosition(String demandPosition) {
+        this.demandPosition = demandPosition;
+    }
+
 
     public String getDemandPositionInf() {
         return demandPositionInf;
@@ -76,22 +83,6 @@ public class RecruitDemandVO {
 
     public void setDemandMoney(String demandMoney) {
         this.demandMoney = demandMoney;
-    }
-
-    public Timestamp getDemandTime() {
-        return demandTime;
-    }
-
-    public void setDemandTime(Timestamp demandTime) {
-        this.demandTime = demandTime;
-    }
-
-    public Integer getDemandState() {
-        return demandState;
-    }
-
-    public void setDemandState(Integer demandState) {
-        this.demandState = demandState;
     }
 
     public RecruitRecruitapply getRecruitRecruitapplyByRecruitapplyId() {

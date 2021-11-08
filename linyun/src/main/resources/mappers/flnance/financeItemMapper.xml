@@ -4,7 +4,7 @@
 <mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceItemMapper">
 <!--    查询-->
     <insert id="allFinance">
-        insert  into  finance_item  values(0,#{itemName},#{itemExplain})
+        insert  into  finance_item  values(0,#{itemName},#{itemExplain},#{itemScore})
     </insert>
     <select id="sllFinance" resultType="FinanceItem">
         select*from finance_item

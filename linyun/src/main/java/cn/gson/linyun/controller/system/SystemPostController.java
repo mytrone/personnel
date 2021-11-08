@@ -15,17 +15,17 @@ public class SystemPostController {
     SystemPostService systemPostService;
     //查看职位
     @GetMapping("/selPost")
-    public List<SystemPost> selPost(){
-        return systemPostService.selPost();
+    public List<SystemPost> selPost(String param){
+        return systemPostService.selPost(param);
     }
     //新增职位
     @PostMapping("/addPost")
-    public void addPost(SystemPost systemPost){
+    public void addPost(@RequestBody SystemPost systemPost){
         systemPostService.addPost(systemPost);
     }
     //修改职位
     @PostMapping("/changePost")
-    public void changePost(SystemPost post){
+    public void changePost(@RequestBody SystemPost post){
         systemPostService.changePost(post);
     }
     //删除职位

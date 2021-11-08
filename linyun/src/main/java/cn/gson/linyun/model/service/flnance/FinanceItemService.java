@@ -14,16 +14,16 @@ import java.util.List;
 public class FinanceItemService {
     @Autowired
     FinanceItemMapper financeTemplateMapper;
-    public void allFinance(FinanceItem financeItem){
+    public void allFinance(FinanceItem financeItem){//新增项目表
         financeTemplateMapper.allFinance(financeItem);
     }
-    public List<FinanceItem> sllFinance(FinanceItem financeItem){
+    public List<FinanceItem> sllFinance(FinanceItem financeItem){//查询项目表
       return   financeTemplateMapper.sllFinance(financeItem);
     }
-    public void deFinance(FinanceItem financeItem){
+    public void deFinance(FinanceItem financeItem){//删除项目
         financeTemplateMapper.deFinance(financeItem);
     }
-    public List<Alinkey>allAlinkey(){
+    public List<Alinkey>allAlinkey(){//查询考核类别表
         return financeTemplateMapper.allAlinkey();
     }
 }

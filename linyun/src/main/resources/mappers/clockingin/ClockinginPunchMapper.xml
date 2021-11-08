@@ -11,7 +11,8 @@
 
     <!--新增打卡记录-->
     <insert id="insertPunch" parameterType="cn.gson.linyun.model.pojos.clockingin.ClockinginPunch">
-        insert  into clockingin_punch(punch_id,punch_card) values (null ,#{punchCard})
+        insert  into clockingin_punch(punch_id,alinkey_id,emp_id,punch_card)
+         values (null,#{alinkeyByAlinkeyId.alinkeyId},#{archivesEmpByArchivesId.empId} ,#{punchCard})
     </insert>
 
     <resultMap id="punchOneMap" type="cn.gson.linyun.model.pojos.clockingin.ClockinginPunch">
