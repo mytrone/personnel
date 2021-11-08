@@ -23,5 +23,8 @@ public interface ArchivesEmpMapper {
      */
     ArchivesEmp SelectByPostPo(Integer id);
 
+
+    /*根据员工编号查询 selectEmpById*/
+    ArchivesEmp selectEmpById(Integer empId);
 }
 

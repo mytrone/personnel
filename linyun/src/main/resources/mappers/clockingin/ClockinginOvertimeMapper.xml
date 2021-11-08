@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.linyun.model.mapper.clockingin.IClockinginOvertimeMapper">
+
+    <resultMap id="overtimeMap" type="cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime">
+        <id column="overtime_id" property="overtimeId" />
+        <result column="overtime_start" property="overtimeStart" />
+        <result column="overtime_finish" property="overtimeFinish" />
+    </resultMap>
+
+    <!--查询当天是否有加班申请 selectOvertimeByEmpId-->
+    <select id="selectOvertimeByEmpId" resultMap="overtimeMap" parameterType="java.lang.Integer">
+      select
+       co.overtime_id,co.overtime_start,co.overtime_finish
+       from clockingin_overtime co
+        LEFT JOIN archives_emp ae on co.emp_id=ae.emp_id
+      where  ae.emp_id=#{empId} and to_days(co.overtime_start)=to_days(now()) and co.overtime_state=2
+    </select>
+
+    <resultMap id="OverAllMap" type="cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime">
+        <id column="overtime_id" property="overtimeId" />
+        <result column="overtime_start" property="overtimeStart" />
+        <result column="overtime_finish" property="overtimeFinish" />
+        <result column="overtime_duration" property="overtimeDuration" />
+        <result column="overtime_reason" property="overtimeReason" />
+        <association property="archivesEmpByEmpId" javaType="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
+            <id column="emp_id" property="empId" />
+            <result column ="emp_name" property="empName" />
+        </association>
+        <association property="alinkeyByAlinkeyId" javaType="cn.gson.linyun.model.pojos.workflow.Alinkey">
+            <id column="alinkey_id" property="alinkeyId" />
+            <result column="alinkey_name" property="alinkeyName" />
+        </association>
+    </resultMap>
+    <!--查询当前员工所有的加班申请 selectOverAllByEmpId-->
+    <select id="selectOverAllByEmpId" resultMap="OverAllMap" parameterType="java.lang.Integer">
+        select
+         ae.emp_id,ae.emp_name
+        ,co.overtime_id,co.overtime_start,co.overtime_finish
+        ,co.overtime_duration,co.overtime_reason
+        ,ak.alinkey_id,ak.alinkey_name
+         from archives_emp ae
+          INNER JOIN clockingin_overtime co on ae.emp_id=co.emp_id
+          INNER JOIN alinkey ak on co.alinkey_id=ak.alinkey_id
+         where ae.emp_id=#{empId}
+        <if test="start != null and start!=''">
+            and co.overtime_start &gt;= #{start}
+        </if>
+        <if test="finish != null and finish != ''">
+            and co.overtime_start &lt;= #{finish}
+        </if>
+        ORDER BY co.overtime_start DESC
+    </select>
+
+    <!--新增加班申请记录-->
+    <insert id="insertOvertime" useGeneratedKeys="true" keyProperty="overtimeId"
+            parameterType="cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime">
+        insert into clockingin_overtime VALUES(null,#{archivesEmpByEmpId.empId},#{archivesEmpByArcEmpId.empId},
+        #{alinkeyByAlinkeyId.alinkeyId},#{workflowFlowByFlowId.flowId},#{systemPostBySystemPost.postId}
+        ,#{systemDepartmentByDepartmentId.departmentId},#{overtimeStart},#{overtimeFinish},
+        #{overtimeDuration},#{overtimeReason},#{overtimeState})
+    </insert>
+
+
+</mapper>

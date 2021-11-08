@@ -1,5 +1,6 @@
 package cn.gson.linyun.model.pojos.workflow;
 
+import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Data
@@ -24,6 +26,8 @@ public class WorkflowFlow {
     @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp flowTime;
     private Integer flowPosition;
+
+    private Collection<ClockinginLeave> clockinginLeavesByFlow;
 
 
 }

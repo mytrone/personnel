@@ -22,4 +22,8 @@ public interface ISystemPostMapper {
      * @return
      */
     SystemPost SelectByid(Integer id);
+
+    /*根据类型查询 selectByPostId postId*/
+    SystemPost selectByPostId(Integer postId);
+
 }

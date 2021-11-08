@@ -178,6 +178,30 @@ let routes = [{
 					title: "下一个审批人"
 				}
 
+			},
+			{
+				path: '/clockinginovertime',
+				name: 'clockinginovertime',
+				component: () => import('@/components/ClockinginOvertime.vue'),
+				meta: {
+					title: '加班申请记录'
+				}
+			},
+			{
+				path: '/clockinginovertimeadd',
+				name: 'clockinginovertimeadd',
+				component: () => import('@/components/ClockinginOvertimeAdd.vue'),
+				meta:{
+					title:"加班申请"
+				}
+			},
+			{
+				path:"/clockinginleave",
+				name:"clockinginleave",
+				component:()=> import("@/components/ClockinginLeave.vue"),
+				meta:{
+					title:"请假申请"
+				}
 			}
 
 		]

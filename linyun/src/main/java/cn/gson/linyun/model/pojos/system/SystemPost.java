@@ -3,6 +3,10 @@ package cn.gson.linyun.model.pojos.system;
 
 import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
 
+import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
+import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
+
+import java.util.Collection;
 import java.util.List;
 
 public class SystemPost {
@@ -21,6 +25,25 @@ public class SystemPost {
 
   public void setPostGrade(Integer postGrade) {
     PostGrade = postGrade;
+  }
+
+  private Collection<ClockinginOvertime> clockinginOvertimesBySystemPost;
+  private Collection<ClockinginLeave> clockinginLeavesByPost;
+
+  public Collection<ClockinginLeave> getClockinginLeavesByPost() {
+    return clockinginLeavesByPost;
+  }
+
+  public void setClockinginLeavesByPost(Collection<ClockinginLeave> clockinginLeavesByPost) {
+    this.clockinginLeavesByPost = clockinginLeavesByPost;
+  }
+
+  public Collection<ClockinginOvertime> getClockinginOvertimesBySystemPost() {
+    return clockinginOvertimesBySystemPost;
+  }
+
+  public void setClockinginOvertimesBySystemPost(Collection<ClockinginOvertime> clockinginOvertimesBySystemPost) {
+    this.clockinginOvertimesBySystemPost = clockinginOvertimesBySystemPost;
   }
 
   public long getPostId() {
