@@ -21,4 +21,8 @@ public class AlinkeyService {
         return alinkeyMapper.SelectByid(id);
     }
 
+    /*根据名称查询 selectAlinkeyByName*/
+    public Alinkey selectAlinkeyByName(String name){
+        return alinkeyMapper.selectAlinkeyByName(name);
+    }
 }

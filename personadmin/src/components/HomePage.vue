@@ -15,14 +15,33 @@
 							<span style="font-size: 18px;">{{hour}}</span>
 						</el-col>
 
+						<!-- {{frequency.length}} -->
 						<el-col style="text-align: right;" :span="12">
-							<el-button type="primary" :disabled="frequency.length==2 || frequency.length==4" @click="signin(frequency.length)">
-								{{frequency.length==0?"上班签到":
-								frequency.length==1?"下班签到":"完成打卡"
-								}}<!-- frequency.length==2?"加班上班签到":
-								frequency.length==3?"加班下班签到":"" -->
-								
-							</el-button>
+							<span v-if="frequency.length<=2">
+								<span v-if="overtime.length==0">
+									<el-button type="primary" :disabled="frequency.length==2 || frequency.length==4"
+										@click="signin(frequency.length)">
+										{{frequency.length==0?"上班签到":
+										frequency.length==1?"下班签到":"完成打卡"
+										}}
+										<!-- frequency.length==2?"加班上班签到":
+										frequency.length==3?"加班下班签到":"" -->
+									</el-button>
+								</span>
+							</span>
+							<span v-if="frequency.length>=2">
+								<span v-if="overtime.length!=0">
+									<el-button type="primary" :disabled="frequency.length==4"
+										@click="signin(frequency.length)">
+										{{frequency.length==2?"加班上班签到":
+										frequency.length==3?"加班下班签到":"完成打卡"
+										}}
+										<!-- frequency.length==2?"加班上班签到":
+										frequency.length==3?"加班下班签到":"" -->
+									</el-button>
+								</span>
+							</span>
+
 						</el-col>
 
 					</el-row>
@@ -82,7 +101,8 @@
 				hour: "",
 				punchState: "上班",
 				state: "",
-				frequency: [] //打卡次数  计算属于下次打卡属于打卡类型
+				frequency: [], //打卡次数  计算属于下次打卡属于打卡类型
+				overtime: []
 			};
 		},
 		/* computed: {
@@ -94,6 +114,17 @@
 			}
 		}, */
 		methods: {
+			/* 查询当天是否存在以通过的加班申请 */
+			overtimeState() {
+				this.axios.get("punch/OvertimeByEmpId", {
+					params: {
+						empId: 1
+					}
+				}).then(res => {
+					console.log(res)
+					this.overtime = res.data
+				});
+			},
 			punch() {
 				/* 查询当前是发以打卡 */
 				this.axios.get("punch", {
@@ -101,40 +132,60 @@
 						empid: 1
 					}
 				}).then(res => {
-					if (res.data != null) {
-						console.log(res)
-						res.data.forEach(r=>{
-							console.log(r,4)
-							r.punchCard=moment(r.punchCard).format("HH:mm:ss")
+					// console.log(res)
+					if (res != null) {
+						// console.log(res)
+						res.forEach(r => {
+							// console.log(r, 4)
+							r.punchCard = moment(r.punchCard).format("HH:mm:ss")
 						})
-						this.frequency = res.data
+						this.frequency = res
+						if(this.frequency.length==2){
+							console.log(2)
+							this.overtimeState(); /*  */
+						}
 					}
 
 				});
 			},
 			signin(index) {
-				console.log(this.nowDate)
-				console.log(this.hour)
-				if(index+1<3){
-					console.log(index,"=====")
-					if (this.hour === "18:00") {
+				// console.log(this.nowDate)
+				// console.log(this.hour)
+				console.log(index, "=====")
+				if (index + 1 == 1) {
+					if (this.hour === "07:00" || this.hour <= "09:00") {
+						this.state = "正常";
+						// console.log("正常打卡")
+					} else if (this.hour > "09:00") {
+						this.state = "迟到";
+						// console.log("当前打卡为早退")
+					}
+				} else if (index + 1 == 2) {
+					// console.log(index, "=====")
+					if (this.hour === "18:00" || this.hour >= "18:00") {
 						this.state = "正常";
 						console.log("正常打卡")
 					} else if (this.hour < "18:00") {
 						this.state = "早退";
 						console.log("当前打卡为早退")
 					}
+				} else if (index + 1 == 3) {
+					console.log("正常")
+					this.state = "加班正常卡";
+				} else if (index + 1 == 4) {
+					console.log("正常")
+					this.state = "加班正常卡";
 				}
-				
+
 				this.axios.post("punch/addPunch", qs.stringify({
 					date: this.nowDate + " " + this.hour,
 					empid: 1,
 					state: this.state
 				})).then(res => {
-					console.log(res)
-					if (res > 0) {
+					// console.log(res)
+					if (res.code > 0) {
 						ElMessage({
-							message: "打卡成功",
+							message: res.msg,
 							type: 'success'
 						});
 						this.punch();

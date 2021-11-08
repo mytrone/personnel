@@ -1,6 +1,8 @@
 package cn.gson.linyun.model.pojos.recruit;
 
+import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
+import cn.gson.linyun.model.pojos.clockingin.ClockinginPunch;
 import cn.gson.linyun.model.pojos.flnance.FinanceTemplate;
 
 import javax.persistence.*;
@@ -25,6 +27,60 @@ public class ArchivesEmp {
     private Collection<ClockinginOvertime> clockinginOvertimesByEmpId;
     private Collection<ClockinginOvertime> clockinginOvertimesByEmpId_0;
     private Collection<FinanceTemplate> financeTemplatesByEmpId;
+    private Collection<ClockinginLeave> clockinginLeaves;
+    private Collection<ClockinginLeave> clockinginLeavesByEmpId;
+
+
+    @Override
+    public String toString() {
+        return "ArchivesEmp{" +
+                "empId=" + empId +
+                ", empName='" + empName + '\'' +
+                ", empsonSex='" + empsonSex + '\'' +
+                ", empsonCard='" + empsonCard + '\'' +
+                ", empsonEmail='" + empsonEmail + '\'' +
+                ", empsonTel=" + empsonTel +
+                ", empsonBank='" + empsonBank + '\'' +
+                ", empsonEducation='" + empsonEducation + '\'' +
+                ", empsonDay=" + empsonDay +
+                ", empsonBirthday=" + empsonBirthday +
+                ", topId=" + topId +
+                '}';
+    }
+
+    public Collection<ClockinginLeave> getClockinginLeaves() {
+        return clockinginLeaves;
+    }
+
+    public void setClockinginLeaves(Collection<ClockinginLeave> clockinginLeaves) {
+        this.clockinginLeaves = clockinginLeaves;
+    }
+
+    public Collection<ClockinginLeave> getClockinginLeavesByEmpId() {
+        return clockinginLeavesByEmpId;
+    }
+
+    public void setClockinginLeavesByEmpId(Collection<ClockinginLeave> clockinginLeavesByEmpId) {
+        this.clockinginLeavesByEmpId = clockinginLeavesByEmpId;
+    }
+
+    private Collection<ClockinginPunch> clockinginPunchesByEmpId;
+
+    public Collection<FinanceTemplate> getFinanceTemplatesByEmpId() {
+        return financeTemplatesByEmpId;
+    }
+
+    public void setFinanceTemplatesByEmpId(Collection<FinanceTemplate> financeTemplatesByEmpId) {
+        this.financeTemplatesByEmpId = financeTemplatesByEmpId;
+    }
+
+    public Collection<ClockinginPunch> getClockinginPunchesByEmpId() {
+        return clockinginPunchesByEmpId;
+    }
+
+    public void setClockinginPunchesByEmpId(Collection<ClockinginPunch> clockinginPunchesByEmpId) {
+        this.clockinginPunchesByEmpId = clockinginPunchesByEmpId;
+    }
 
     public Integer getEmpId() {
         return empId;

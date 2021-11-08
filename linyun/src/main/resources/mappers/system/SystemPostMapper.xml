@@ -20,6 +20,15 @@
         select *,p1.post_name pname from system_post p left join system_post p1 on p.post_parent_id=p1.post_id
     </select>
 
+    <resultMap id="postMap" type="cn.gson.linyun.model.pojos.system.SystemPost">
+        <id column="post_id" property="postId" />
+        <result column="post_name" property="postName" />
+    </resultMap>
+    <!--根据类型查询 selectByPostId postId-->
+    <select id="selectByPostId" resultMap="postMap">
+        select post_id,post_name from system_post where post_id=#{postId}
+    </select>
+
     <!--新增职位表-->
     <insert id="addPost">
         insert into system_post(post_name,department_id,post_parent_id)values (#{postName},#{departmentId},#{postParentId})

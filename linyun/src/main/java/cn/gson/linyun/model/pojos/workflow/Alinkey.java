@@ -1,5 +1,6 @@
 package cn.gson.linyun.model.pojos.workflow;
 
+import cn.gson.linyun.model.pojos.clockingin.ClockinginLeave;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginOvertime;
 import cn.gson.linyun.model.pojos.clockingin.ClockinginPunch;
 import cn.gson.linyun.model.pojos.flnance.FinanceTemplate;
@@ -28,6 +29,8 @@ public class Alinkey {
 
     private Collection<ClockinginPunch> clockinginPunchesByAlinkeyId;
     private Collection<ClockinginOvertime> clockinginOvertimesByAlinkeyId;
+
+    private Collection<ClockinginLeave> clockinginLeaves;
 
 
     private Collection<FinanceTemplate> financeTemplatesByAlinkeyId;

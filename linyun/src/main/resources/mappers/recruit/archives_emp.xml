@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.gson.linyun.model.mapper.recruit.ArchivesEmpMapper">
+    <resultMap id="archivesEmpMap" type="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
+        <id column="emp_id" property="empId" />
+        <result column="emp_name" property="empName" />
+    </resultMap>
+    <!--根据员工编号查询 selectEmpById-->
+    <select id="selectEmpById" resultMap="archivesEmpMap" parameterType="java.lang.Integer">
+        select emp_id,emp_name from archives_emp where emp_id=#{empId}
+    </select>
+
     <resultMap id="base" type="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
         <id column="empId" property="empId"/>
         <id column="empName" property="empName"/>

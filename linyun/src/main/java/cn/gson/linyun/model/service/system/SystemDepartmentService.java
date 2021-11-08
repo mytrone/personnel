@@ -29,4 +29,9 @@ public class SystemDepartmentService {
     public void delDepartment(int departmentId){
         iSystemDepartmentMapper.delDepartment(departmentId);
     }
+
+    /*根据编号查询 selectByDeptId deptId*/
+    public SystemDepartment selectByDeptId(Integer deptId){
+        return iSystemDepartmentMapper.selectByDeptId(deptId);
+    }
 }

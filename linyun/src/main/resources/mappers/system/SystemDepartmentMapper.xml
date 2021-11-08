@@ -25,4 +25,13 @@
     <update id="changeDepartment">
         update system_department set department_name=#{departmentName} where department_id=#{departmentId}
     </update>
+
+    <resultMap id="deparMap" type="cn.gson.linyun.model.pojos.system.SystemDepartment">
+        <id column="department_id" property="departmentId" />
+        <result column="department_name" property="departmentName" />
+    </resultMap>
+    <!--根据编号查询 selectByDeptId deptId-->
+    <select id="selectByDeptId" resultMap="deparMap">
+        select department_id,department_name from system_department where department_id=#{deptId}
+    </select>
 </mapper>
