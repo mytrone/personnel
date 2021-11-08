@@ -28,13 +28,12 @@ public class FinanceCheckService {
     }
     public void  addEmp(Map<String,Object> datas){//批量新增
         //新增考核表
-        String number=  MyUtil.genrateNo("KH");//随机生成模板编号
+
         System.out.println(datas);
         List<Integer>empId=(List<Integer>)datas.get("archivesEmpList");
         String str= JSON.toJSONString(datas.get("financeCheckson"));
         List<FinanceCheckson> list=JSON.parseArray(str,FinanceCheckson.class);
 
-        System.out.println(empId);
 
 
         String checkPy=(String) datas.get("checkRemark") ;//获取值
@@ -43,12 +42,15 @@ public class FinanceCheckService {
 
 
         int sun=0;
-        int kw=1;
+        int kw=0;
         for (Integer k: empId) {//按人员来新增主表数据、前台选中多少人循环多少次
-            kw++;
-            System.out.println(kw);
+            kw+=1;
+
             FinanceCheck rmp=new FinanceCheck();
-            if(kw>=empId.size()){
+            String number=  MyUtil.genrateNo("KH");//随机生成模板编号
+
+
+            if(kw<=empId.size()){
 
 
 
@@ -60,21 +62,21 @@ public class FinanceCheckService {
                     bmp.setChecksonExplain(souy.getChecksonExplain());
                     bmp.setCheckSerial(number);
                     sun+=souy.getChecksonPoints();
-                  System.out.println(666);
-                    System.out.println(bmp);
-                  financeChecksonMpper.addCheckson(bmp);
+                   financeChecksonMpper.addCheckson(bmp);
 
-                  rmp.setCheckPoints(sun);
-                  rmp.setEmpId(k);
-                  rmp.setCheckRemark(checkPy);
-                  rmp.setCheckTemplate(checkMz);
-                  rmp.setCheckSerial(number);
-                  financeCheckMpper.addEmp(rmp);
+
 
                }
-
-              continue;
+                rmp.setCheckPoints(sun);
+                continue;
             }
+            rmp.setEmpId(k);
+            rmp.setCheckRemark(checkPy);
+            rmp.setCheckTemplate(checkMz);
+            rmp.setCheckSerial(number);
+
+            financeCheckMpper.addEmp(rmp);
+            continue;
 
 
         }

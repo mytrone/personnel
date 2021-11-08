@@ -16,7 +16,7 @@ public class FinanceChecksonService {
     FinanceChecksonMpper financeChecksonMpper;
     //子表查询
     public List<FinanceCheckson> seCheckson(FinanceCheckson financeCheckson){
-        financeChecksonMpper.seCheckson(financeCheckson);
+       return financeChecksonMpper.seCheckson(financeCheckson);
     }
 
 }

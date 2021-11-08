@@ -22,7 +22,7 @@ public class FinanceChenckContorller {
         return financeCheckService.allEmp();
     }
     @RequestMapping("/addChencks")
-    public String addEmp(@RequestBody Map<String,Object> datas){//查询员工
+    public String addEmp(@RequestBody Map<String,Object> datas){//新增评分表和从表
 
         financeCheckService.addEmp(datas);
        return "ok";

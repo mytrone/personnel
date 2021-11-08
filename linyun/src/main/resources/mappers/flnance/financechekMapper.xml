@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceCheckMpper">
-    <resultMap id="lefgl" type="cn.gson.linyun.model.pojos.flnance.FinanceTemplate">
+    <resultMap id="lefgl" type="cn.gson.linyun.model.pojos.flnance.FinanceCheck">
         <id column="check_id" property="checkId"/>
         <result column="check_points" property="checkPoints"/>
         <result column="check_remark" property="checkRemark"/>
         <result column="check_template" property="checkTemplate"/>
         <result column="check_serial" property="checkSerial"/>
-        <result column="check_date" property="check_date"/>
-        <association property="EmpList" javaType="ArchivesEmp">
+        <result column="check_date" property="checkDate"/>
+        <association property="empList" javaType="ArchivesEmp">
             <id column="emp_id" property="empId"/>
             <result column="emp_name" property="empName"/>
         </association>

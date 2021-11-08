@@ -59,22 +59,35 @@
 			</el-table>
 		</el-tab-pane>
 		<el-tab-pane label="查询评分" name="second">
-				<el-table :data="financeCheck.financeCheckson" style="width:100%" :header-cell-style="{'text-align':'center'}"
+			<el-col :span="7" :push="1">
+				<el-input v-model="inputy" placeholder="请输入项目名查询"> </el-input>
+			</el-col>
+			<el-col :span="7" id="shuru1" :push="2">
+				<el-row>
+					<el-button type="primary" @click="getFinanceItem()">查询</el-button>
+				</el-row>
+			</el-col>
+				<el-table :data="financeCheckw" style="width:100%" :header-cell-style="{'text-align':'center'}"
 				:cell-style="{'text-align':'center'}">
-				<el-table-column label="项目名" prop="checksonName">
-
+				<el-table-column label="序号" prop="checkId">
 				</el-table-column>
-				<el-table-column label="项目评分" prop="checksonScore">
-
+				<el-table-column label="项目评分" prop="checkPoints">
 				</el-table-column>
-				<el-table-column label="项目说明" prop="checksonExplain">
-
+				<el-table-column label="考核模板名" prop="checkTemplate">
 				</el-table-column>
-				<el-table-column label="上级评分" prop="checksonPoints">
+				<el-table-column label="考核编号" prop="checkSerial">
+				</el-table-column>
+				<el-table-column label="评分时间" prop="checkDate">
+				</el-table-column>
+				<el-table-column label="受评人" prop="empList.empName">
+				</el-table-column>
+				<el-table-column label="操作" prop="checksonPoints">
 					<template v-slot:default="scope">
-						<el-input-number v-model="scope.row.checksonPoints" controls-position="right" :min="1" :max="10"
-							style="width: 100px">
-						</el-input-number>
+						
+							<el-button type="primary" size="medium" @click="delDrugw(scope.row)"
+								style="margin:  0  auto;">查询评分详细
+							</el-button>
+						
 					</template>
 				</el-table-column>
 				
@@ -138,6 +151,8 @@
 		},
 		data() {
 			return {
+				financeCheckw:[],//评分数组
+				inputy:'',
 				activeName: 'first',
 				query: '',
 				drawer: false,
@@ -220,7 +235,7 @@
 								if (res === "ok") {
 									this.$message.success("新增成功");
 									this.getQK()
-									
+									this.getAawtp()
 									this.handleClose2()
 								} else {
 									this.$message.error("新增失败");
@@ -269,9 +284,18 @@
 
 				})
 			},
-			getAawty(){
+			getAawty(){//查询员工
 				this.axios.post("/chenck/chencks").then((res) => {
 					this.options = res;
+					console.log(this.options)
+				}).catch(function() {
+				
+				})
+				
+			},
+			getAawtp(){//查询评分表
+				this.axios.post("/chenck/allChencks").then((res) => {
+					this.financeCheckw = res;
 					console.log(this.options)
 				}).catch(function() {
 				
@@ -292,6 +316,7 @@
 			this.getFinanceItem()
 
 			this.getAawty()
+			this.getAawtp()
 		}
 	}
 </script>

@@ -17,7 +17,7 @@ public class FinanceCheck {
     private String checkSerial;//考核编号
     private Timestamp checkDate;//时间
     private List<ArchivesEmp> archivesEmpList;//员工
-    private ArchivesEmp EmpList;//员工
+    private ArchivesEmp empList;//员工
     private List<FinanceCheckson> financeCheckson;//考核子表
     private int empId;
 
