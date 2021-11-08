@@ -110,7 +110,7 @@
 	 </el-dialog>
 	 
     <el-table
-      :data="tableData"
+      :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
       style="width: 100%">
 	  <el-table-column
 	    prop="demandPosition"
@@ -135,6 +135,9 @@
 		 </template>
 	  </el-table-column>
     </el-table>
+	<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" layout="total, sizes, prev, pager, next, jumper"
+									 :page-size="pagesize" :page-sizes="[3, 6, 9]" :total="tableData.length">
+									</el-pagination>
   </template>
 
 <script lang="ts">
@@ -170,10 +173,19 @@ export default {
 	  xinxi:{},//行数据	
 	  tableData:[],//招聘信息表数据
 	  centerDialogVisible:false,
-	  centerDialogVisible2:false
+	  centerDialogVisible2:false,
+	  currentPage: 1, //职位初始页
+	  pagesize: 5, //职位每页的数据
+	  
     }
   },
   methods: {
+	  handleSizeChange: function(size) {
+	  	this.pagesize = size;
+	  },
+	  handleCurrentChange: function(currentPage) {
+	  	this.currentPage = currentPage;
+	  },
 	  open() {
 	          this.$message('发布成功');
 	        },

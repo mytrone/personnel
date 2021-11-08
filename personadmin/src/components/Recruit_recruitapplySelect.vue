@@ -1,6 +1,6 @@
 <template>
     <el-table
-      :data="tableData"
+      :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
       style="width: 100%">
 	  <el-table-column
 	    prop="recruitapplyId"
@@ -42,7 +42,11 @@
 			<el-button v-show="scope.row.recruitapplyState==1" @click="look(scope.row)" >发布招聘信息</el-button>
 		 </template>
 	  </el-table-column>
+	  
     </el-table>
+	<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" layout="total, sizes, prev, pager, next, jumper"
+									 :page-size="pagesize" :page-sizes="[3, 6, 9]" :total="tableData.length">
+									</el-pagination>
 	
 	<el-dialog title="发布招聘信息" v-model="centerDialogVisible" width="60%">
 		<div class="bod">
@@ -108,6 +112,8 @@ import { Timer } from '@element-plus/icons'
 export default {
   data() {
     return {
+		currentPage: 1, //职位初始页
+		pagesize: 5, //职位每页的数据
 	  tableData:[],
 	  centerDialogVisible:false,
 	  form: {
@@ -122,6 +128,12 @@ export default {
     }
   },
   methods: {
+	  handleSizeChange: function(size) {
+	  	this.pagesize = size;
+	  },
+	  handleCurrentChange: function(currentPage) {
+	  	this.currentPage = currentPage;
+	  },
 	  look(row){
 		  console.log("row",row)
 		  this.centerDialogVisible=true

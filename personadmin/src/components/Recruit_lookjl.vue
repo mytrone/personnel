@@ -1,6 +1,6 @@
 <template>
     <el-table
-      :data="tableData"
+      :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
       style="width: 100%">
 	  <el-table-column
 	    prop="lookjlName"
@@ -17,6 +17,9 @@
 		 </template>
 	  </el-table-column>
     </el-table>
+	<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" layout="total, sizes, prev, pager, next, jumper"
+									 :page-size="pagesize" :page-sizes="[3, 6, 9]" :total="tableData.length">
+									</el-pagination>
 	
 	<el-dialog title="发布招聘信息" v-model="centerDialogVisible" width="60%">
 	<el-form ref="form" :model="form" label-width="100px">
@@ -102,6 +105,8 @@ export default {
 	  tableData:[],
 	  centerDialogVisible:false,
 	  centerDialogVisible2:false,
+	  currentPage: 1, //职位初始页
+	  pagesize: 5, //职位每页的数据
 	  form:{
 		  name:'',
 		  intime:'',
@@ -116,6 +121,12 @@ export default {
     }
   },
   methods: {
+	  handleSizeChange: function(size) {
+	  	this.pagesize = size;
+	  },
+	  handleCurrentChange: function(currentPage) {
+	  	this.currentPage = currentPage;
+	  },
 	  dafen(){
 		  this.axios.post("recruitinterviewrecord/insertInterviewrecord",{
 		  	  		  interviewrecordName:this.faft.msr,
