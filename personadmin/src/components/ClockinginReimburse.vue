@@ -96,8 +96,11 @@
 		</el-row>
 
 		<el-row style="margin-top: 12px;">
-			<el-col>
+			<el-col style="text-align: right;" :span="2">
 				<el-button type="primary" size="mini" round @click="insertRei">提交</el-button>
+			</el-col>
+			<el-col :span="2">
+				<el-button type="primary" size="mini" round @click="qx">取消</el-button>
 			</el-col>
 		</el-row>
 
@@ -187,8 +190,13 @@
 					this.bus = res
 				});
 			},
+			qx() {
+				this.$router.push({
+					name: "reimbures"
+				})
+			},
 			insertRei() {
-				let f={
+				let f = {
 					empId: this.emp.empId,
 					deptId: this.dept.departmentId,
 					flowId: this.busId,
@@ -196,7 +204,7 @@
 					zje: this.zje,
 					xq: this.xq,
 				}
-				console.log(f,"=-")
+				console.log(f, "=-")
 				this.axios.post("reimburse/insertRei", f).then(res => {
 					console.log(res)
 					/*if (res > 0) {

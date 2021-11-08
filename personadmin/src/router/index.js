@@ -243,6 +243,14 @@ let routes = [{
 				path: "/clockinginreimburse",
 				name: "clockinginreimburse",
 				component: () => import("@/components/ClockinginReimburse.vue")
+			},
+			{
+				path: '/reimbures',
+				name: 'reimbures',
+				component: () => import("@/components/Reimbures.vue"),
+				meta: {
+					title: "报销查询"
+				}
 			}
 
 		]
