@@ -38,11 +38,11 @@ public class WorkflowFlowSpController {
         Timestamp timestamp = new Timestamp(new Date().getTime());
         try {
             Integer i =  workflowFlowSpService.Update(id, state, row,timestamp);
-
+            
             if(state==true){
-                approveService.UpdateNode(appd,112);
+                approveService.UpdateNode(appd,id);
                 WorkflowFlowSpVo vo=new WorkflowFlowSpVo();
-                vo.setWorkflowNode(112);
+                vo.setWorkflowNode(id);
                 vo.setArchivesEmpsp(spr);
                 vo.setWorkflowApprove(appd);
                 workflowFlowSpService.Insert(vo);//创建下一个节点
