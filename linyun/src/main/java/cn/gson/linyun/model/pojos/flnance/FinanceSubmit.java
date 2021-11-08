@@ -8,10 +8,27 @@ import java.util.Objects;
 public class FinanceSubmit {
 
     private int submitId;
+    private int empId;
+    private int arcempId;
     private String submitSerial;
     private BigDecimal submitSum;
     private Timestamp submitDate;
 
+    public int getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(int empId) {
+        this.empId = empId;
+    }
+
+    public int getArcempId() {
+        return arcempId;
+    }
+
+    public void setArcempId(int arcempId) {
+        this.arcempId = arcempId;
+    }
 
     public int getSubmitId() {
         return submitId;

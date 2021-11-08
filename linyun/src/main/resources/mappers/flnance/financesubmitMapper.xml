@@ -2,5 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.linyun.model.mapper.flnance.FinancSubmitMpper">
+    <resultMap id="quyk" type="cn.gson.linyun.model.pojos.flnance.ClockinginReimburse">
+        <id column="reimburse_id" property="reimburseId"/>
+        <result column="reimburse_data" property="reimburseData"/>
+        <result column="reimburse_money" property="reimburseMoney"/>
+        <result column="reimburse_state" property="reimburseState"/>
 
+        <result column="reimburse_title" property="reimburseTitle"/>
+        <association property="empId" javaType="ArchivesEmp">
+            <result column="emp_id" property="empId"/>
+            <result column="emp_name" property="empName"/>
+        </association>
+    </resultMap>
+    <select id="allSubmit"  resultMap="quyk">
+        select*from clockingin_reimburse hj
+            left join archives_emp  col on hj.emp_id= col.emp_id
+        <where>
+
+            <if test=" empName != null and '' !=  empName">
+                or  emp_name like '%${empName}%'
+            </if>
+        </where>
+          having   hj.reimburse_state=1
+    </select>
+    <select id="allSubmitu" resultType="FinanceSubmit">
+        select*from finance_submit
+        <where>
+            <if test=" submitSerial != null and '' !=  submitSerial">
+                or  submit_serial like '%${submitSerial}%'
+            </if>
+        </where>
+
+    </select>
+    <insert id="addSubmit">
+        insert  into finance_submit values (null,#{empId},1,#{submitSerial},#{submitSum},current_timestamp)
+    </insert>
+    <update id="upClocking">
+        update clockingin_reimburse set reimburse_state=4 where  reimburse_id=#{reimburseId}
+    </update>
 </mapper>

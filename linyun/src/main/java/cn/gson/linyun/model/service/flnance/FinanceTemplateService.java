@@ -52,8 +52,9 @@ public class FinanceTemplateService {
     public List<FinanceItem>allmiddel(FinanceTemplate financeTemplate){
         return financeTemplateMaper.allmiddel(financeTemplate);
     }//模板项目查询
-    public List<FinanceTemplate>alltemplates(){
-        return financeTemplateMaper.alltemplates();
+    public List<FinanceTemplate>alltemplates(FinanceTemplate financeTemplate){
+
+        return financeTemplateMaper.alltemplates(financeTemplate);
     }
 
 }

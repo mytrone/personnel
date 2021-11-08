@@ -15,4 +15,7 @@ public interface ISystemDepartmentMapper {
     void changeDepartment(SystemDepartment systemDepartment);
     //删除部门
     void delDepartment(int departmentId);
+
+    /*根据编号查询 selectByDeptId deptId*/
+    SystemDepartment selectByDeptId(Integer deptId);
 }

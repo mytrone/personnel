@@ -60,43 +60,72 @@
 		</el-tab-pane>
 		<el-tab-pane label="查询评分" name="second">
 			<el-col :span="7" :push="1">
-				<el-input v-model="inputy" placeholder="请输入项目名查询"> </el-input>
+				<el-input v-model="gsy" placeholder="请输入考核编号"> </el-input>
 			</el-col>
 			<el-col :span="7" id="shuru1" :push="2">
 				<el-row>
-					<el-button type="primary" @click="getFinanceItem()">查询</el-button>
+					<el-button type="primary" @click="getAawtp()">查询</el-button>
 				</el-row>
 			</el-col>
-				<el-table :data="financeCheckw" style="width:100%" :header-cell-style="{'text-align':'center'}"
+				<el-table :data="financeCheckwk.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width:100%" :header-cell-style="{'text-align':'center'}"
 				:cell-style="{'text-align':'center'}">
 				<el-table-column label="序号" prop="checkId">
-				</el-table-column>
-				<el-table-column label="项目评分" prop="checkPoints">
 				</el-table-column>
 				<el-table-column label="考核模板名" prop="checkTemplate">
 				</el-table-column>
 				<el-table-column label="考核编号" prop="checkSerial">
 				</el-table-column>
-				<el-table-column label="评分时间" prop="checkDate">
+				<el-table-column label="评分时间" prop="checkDate" :formatter="dateFormak">
 				</el-table-column>
 				<el-table-column label="受评人" prop="empList.empName">
 				</el-table-column>
-				<el-table-column label="操作" prop="checksonPoints">
+				<el-table-column label="操作" >
 					<template v-slot:default="scope">
 						
-							<el-button type="primary" size="medium" @click="delDrugw(scope.row)"
-								style="margin:  0  auto;">查询评分详细
+							<el-button type="primary" size="medium" 
+								style="margin:  0  auto;"
+								@click="delDrugw(scope.row),drawers=true">查询评分详细
 							</el-button>
 						
 					</template>
+				
 				</el-table-column>
 				
 
 			</el-table>
+			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" layout="total, sizes, prev, pager, next, jumper"
+											 :page-size="pagesize" :page-sizes="[5, 10, 15]" :total="financeCheckwk.length">
+											</el-pagination>
 		</el-tab-pane>
+		<el-dialog title="评分详细" v-model="drawers">
+		
+		
+		
+			<el-table ref="multipleTable" :data="sortr" tooltip-effect="dark" style="width:1050px;margin-top:8px;"
+				height="350px"
+				:header-cell-style="{'text-align':'center'}"
+					:cell-style="{'text-align':'center'}"
+				>
+				<el-table-column label="序号" prop="checksonId">
+				</el-table-column>
+				<el-table-column label="项目名" prop="checksonName">
+				</el-table-column>
+				<el-table-column label="考核编号" prop="checkSerial">
+				</el-table-column>
+			
+				<el-table-column label="上级评分" prop="checksonPoints">
+				</el-table-column>
+				<el-table-column label="考核说明" prop="checksonExplain">
+				</el-table-column>
+				<el-table-column label="项目评分" prop="checksonScore">
+				</el-table-column>
+		
+			</el-table>
+			
+		 </el-dialog> 
 		<el-drawer title="模板列表" v-model="drawer" size="60%">
 			<el-col :span="7" :push="1">
-				<el-input placeholder="请输入项目名查询"> </el-input>
+				<el-input v-model="inputy" placeholder="请输入模板名查询"> </el-input>
 			</el-col>
 			<el-col :span="7" id="shuru1" :push="2">
 				<el-row>
@@ -151,13 +180,18 @@
 		},
 		data() {
 			return {
-				financeCheckw:[],//评分数组
+				shuru1:'',
+				gsy:'',
+				financeCheckwk:[],//评分数组
 				inputy:'',
+				sortr:[],
 				activeName: 'first',
 				query: '',
 				drawer: false,
 				currentPage2: 1, //职位初始页
 				pagesize2: 5, //职位每页的数据
+				currentPage: 1, //职位初始页
+				pagesize: 5, //职位每页的数据
 				financeCheck:{
 					 checkId:'',//主键
 					 // checkPoints:'',//考核总分
@@ -168,7 +202,7 @@
 				},
 				
 				options:[],
-				
+				drawers:false,
 			
 				item: [],
 				financeTemplate: { //模板属性
@@ -183,9 +217,18 @@
 					checkId:'',//主键
 					checkPoints:'',//考核总分
 					checkRemark:'',//考核评语
-					checkTemplate:'',//考核模板名
+					checkTemplate:'',//考核模板名、
+					checkSerial:'',
 					financeCheckson:[],
 					archivesEmpList:[]
+				},
+				financeCheckw:{
+					checkId:'',//主键
+					checkPoints:'',//考核总分
+					checkRemark:'',//考核评语
+					checkTemplate:'',//考核模板名、
+					checkSerial:'',
+					
 				},
 				treatmentCardRules: {
 					checkRemark: [{
@@ -205,6 +248,16 @@
 				for (var i = 0; i < this.late.length; i++) {
 					this.financeCheck.financeCheckson.splice(i)
 				}
+			},
+			delDrugw(row){//评分详表
+			 this.financeCheckw.checkSerial=row.checkSerial;
+			console.log(this.financeCheckw.checkSerial)
+				this.axios.post("/chenckson/chencksonp", this.financeCheckw).then((res) => {
+					this.sortr = res;
+				
+				}).catch(function() {
+				
+				})
 			},
 			delDrugTj(row) {
 				this.late = row.financeItem;//接收模板表的项目数组
@@ -261,6 +314,12 @@
 				})
 				
 			},
+			handleSizeChange: function(size) {
+				this.pagesize = size;
+			},
+			handleCurrentChange: function(currentPage) {
+				this.currentPage = currentPage;
+			},
 			handleSizeChange2: function(size) {
 				this.pagesize2 = size;
 			},
@@ -277,6 +336,8 @@
 
 			},
 			getFinanceItem() {
+				 this.financeTemplate.templateSerial=this.inputy;
+				 this.financeTemplate.templateName=this.inputy;
 				this.axios.post("/template/alltemplatesu", this.financeTemplate).then((res) => {
 					this.item = res;
 					console.log(this.item)
@@ -285,7 +346,7 @@
 				})
 			},
 			getAawty(){//查询员工
-				this.axios.post("/chenck/chencks").then((res) => {
+				this.axios.post("/chenck/allChyg").then((res) => {
 					this.options = res;
 					console.log(this.options)
 				}).catch(function() {
@@ -293,10 +354,14 @@
 				})
 				
 			},
+		
 			getAawtp(){//查询评分表
-				this.axios.post("/chenck/allChencks").then((res) => {
-					this.financeCheckw = res;
-					console.log(this.options)
+				
+				this.financeCheckw.checkSerial=this.gsy
+				this.axios.post("/chenck/allChenh",this.financeCheckw).then((res) => {
+					this.financeCheckwk = res;
+					
+			
 				}).catch(function() {
 				
 				})
@@ -311,10 +376,19 @@
 			handleDelete(index, row) {
 				console.log(index, row)
 			},
+			dateFormak: function(row, column) { //表格时间规格的排列
+				var date = row[column.property];
+			
+				if (date == undefined) {
+					return ''
+				}
+				return moment(date).format("YYYY-MM-DD hh:mm:ss")
+			
+			},
 		},
 		created() {
 			this.getFinanceItem()
-
+			// this.delDrugw()
 			this.getAawty()
 			this.getAawtp()
 		}

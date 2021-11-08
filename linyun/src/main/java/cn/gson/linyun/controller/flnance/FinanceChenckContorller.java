@@ -18,8 +18,8 @@ public class FinanceChenckContorller {
     @Autowired
     FinanceCheckService financeCheckService;
     @RequestMapping("/chencks")
-    public List<ArchivesEmp> allEmp(){//查询员工
-        return financeCheckService.allEmp();
+    public List<ArchivesEmp> allEmp(@RequestBody  ArchivesEmp archivesEmp){//查询员工
+        return financeCheckService.allEmp(archivesEmp);
     }
     @RequestMapping("/addChencks")
     public String addEmp(@RequestBody Map<String,Object> datas){//新增评分表和从表
@@ -27,8 +27,15 @@ public class FinanceChenckContorller {
         financeCheckService.addEmp(datas);
        return "ok";
     }
-    @RequestMapping("/allChencks")
-    public List<ArchivesEmp>allCheckson(FinanceCheck financeCheck){//查询评分主表
-        return financeCheckService.allCheckson(financeCheck);
+    @RequestMapping("/allChenh")
+    public List<FinanceCheck>allCheckson(@RequestBody FinanceCheck financeCheckw){//查询评分主表
+        System.out.println(financeCheckw.getCheckSerial());
+        return financeCheckService.allCheckson(financeCheckw);
     }
+    @RequestMapping("/allChyg")
+    public List<ArchivesEmp> allEmpr(){
+        return financeCheckService.allEmpr();
+
+    }
+
 }

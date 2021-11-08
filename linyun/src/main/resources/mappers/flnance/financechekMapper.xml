@@ -16,6 +16,20 @@
     </resultMap>
     <select id="allEmp" resultType="ArchivesEmp">
         select*from  archives_emp
+        <where>
+            <if test="empName != null and '' !=empName">
+                or emp_name like '%${empName}%'
+            </if>
+            <if test="empsonCard != null and '' !=empsonCard">
+                or empson_card like '%${empsonCard}%'
+            </if>
+            <if test="empsonBank != null and '' !=empsonBank">
+                or empson_bank like '%${empsonBank}%'
+            </if>
+        </where>
+    </select>
+    <select id="allEmpr" resultType="ArchivesEmp">
+        select*from  archives_emp
     </select>
     <insert id="addEmp">
         insert into  finance_check values(null,#{empId},1,#{checkPoints},#{checkRemark},#{checkTemplate},#{checkSerial},current_timestamp)
@@ -24,7 +38,7 @@
         select *from finance_check  gj left join    archives_emp  mp on gj.emp_id=mp.emp_id
         <where>
             <if test="checkSerial != null and '' != checkSerial">
-                or check_serial like '%${checkSerial}%'
+                or gj.check_serial like '%${checkSerial}%'
             </if>
         </where>
     </select>

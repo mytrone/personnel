@@ -2,5 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.linyun.model.mapper.flnance.FinanceSalarysonMapper">
+    <insert id="addSalaryson">
+        insert into finance_salaryson  values (null,0,#{salarysonName},0,#{salarysonBasic},0,0,#{salarysonBank},current_timestamp)
+    </insert>
+    <select id="allSalaryson" resultType="FinanceSalaryson">
+        select*from  finance_salaryson
+        <where>
+            <if test="salarysonBank != null and '' != salarysonBank">
+                or salaryson_bank like '%${salarysonBank}%'
+            </if>
+        </where>
 
+    </select>
+    <select id="allSalarysonu" resultType="FinanceSalaryson">
+        select*from  finance_salaryson where salaryson_name=#{salarysonName}
+    </select>
 </mapper>

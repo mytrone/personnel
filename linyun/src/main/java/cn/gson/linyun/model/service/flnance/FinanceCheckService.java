@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class FinanceCheckService {
     FinanceCheckMpper financeCheckMpper;
     @Autowired
     FinanceChecksonMpper financeChecksonMpper;
-    public List<ArchivesEmp> allEmp(){//查询员工
-        return financeCheckMpper.allEmp();
+    public List<ArchivesEmp> allEmp(ArchivesEmp archivesEmp){//查询员工
+        return financeCheckMpper.allEmp(archivesEmp);
     }
     public void  addEmp(Map<String,Object> datas){//批量新增
         //新增考核表
@@ -43,8 +44,11 @@ public class FinanceCheckService {
 
         int sun=0;
         int kw=0;
+        int yk=0;
         for (Integer k: empId) {//按人员来新增主表数据、前台选中多少人循环多少次
             kw+=1;
+
+
 
             FinanceCheck rmp=new FinanceCheck();
             String number=  MyUtil.genrateNo("KH");//随机生成模板编号
@@ -61,30 +65,42 @@ public class FinanceCheckService {
                     bmp.setChecksonScore(souy.getChecksonScore());
                     bmp.setChecksonExplain(souy.getChecksonExplain());
                     bmp.setCheckSerial(number);
-                    sun+=souy.getChecksonPoints();
+
                    financeChecksonMpper.addCheckson(bmp);
 
+                      sun+=souy.getChecksonPoints();
 
+
+                  rmp.setCheckPoints(sun/4);
 
                }
-                rmp.setCheckPoints(sun);
+
+
+
+
+
+
+                rmp.setEmpId(k);
+                rmp.setCheckRemark(checkPy);
+                rmp.setCheckTemplate(checkMz);
+                rmp.setCheckSerial(number);
+
+                financeCheckMpper.addEmp(rmp);
                 continue;
             }
-            rmp.setEmpId(k);
-            rmp.setCheckRemark(checkPy);
-            rmp.setCheckTemplate(checkMz);
-            rmp.setCheckSerial(number);
 
-            financeCheckMpper.addEmp(rmp);
-            continue;
 
 
         }
 
     }
     //评分查询
-    public List<ArchivesEmp>allCheckson(FinanceCheck financeCheck){
-        return financeCheckMpper.allCheckson(financeCheck);
+    public List<FinanceCheck>allCheckson(FinanceCheck financeCheckw){
+        return financeCheckMpper.allCheckson(financeCheckw);
+    }
+    public List<ArchivesEmp> allEmpr(){
+        return financeCheckMpper.allEmpr();
+
     }
 
 }

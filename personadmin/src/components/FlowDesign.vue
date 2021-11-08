@@ -201,21 +201,22 @@
 	export default {
 		data() {
 			return {
+				Position:0,
 				handleArrUpdate:[],
 				flowstype:'',
 				flows:{},
 				OptionP: [{
 					id: 1,
 					name: '普通员工',
-					type:1
+					type:0
 				}, {
 					id: 2,
 					name: '部门主管',
-					type:2
+					type:1
 				}, {
 					id: 3,
 					name: '总经理',
-					type:3
+					type:2
 				}
 				
 				],
@@ -364,12 +365,12 @@
 					id:0,
 					name: this.flow.name,
 					type:this.OptionsType,
-					position:this.OptionsPosition,
+					position:this.Position,
 					jieduan:this.handleArr,
 					web:this.flow.adds,
-					state:this.flow.state
+					state:this.flow.state,
 				};
-				
+				console.log(prim,"参数是啥");
 				
 				this.axios.post("flow/add",prim).then(res => {
 					if(res.code==1){
@@ -437,6 +438,13 @@
 			this.selectall();
 		},watch:{
 		
+		dialogVisibleUpdate(){
+			if(this.dialogVisibleUpdate==false){
+				this.handleArrUpdate=[];
+			}
+			
+		},
+		
 			handleArr(){
 				
 				
@@ -457,9 +465,11 @@
 			},OptionsPosition(){
 				this.handleArr=[];
 				this.OptionP.forEach(res=>{
+					console.log(res,"这里便利的");
 					if(this.OptionsPosition==res.id){
-						
-						if(res.type==2){
+						console.log("OptionsPosition",this.OptionsPosition);
+						if(res.type==1){
+							this.Position=1;
 							this.tableData.forEach(rel=>{
 							if(rel.alinkeyId==6){
 									rel.disabled=true;
@@ -468,7 +478,8 @@
 							
 						}
 						
-						if(res.type==3){
+						if(res.type==2){
+							this.Position=2;
 							this.tableData.forEach(rel=>{
 							if(rel.alinkeyId==7 || rel.alinkeyId==6){
 									rel.disabled=true;
@@ -477,7 +488,9 @@
 							
 							
 						}
-						if(res.type==1){
+						if(res.type==0){
+							console.log("这里是");
+							this.Position=0;
 							this.tableData.forEach(rel=>{
 									rel.disabled=false;
 							})

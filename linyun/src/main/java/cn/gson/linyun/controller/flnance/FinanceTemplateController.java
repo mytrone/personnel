@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("template")
+@RequestMapping("/template")
 public class FinanceTemplateController {
     @Autowired
     FinanceTemplateService financeTemplateService;
@@ -26,11 +26,11 @@ public class FinanceTemplateController {
         }
 
     }
-    @RequestMapping("alltemplatew")
+    @RequestMapping("/alltemplatew")
     public List<FinanceTemplate> alltemplate(@RequestBody FinanceTemplate financeTemplate){
         return financeTemplateService.alltemplate(financeTemplate);
     }
-    @RequestMapping("dlltemplatew")
+    @RequestMapping("/dlltemplatew")
     public  String delTemplate(@RequestBody FinanceTemplate financeTemplate){//删除模板表
         try{
             financeTemplateService.delTemplate(financeTemplate);
@@ -39,12 +39,12 @@ public class FinanceTemplateController {
             return "fail";
         }
     }
-    @RequestMapping("allmiddelw")
-    public List<FinanceItem>allmiddel(@RequestBody  FinanceTemplate financeTemplate){
+    @RequestMapping("/allmiddelw")
+    public List<FinanceItem>allmiddel(@RequestBody  FinanceTemplate financeTemplate){//查询模板表
         return financeTemplateService.allmiddel(financeTemplate);
     }
-    @RequestMapping("alltemplatesu")
+    @RequestMapping("/alltemplatesu")
     public List<FinanceTemplate>alltemplates(@RequestBody  FinanceTemplate financeTemplate){
-        return financeTemplateService.alltemplates();
+        return financeTemplateService.alltemplates(financeTemplate);
     }
 }

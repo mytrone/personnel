@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指向对应的接口类，全称-->
+<mapper namespace="cn.gson.linyun.model.mapper.workflow.WorkflowFlowSpMapper">
+
+    <resultMap id="base" type="WorkflowFlowSp">
+
+            <id property="flowSpId" column="flow_sp_id"/>
+            <result property="flowSpTime" column="flow_sp_time"/>
+            <result property="flowSpRemarks" column="flow_sp_remarks"/>
+            <result property="flowSpState" column="flow_sp_state"/>
+            <association property="archivesEmpsp" javaType="ArchivesEmp">
+                <id column="emp_id" property="empId"/>
+                <id column="emp_name" property="empName"/>
+                <id column="empson_sex" property="empsonSex"/>
+                <id column="empson_card" property="empsonCard"/>
+                <id column="empson_email" property="empsonEmail"/>
+                <id column="empson_tel" property="empsonTel"/>
+                <id column="empson_bank" property="empsonBank"/>
+                <id column="empson_education" property="empsonEducation"/>
+                <id column="empson_day" property="empsonDay"/>
+                <id column="empson_birthday" property="empsonBirthday"/>
+
+            </association>
+            <association property="workflowNode" javaType="workflowNode">
+                <id property="nodeId" column="node_id"/>
+                <result property="nodeLast" column="node_last"/>
+                <association property="alinkey" javaType="Alinkey">
+                    <id property="alinkeyId" column="alinkey_id"/>
+                    <result property="alinkeyName" column="alinkey_name"/>
+                </association>
+            </association>
+
+
+    </resultMap>
+<!--  创建sp  -->
+    <insert id="Insert">
+        insert  into workflow_flow_sp values (null,
+                                              #{workflowApprove},
+                                              #{workflowNode},
+                                              #{archivesEmpsp},
+                                              #{flowSpTime},
+                                              #{flowSpRemarks},
+                                              #{flowSpState}
+                                              )
+    </insert>
+
+<!--  修改sp  -->
+    <update id="Update">
+        update workflow_flow_sp set
+                                    flow_sp_remarks=#{row},
+                                    flow_sp_time=#{time},
+                                    flow_sp_state=#{state}
+                                    where flow_sp_id=#{id}
+    </update>
+
+
+
+</mapper>

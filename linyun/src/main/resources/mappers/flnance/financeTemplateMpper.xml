@@ -76,10 +76,10 @@
 
         <where>
             <if test="templateSerial != null and '' != templateSerial">
-                or template_serial like '%${templateSerial}%'
+                or  kl.template_serial like '%${templateSerial}%'
             </if>
             <if test="templateName != null and '' != templateName">
-                or template_name like '%${templateName}%'
+                or  kl.template_name like '%${templateName}%'
             </if>
         </where>
         having  template_state=0

@@ -21,6 +21,15 @@ public class FinanceCheck {
     private List<FinanceCheckson> financeCheckson;//考核子表
     private int empId;
 
+@OneToOne
+    public ArchivesEmp getEmpList() {
+        return empList;
+    }
+
+    public void setEmpList(ArchivesEmp empList) {
+        this.empList = empList;
+    }
+
     public int getEmpId() {
         return empId;
     }

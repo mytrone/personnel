@@ -30,6 +30,16 @@ public class WorkflowNodeController {
         return MyResult.SUCCESS_DATA(workflowNodeService.SelectByFlow(id));
     }
 
+    /**
+     * 根据职位层级查询已经设计好的流程节点
+     * @param id
+     * @return
+     */
+    @PostMapping("selectpo")
+    public MyResult SelectByPosition(@RequestParam("id")Integer id){
+        return MyResult.SUCCESS_DATA(workflowNodeService.SelectByPosition(id));
+    }
+
 
 
 

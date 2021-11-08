@@ -1,22 +1,40 @@
 package cn.gson.linyun.model.pojos.clockingin;
 
 import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
+import cn.gson.linyun.model.pojos.system.SystemDepartment;
+import cn.gson.linyun.model.pojos.system.SystemPost;
 import cn.gson.linyun.model.pojos.workflow.Alinkey;
+import cn.gson.linyun.model.pojos.workflow.WorkflowFlow;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class ClockinginOvertime {
+public class ClockinginOvertime {/*加班申请表*/
     private Integer overtimeId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp overtimeStart;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp overtimeFinish;
     private BigDecimal overtimeDuration;
     private String overtimeReason;
     private ArchivesEmp archivesEmpByEmpId;
     private ArchivesEmp archivesEmpByArcEmpId;
     private Alinkey alinkeyByAlinkeyId;
+    private WorkflowFlow workflowFlowByFlowId;
+    private SystemPost systemPostBySystemPost;
+    private SystemDepartment systemDepartmentByDepartmentId;
+    private Integer overtimeState;
+
+    public Integer getOvertimeState() {
+        return overtimeState;
+    }
+
+    public void setOvertimeState(Integer overtimeState) {
+        this.overtimeState = overtimeState;
+    }
 
     public Integer getOvertimeId() {
         return overtimeId;
@@ -91,5 +109,29 @@ public class ClockinginOvertime {
                 ", overtimeDuration=" + overtimeDuration +
                 ", overtimeReason='" + overtimeReason + '\'' +
                 '}';
+    }
+
+    public WorkflowFlow getWorkflowFlowByFlowId() {
+        return workflowFlowByFlowId;
+    }
+
+    public void setWorkflowFlowByFlowId(WorkflowFlow workflowFlowByFlowId) {
+        this.workflowFlowByFlowId = workflowFlowByFlowId;
+    }
+
+    public SystemPost getSystemPostBySystemPost() {
+        return systemPostBySystemPost;
+    }
+
+    public void setSystemPostBySystemPost(SystemPost systemPostBySystemPost) {
+        this.systemPostBySystemPost = systemPostBySystemPost;
+    }
+
+    public SystemDepartment getSystemDepartmentByDepartmentId() {
+        return systemDepartmentByDepartmentId;
+    }
+
+    public void setSystemDepartmentByDepartmentId(SystemDepartment systemDepartmentByDepartmentId) {
+        this.systemDepartmentByDepartmentId = systemDepartmentByDepartmentId;
     }
 }

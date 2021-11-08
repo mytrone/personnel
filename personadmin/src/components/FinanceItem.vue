@@ -53,7 +53,7 @@
 			<el-form @submit.native.prevent>
 				<el-col :span="12">
 					<el-form-item label="考核项目">
-						<el-input v-model="financeItem.itemName" placeholder="请输入项目名查询"> </el-input>
+						<el-input v-model="intou" placeholder="请输入项目名查询"> </el-input>
 					</el-form-item>
 					
 				</el-col>
@@ -63,7 +63,7 @@
 						<el-button type="primary"  @click="getFinanceItem()">查询</el-button>
 					</el-form-item>
 				</el-col>
-				<el-table :data="item" style="width:100%" :header-cell-style="{'text-align':'center'}"
+				<el-table :data="item.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width:100%" :header-cell-style="{'text-align':'center'}"
 					:cell-style="{'text-align':'center'}">
 					<el-table-column label="序号" prop="itemId">
 					</el-table-column>
@@ -79,14 +79,12 @@
 							</el-button>
 						</template>
 					</el-table-column>
-					<!-- <el-table-column label="Operations">
-						<template #default="scope">
-							<el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-							<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
-						</template>
-					</el-table-column> -->
+					
 				</el-table>
-
+<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+						layout="total, sizes, prev, pager, next, jumper" :page-size="pagesize" :page-sizes="[3, 6, 9]"
+						:total="item.length">
+					</el-pagination>
 
 			</el-form>
 		</el-tab-pane>
@@ -107,6 +105,9 @@
 		},
 		data() {
 			return {
+				currentPage: 1, //职位初始页
+				pagesize: 5, //职位每页的数据
+				intou:'',
 				activeName: 'first',
 				query: '',
 				tableData: [], //新增数组
@@ -116,7 +117,10 @@
 					itemName: '', //项目名
 					itemExplain: '', //项目说明
 					itemScore:''//项目分数
-				}
+				},
+				financeSalary:{
+					
+				},
 
 
 			}
@@ -128,6 +132,12 @@
 					itemExplain: ''
 				})
 			},
+			handleSizeChange: function(size) {
+				this.pagesize = size;
+			},
+			handleCurrentChange: function(currentPage) {
+				this.currentPage = currentPage;
+			},
 			AddBatch() { //新增项目
 				this.$confirm('是否新增?', '提示', {
 					confirmButtonText: '确定',
@@ -138,7 +148,7 @@
 						this.financeItem.itemName = this.tableData[i].itemName;
 						this.financeItem.itemExplain = this.tableData[i].itemExplain;
 						this.financeItem.itemScore = this.tableData[i].itemScore;
-						this.axios.post("/finance/addFinance", this.financeItem).then((res) => {
+						this.axios.post("/finance/addFinance", this.financeSalary).then((res) => {
 
 							if (res === "ok") {
 								this.$message.success("新增成功");
@@ -159,6 +169,8 @@
 				});
 			},
 			getFinanceItem() {
+				
+			this.financeItem.itemName=this.intou;
 				this.axios.post("/finance/allFinance", this.financeItem).then((res) => {
 					this.item = res;
 				}).catch(function() {

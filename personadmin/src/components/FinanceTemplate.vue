@@ -280,9 +280,9 @@
 			},
 			
 			getKeyj(){//查询模板表
-			  this.financeItem.templateSerial=this.input;
-			  this.financeItem.templateName=this.input;
-				this.axios.post("/template/alltemplatew", this.financeItem).then((res) => {
+			  this.financeTemplate.templateSerial=this.input;
+			  this.financeTemplate.templateName=this.input;
+				this.axios.post("/template/alltemplatew", this.financeTemplate).then((res) => {
 					this.getku = res;
 				}).catch(function() {
 				

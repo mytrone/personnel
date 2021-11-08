@@ -2,10 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.linyun.model.mapper.system.ISystemStaffMapper">
-    <resultMap id="ystemStaffMap" type="cn.gson.linyun.model.pojos.system.SystemStaff">
+    <resultMap id="StaffMap" type="cn.gson.linyun.model.pojos.system.SystemStaff">
         <id column="staff_id" property="staffId"/>
-        <id column="staff_account" property="staffAccount"/>
-        <id column="staff_code" property="staffCode"/>
-        <id column="emp_id" property="empId"/>
+        <result column="staff_account" property="staffAccount"/>
+        <result column="staff_code" property="staffCode"/>
+        <result column="emp_id" property="empId"/>
+        <result column="staff_state" property="staffState"/>
+        <association property="archivesEmp" javaType="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
+            <result column="emp_name" property="empName"/>
+        </association>
+        <association property="department" javaType="cn.gson.linyun.model.pojos.system.SystemDepartment">
+            <result column="department_name" property="departmentName" />
+        </association>
+        <association property="post" javaType="cn.gson.linyun.model.pojos.system.SystemPost">
+            <result column="post_name" property="postName" />
+        </association>
     </resultMap>
+    <!--查询用户根据账号密码-->
+    <select id="selStaff" resultMap="StaffMap">
+        select * from system_staff ss
+          inner join archives_emp ae on ss.emp_id=ae.emp_id
+          inner join system_department sd on ae.department_id =sd.department_id
+          inner join system_post sp on ae.post_id=sp.post_id
+        where staff_account=#{staffAccount} and staff_code=#{staffCode} and staff_state=0
+    </select>
+    <!--根据用户名查询用户-->
+    <select id="selStaffByAccount" resultMap="StaffMap">
+        select * from system_staff ss
+            inner join archives_emp ae on ss.emp_id=ae.emp_id
+            inner join system_department sd on ae.department_id =sd.department_id
+            inner join system_post sp on ae.post_id=sp.post_id
+        where 1=1
+        <if test="name!='' and name!=null">
+            and staff_account=#{staffAccount}
+        </if>
+    </select>
+    <!--新增用户-->
+    <insert id="addStaff">
+        insert into system_staff(emp_id,staff_account,staff_code,staff_state) values (#{empId},#{staffAccount},#{staffCode},#{staffState});
+        <selectKey keyProperty="staffId" resultType="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <!--对象与角色关联-->
+    <insert id="addStaffRole">
+        insert into system_staff_role values (#{staffId},#{roleId})
+    </insert>
+    <!--删除用户-角色-->
+    <delete id="delStaffRole">
+        delete from system_staff_role where staff_id=#{staffId}
+    </delete>
+    <!--修改用户-->
+    <update id="changeStaff">
+        update system_staff
+        <set>
+            <if test="staffAccount!=''">
+                staff_account=#{staffAccount},
+            </if>
+            <if test="staffCode!=''">
+                staff_code=#{staffCode},
+            </if>
+        </set>
+        where staff_id=#{staffId}
+    </update>
 </mapper>

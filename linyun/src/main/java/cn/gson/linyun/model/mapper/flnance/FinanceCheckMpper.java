@@ -9,7 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface FinanceCheckMpper{
-    public List<ArchivesEmp> allEmp();//查询员工
+    public List<ArchivesEmp> allEmp(ArchivesEmp archivesEmp);//查询员工
     public void  addEmp(FinanceCheck financeCheck);//新增考核表
-    public List<ArchivesEmp>allCheckson(FinanceCheck financeCheck);//评分查询
+    public List<FinanceCheck>allCheckson(FinanceCheck financeCheck);//评分查询
+    public List<ArchivesEmp> allEmpr();
 }

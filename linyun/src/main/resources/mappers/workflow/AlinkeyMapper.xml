@@ -14,4 +14,9 @@
         select * from alinkey where alinkey.`alinkey_father`=#{id}
     </select>
 
+    <!--根据名称查询 selectAlinkeyByName-->
+    <select id="selectAlinkeyByName" resultMap="base" parameterType="java.lang.String">
+        select alinkey_id,alinkey_name from alinkey where alinkey_name=#{name}
+    </select>
+
 </mapper>

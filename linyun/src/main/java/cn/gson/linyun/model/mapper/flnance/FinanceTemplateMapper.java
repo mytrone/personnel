@@ -16,5 +16,5 @@ public interface FinanceTemplateMapper {
     public void demiddel(Relationship34 relationship34);//删除项目
     public List<FinanceItem>allmiddel(FinanceTemplate financeTemplate);//查询模板下的项目
 
-    public List<FinanceTemplate>alltemplates();//模板项目查询
+    public List<FinanceTemplate>alltemplates(FinanceTemplate financeTemplate);//模板项目查询
 }

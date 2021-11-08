@@ -18,6 +18,12 @@
             <id property="alinkeyId" column="alinkey_id"/>
             <result property="alinkeyName" column="alinkey_name"/>
         </association>
+        <association property="post" javaType="SystemPost">
+            <id column="post_id" property="postId"/>
+            <result column="post_name" property="postName"/>
+            <result column="department_id" property="departmentId"/>
+            <result column="post_parent_id" property="postParentId"/>
+        </association>
 
     </resultMap>
 
@@ -25,7 +31,19 @@
     <insert id="Insert" >
         insert into workflow_node values
         <foreach collection="arr" separator="," item="rid">
-         (null,#{flowVo.id},#{rid},false )
+         (null,#{flowVo.id},#{rid},
+          <if test="rid==6">
+              1
+          </if>
+            <if test="rid==7">
+                2
+            </if>
+            <if test="rid==8">
+                3
+            </if>
+
+
+            )
         </foreach>
 
     </insert>
@@ -42,6 +60,16 @@
     <delete id="Delete">
         delete from workflow_node where workflow_node.flow_id=#{id}
     </delete>
+
+<!--  根据职位层级查询已经设计好的流程节点  -->
+    <select id="SelectByPosition" resultMap="base">
+        SELECT * FROM workflow_node
+                          INNER JOIN workflow_flow
+                                     ON workflow_flow.`flow_id`=workflow_node.`flow_id`
+                          INNER JOIN alinkey ON alinkey.`alinkey_id`=workflow_node.`alinkey_id`
+
+        WHERE workflow_flow.`flow_id`=#{id}
+    </select>
 
 
 </mapper>

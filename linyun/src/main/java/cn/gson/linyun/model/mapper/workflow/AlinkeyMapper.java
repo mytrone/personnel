@@ -14,4 +14,6 @@ public interface AlinkeyMapper {
      */
     List<Alinkey> SelectByid(Integer id);
 
+    /*根据名称查询 selectAlinkeyByName*/
+    Alinkey selectAlinkeyByName(String name);
 }
