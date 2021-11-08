@@ -10,6 +10,24 @@
         <result column="authority_ioc" property="authorityIoc"/>
         <result column="authority_parent_id" property="authorityParentId"/>
     </resultMap>
+
+    <resultMap id="SystemAuthorityMap2" type="cn.gson.linyun.model.pojos.system.SystemAuthority">
+        <id column="sid" property="authorityId"/>
+        <result column="sname" property="authorityName"/>
+        <result column="saccess" property="authorityAccess"/>
+        <result column="spath" property="authorityPath"/>
+        <result column="sioc" property="authorityIoc"/>
+        <result column="spid" property="authorityParentId"/>
+        <collection property="authorityChilds" ofType="cn.gson.linyun.model.pojos.system.SystemAuthority">
+            <id column="sid2" property="authorityId"/>
+            <result column="sname2" property="authorityName"/>
+            <result column="saccess2" property="authorityAccess"/>
+            <result column="spath2" property="authorityPath"/>
+            <result column="sioc2" property="authorityIoc"/>
+            <result column="spid2" property="authorityParentId"/>
+        </collection>
+    </resultMap>
+
     <!--查看一级路由-->
     <select id="selAuthority" resultMap="SystemAuthorityMap">
         select * from system_authority where system_authority.authority_parent_id is null
@@ -17,5 +35,16 @@
     <!--根据父级id查找路由子集级-->
     <select id="selChild" resultMap="SystemAuthorityMap">
         select * from system_authority where system_authority.authority_parent_id=#{authorityParentId}
+    </select>
+    <!--根据用户编号查看权限-->
+    <select id="selAuthorityByStaffId" resultMap="SystemAuthorityMap2">
+        select s1.authority_id sid,s1.authority_name sname,s1.authority_access saccess,
+               s1.authority_path spath,s1.authority_ioc sioc,s1.authority_parent_id spid,
+               s2.authority_id sid2,s2.authority_name sname2,s2.authority_access saccess2,
+               s2.authority_path spath2,s2.authority_ioc sioc2,s2.authority_parent_id spid2
+        from system_authority s1
+            left join system_authority s2 on s1.authority_id=s2.authority_parent_id
+        where s2.authority_id in (select authority_id from system_role_authority where role_id in (select role_id from system_staff_role where staff_id =2))
+        order by s1.authority_id,s2.authority_id
     </select>
 </mapper>

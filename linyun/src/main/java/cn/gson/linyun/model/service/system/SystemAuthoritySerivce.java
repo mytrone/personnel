@@ -13,6 +13,7 @@ import java.util.List;
 public class SystemAuthoritySerivce {
     @Autowired
     ISystemAuthorityMapper iSystemAuthorityMapper;
+    //查询所有权限
     public List<SystemAuthority> selAuthority(){
         List<SystemAuthority> systemAuthorities = iSystemAuthorityMapper.selAuthority();
         for (SystemAuthority systemAuthority : systemAuthorities) {
@@ -20,7 +21,7 @@ public class SystemAuthoritySerivce {
         }
         return systemAuthorities;
     }
-
+    //递归获得子集
     public List<SystemAuthority> selChild(Long parentId){
         List<SystemAuthority> systemAuthorities = iSystemAuthorityMapper.selChild(parentId);
         for (SystemAuthority systemAuthority : systemAuthorities) {
@@ -28,5 +29,10 @@ public class SystemAuthoritySerivce {
             systemAuthority.setAuthorityChilds(selChild(systemAuthority.getAuthorityId()));
         }
         return systemAuthorities;
+    }
+
+    //根据用户id获得路由
+    public List<SystemAuthority> selAuthorityByStaffId(long staffId){
+        return iSystemAuthorityMapper.selAuthorityByStaffId(staffId);
     }
 }

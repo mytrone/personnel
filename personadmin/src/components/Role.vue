@@ -203,10 +203,22 @@
 			handleCurrentChange: function(currentPage) {
 				this.currentPage = currentPage;
 			},
+			//获取
+			selAuthorityByStaffId(){
+				this.axios({
+					url:'system/selAuthorityByStaffId',
+					params:{
+						staffId:1
+					}
+				}).then((v)=>{
+					console.log(v)
+				})
+			}
 		},
 		created(){
 			this.selAuthority(),
-			this.selRole()
+			this.selRole(),
+			this.selAuthorityByStaffId()
 		}
 	}
 </script>

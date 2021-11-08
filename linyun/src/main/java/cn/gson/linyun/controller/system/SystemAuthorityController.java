@@ -18,4 +18,9 @@ public class SystemAuthorityController {
     public List<SystemAuthority> selAuthority(){
         return systemAuthoritySerivce.selAuthority();
     }
+    //根据用户id获得路由
+    @GetMapping("/selAuthorityByStaffId")
+    public List<SystemAuthority> selAuthorityByStaffId(long staffId){
+        return systemAuthoritySerivce.selAuthorityByStaffId(staffId);
+    }
 }

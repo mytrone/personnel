@@ -11,4 +11,6 @@ public interface ISystemAuthorityMapper {
     List<SystemAuthority> selAuthority();
     //根据父级id查找子集路由
     List<SystemAuthority> selChild(Long parentId);
+    //根据用户id获得路由
+    List<SystemAuthority> selAuthorityByStaffId(long staffId);
 }
