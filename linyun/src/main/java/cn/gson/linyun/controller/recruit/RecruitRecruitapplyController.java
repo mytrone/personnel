@@ -3,6 +3,7 @@ package cn.gson.linyun.controller.recruit;
 import cn.gson.linyun.model.Vo.WorkflowApproveVo;
 import cn.gson.linyun.model.Vo.WorkflowFlowSpVo;
 import cn.gson.linyun.model.pojos.recruit.ArchivesEmp;
+import cn.gson.linyun.model.pojos.recruit.RecruitDemand;
 import cn.gson.linyun.model.pojos.recruit.RecruitRecruitapply;
 import cn.gson.linyun.model.pojos.recruit.vo.RecruitRecruitapplyVO;
 import cn.gson.linyun.model.service.recruit.RecruitRecruitapplyService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/recruitRecruitapply")
@@ -25,6 +28,11 @@ public class RecruitRecruitapplyController {
     @Autowired
     WorkflowApproveService workflowApproveService;//流程实例Service
 
+
+    @RequestMapping("/selectRecruitapply")
+    public List<RecruitRecruitapply> selectRecruitapply(){
+        return service.selectRecruitapply();
+    }
 
     @RequestMapping("/insertRecruitapply")
     public Integer add(@RequestBody RecruitRecruitapplyVO vo){
@@ -45,6 +53,8 @@ public class RecruitRecruitapplyController {
         recruitRecruitapply.setRecruitapplyPosition(vo.getRecruitapplyPosition());
         //需求人数
         recruitRecruitapply.setRecruitapplyPnum(vo.getRecruitapplyPnum());
+        //需求学历
+        recruitRecruitapply.setRecruitapplyEducationInf(vo.getRecruitapplyEducationInf());
         //需求原因
         recruitRecruitapply.setRecruitapplyEason(vo.getRecruitapplyEason());
         //需求状态，状态默认为0，待审核

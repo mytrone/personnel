@@ -82,6 +82,34 @@ let routes = [{
 					title: "用人申请"
 				}
 			}, {
+				path: '/recruit_demand',
+				component: () => import('@/components/Recruit_demand.vue'),
+				name: 'Recruit_demand',
+				meta: {
+					title: "发布招聘信息"
+				}
+			},{
+				path: '/recruit_demandSelect',
+				component: () => import('@/components/Recruit_demandSelect.vue'),
+				name: 'Recruit_demandSelect',
+				meta: {
+					title: "查看招聘信息"
+				}
+			},{
+				path: '/recruit_recruitapplySelect',
+				component: () => import('@/components/Recruit_recruitapplySelect.vue'),
+				name: 'Recruit_recruitapplySelect',
+				meta: {
+					title: "查看用人申请单"
+				}
+			},{
+				path: '/recruit_lookjl',
+				component: () => import('@/components/Recruit_lookjl.vue'),
+				name: 'Recruit_lookjl',
+				meta: {
+					title: "查看简历"
+				}
+			},{
 				path: '/role',
 				component: () => import('@/components/Role.vue'),
 				name: 'Role',

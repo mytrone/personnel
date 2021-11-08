@@ -3,8 +3,15 @@
 		<el-aside width="200px" style="background-color: rgb(238, 241, 246)">
 
 
-			<el-menu active-text-color="#ffd04b" background-color="#545c64" class="el-menu-vertical-demo"
-				default-active="3-2" text-color="#fff" @open="handleOpen" @close="handleClose">
+            <el-menu
+              active-text-color="#ffd04b"
+              background-color="#545c64"
+              class="el-menu-vertical-demo"
+              default-active="99"
+              text-color="#fff"
+              @open="handleOpen"
+              @close="handleClose"
+            >
 
 				<el-menu-item index="99">
 					<el-icon>
@@ -50,47 +57,61 @@
 						<router-link to="flownotice">抄送事宜</router-link>
 					</el-menu-item>
 
-				</el-sub-menu>
-				<el-sub-menu index="2">
-					<template #title>
-						<el-icon style="margin-right: 15px">
-							<setting />
-						</el-icon>
-						<span>招聘管理</span>
-					</template>
-					<el-menu-item index="2-1">
-						<el-menu-item index="2-1">
-							<router-link to="recruit_yrensq">用人申请</router-link>
-						</el-menu-item>
+              </el-sub-menu>
+                <el-sub-menu index="2">
+                    <template #title>
+                        <el-icon style="margin-right: 15px">
+                            <setting />
+                        </el-icon>
+                        <span>招聘管理</span>
+                    </template>
+                    <el-menu-item index="2-1">
+                        <el-menu-item index="2-1">
+                            <router-link to="recruit_yrensq">用人申请</router-link>
+                        </el-menu-item>
+                    </el-menu-item>
+					<el-menu-item index="2-2">
+					    <el-menu-item index="2-2">
+					        <router-link to="recruit_demand">发布招聘信息</router-link>
+					    </el-menu-item>
 					</el-menu-item>
-				</el-sub-menu>
-				<el-sub-menu index="3">
-					<template #title>
-						<el-icon style="margin-right: 15px">
-							<setting />
-						</el-icon>
-						<span>考勤管理</span>
-					</template>
-					<el-menu-item index="3-1">
-						<router-link to="clockinginovertime">加班申请记录</router-link>
+					<el-menu-item index="2-3">
+					    <el-menu-item index="2-3">
+					        <router-link to="recruit_demandSelect">查看招聘信息</router-link>
+					    </el-menu-item>
 					</el-menu-item>
-					<el-menu-item index="3-2">
-						<router-link to="clockinginleave">请假申请记录</router-link>
+					<el-menu-item index="2-4">
+					    <el-menu-item index="2-4">
+					        <router-link to="recruit_recruitapplySelect">查看用人申请单</router-link>
+					    </el-menu-item>
 					</el-menu-item>
-				</el-sub-menu>
-				<!-- <el-menu-item index="3">
-					<el-icon>
-						<document />
-					</el-icon>
-					<span>Navigator Three</span>
-				</el-menu-item> -->
-				<el-sub-menu index="4">
-					<template #title>
-						<el-icon style="margin-right: 15px">
-							<setting />
-						</el-icon>
-						<span>绩效管理</span>
-					</template>
+					<el-menu-item index="2-5">
+					    <el-menu-item index="2-5">
+					        <router-link to="recruit_lookjl">查看简历</router-link>
+					    </el-menu-item>
+					</el-menu-item>
+                </el-sub-menu>
+                <el-sub-menu index="3">
+                    <template #title>
+                        <el-icon style="margin-right: 15px">
+                            <setting />
+                        </el-icon>
+                        <span>考勤管理</span>
+                    </template>
+                    <el-menu-item index="3-1">
+                        <router-link to="clockinginovertime">加班申请记录</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="3-2">
+                        <router-link to="clockinginleave">请假申请记录</router-link>
+                    </el-menu-item>
+                </el-sub-menu>
+                <el-sub-menu index="4">
+                    <template #title>
+                        <el-icon style="margin-right: 15px">
+                            <setting />
+                        </el-icon>
+                        <span>绩效管理</span>
+                    </template>
 
 					<el-menu-item index="4-1">
 						<router-link to="financeItem">考核项目</router-link>
