@@ -8,12 +8,16 @@ let store = createStore({
 	/* 状态管理 */
 	state:{
 		users:{},
-		emp:{}
+		emp:{},
+		children:{}
 	},
 	/* 同步函数：修改状态中的变量 */
-	mutations:{
-		
-		
+	mutations:{		
+		initMenu(state, menus){
+		    //将获取的菜单信息，装载到children对象中
+		    state.children = menus;
+		    window.sessionStorage.setItem('children',JSON.stringify(menus));
+		},
 		
 	},
 	/* 异步函数 */

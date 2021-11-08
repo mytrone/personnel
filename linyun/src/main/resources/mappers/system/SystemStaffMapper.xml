@@ -9,12 +9,15 @@
         <result column="emp_id" property="empId"/>
         <result column="staff_state" property="staffState"/>
         <association property="archivesEmp" javaType="cn.gson.linyun.model.pojos.recruit.ArchivesEmp">
+            <id column="emp_id" property="empId"/>
             <result column="emp_name" property="empName"/>
         </association>
         <association property="department" javaType="cn.gson.linyun.model.pojos.system.SystemDepartment">
+            <id column="department_id" property="departmentId"/>
             <result column="department_name" property="departmentName" />
         </association>
         <association property="post" javaType="cn.gson.linyun.model.pojos.system.SystemPost">
+            <id column="post_id" property="postId"/>
             <result column="post_name" property="postName" />
         </association>
     </resultMap>
@@ -34,7 +37,7 @@
             inner join system_post sp on ae.post_id=sp.post_id
         where 1=1
         <if test="name!='' and name!=null">
-            and staff_account=#{staffAccount}
+            and staff_account like '%${staffAccount}%'
         </if>
     </select>
     <!--新增用户-->
@@ -52,6 +55,10 @@
     <delete id="delStaffRole">
         delete from system_staff_role where staff_id=#{staffId}
     </delete>
+    <!--修改用户密码-->
+    <update id="changeStaffCode">
+        update system_staff set staff_code=#{staffCode} where staff_id=#{staffId}
+    </update>
     <!--修改用户-->
     <update id="changeStaff">
         update system_staff
@@ -62,7 +69,8 @@
             <if test="staffCode!=''">
                 staff_code=#{staffCode},
             </if>
+            staff_state=#{staffState},
         </set>
-        where staff_id=#{staffId}
+         where staff_id=#{staffId}
     </update>
 </mapper>

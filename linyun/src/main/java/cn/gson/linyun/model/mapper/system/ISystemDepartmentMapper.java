@@ -18,4 +18,6 @@ public interface ISystemDepartmentMapper {
 
     /*根据编号查询 selectByDeptId deptId*/
     SystemDepartment selectByDeptId(Integer deptId);
+    //查询部门旗下是否有员工
+    Integer selEmpBydeptId(int departmentId);
 }

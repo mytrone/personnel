@@ -31,6 +31,7 @@
             <if test="param!=''">
                 and sd.department_id=#{param}
             </if>
+        order by p.post_id asc
     </select>
 
     <resultMap id="postMap" type="cn.gson.linyun.model.pojos.system.SystemPost">
@@ -58,4 +59,8 @@
     <select id="SelectByid" resultMap="base">
         select * from system_post where post_id=#{id}
     </select>
+    <!--删除职位-->
+    <delete id="delPostByDepartmentId">
+        delete from system_post where department_id=#{departmentId}
+    </delete>
 </mapper>

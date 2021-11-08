@@ -163,11 +163,19 @@
 						roleId:val
 					}
 				}).then((v)=>{
-					this.selRole(),
-					this.$message({
-					  message: '角色删除成功',
-					  type: 'success'
-					});
+					if(v=="yes"){
+						this.selRole(),
+						this.$message({
+						  message: '角色删除成功',
+						  type: 'success'
+						});
+					}else{
+						this.$message({
+						  message: '角色正被使用中',
+						  type: 'warning'
+						});
+					}
+					
 				})
 			},
 			//查看角色的权限
@@ -203,7 +211,7 @@
 			handleCurrentChange: function(currentPage) {
 				this.currentPage = currentPage;
 			},
-			//获取
+			/* //获取
 			selAuthorityByStaffId(){
 				this.axios({
 					url:'system/selAuthorityByStaffId',
@@ -211,14 +219,15 @@
 						staffId:1
 					}
 				}).then((v)=>{
-					console.log(v)
+					console.log("哈哈")
+					//console.log(v)
 				})
-			}
+			} */
 		},
 		created(){
-			this.selAuthority(),
-			this.selRole(),
-			this.selAuthorityByStaffId()
+			this.selAuthority()
+			this.selRole()
+			//this.selAuthorityByStaffId()
 		}
 	}
 </script>

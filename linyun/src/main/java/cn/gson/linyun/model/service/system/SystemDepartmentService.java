@@ -1,6 +1,7 @@
 package cn.gson.linyun.model.service.system;
 
 import cn.gson.linyun.model.mapper.system.ISystemDepartmentMapper;
+import cn.gson.linyun.model.mapper.system.ISystemPostMapper;
 import cn.gson.linyun.model.pojos.system.SystemDepartment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import java.util.List;
 public class SystemDepartmentService {
     @Autowired
     ISystemDepartmentMapper iSystemDepartmentMapper;
+    @Autowired
+    ISystemPostMapper iSystemPostMapper;
     //查询部门
     public List<SystemDepartment> selDepartment(String departmentName){
         return iSystemDepartmentMapper.selDepartment(departmentName);
@@ -26,8 +29,18 @@ public class SystemDepartmentService {
         iSystemDepartmentMapper.changeDepartment(systemDepartment);
     }
     //删除部门
-    public void delDepartment(int departmentId){
-        iSystemDepartmentMapper.delDepartment(departmentId);
+    public String delDepartment(int departmentId){
+        //判断部门下是否有员工
+        if(iSystemDepartmentMapper.selEmpBydeptId(departmentId)==0){
+            //删除部门下的职位
+            iSystemPostMapper.delPostByDepartmentId(departmentId);
+            //删除部门
+            iSystemDepartmentMapper.delDepartment(departmentId);
+
+            return "yes";
+        }else{
+            return "no";
+        }
     }
 
     /*根据编号查询 selectByDeptId deptId*/

@@ -20,4 +20,6 @@ public interface ISystemStaffMapper {
     void delStaffRole(long staffId);
     //修改用户
     void changeStaff(SystemStaff systemStaff);
+    //修改用户密码
+    void changeStaffCode(SystemStaff systemStaff);
 }

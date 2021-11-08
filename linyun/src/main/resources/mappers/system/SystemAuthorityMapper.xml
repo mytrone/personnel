@@ -34,7 +34,7 @@
     </select>
     <!--根据父级id查找路由子集级-->
     <select id="selChild" resultMap="SystemAuthorityMap">
-        select * from system_authority where system_authority.authority_parent_id=#{authorityParentId}
+        select * from system_authority where authority_parent_id=#{authorityParentId}
     </select>
     <!--根据用户编号查看权限-->
     <select id="selAuthorityByStaffId" resultMap="SystemAuthorityMap2">
@@ -44,7 +44,7 @@
                s2.authority_path spath2,s2.authority_ioc sioc2,s2.authority_parent_id spid2
         from system_authority s1
             left join system_authority s2 on s1.authority_id=s2.authority_parent_id
-        where s2.authority_id in (select authority_id from system_role_authority where role_id in (select role_id from system_staff_role where staff_id =2))
+        where s2.authority_id in (select authority_id from system_role_authority where role_id in (select role_id from system_staff_role where staff_id =#{staffId}))
         order by s1.authority_id,s2.authority_id
     </select>
 </mapper>

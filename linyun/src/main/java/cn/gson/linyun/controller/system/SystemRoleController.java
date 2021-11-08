@@ -29,8 +29,8 @@ public class SystemRoleController {
     }
     //删除角色
     @RequestMapping("/delRole")
-    public void delRole(int roleId){
-         systemRoleService.delRole(roleId);
+    public String  delRole(int roleId){
+         return systemRoleService.delRole(roleId);
     }
     //查看角色的权限
     @GetMapping("/selRoleAuthority")

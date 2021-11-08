@@ -25,4 +25,6 @@ public interface ISystemRoleMapper {
     void changeRole(SystemRole systemRole);
     //根据用户编号查询角色
     List<SystemRole> selRoleByStaffId(int staffId);
+    //查询角色是否被使用
+    Integer selStaffRole(int roleId);
 }

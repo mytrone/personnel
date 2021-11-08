@@ -66,5 +66,4 @@
         select * from  archives_emp WHERE archives_emp.post_id=#{id}
     </select>
 
-
 </mapper>

@@ -28,7 +28,7 @@
 			<el-table-column label="操作">
 				<template v-slot:default="v">
 					<el-button size="mini" @click="changePost(v.row)">修改</el-button>
-					<el-button size="mini" @click="delPost(v.row.postId)">删除</el-button>
+					<!-- <el-button size="mini" @click="delPost(v.row.postId)">删除</el-button> -->
 				</template>				
 			</el-table-column>
 		</el-table>
@@ -36,10 +36,10 @@
 		 :page-size="pagesize" :page-sizes="[5, 10, 15]" :total="posts.length">
 		</el-pagination>
 	</el-row>
-	<el-dialog v-model="dialogVisible">
-		<el-form ref="post" :model="post" :rules="postRules">
+	<el-dialog v-model="dialogVisible" width="40%">
+		<el-form ref="post" :model="post" :rules="postRules" label-width="200px">
 			<el-form-item label="职位名称" prop="postName">
-				<el-input v-model="post.postName"></el-input>
+				<el-input v-model="post.postName" style="width: 200px;"></el-input>
 			</el-form-item>
 			<el-form-item label="所属部门" prop="departmentId">
 				<el-select v-model="post.departmentId" @change="selPostByDepartment(post.departmentId)">
@@ -48,9 +48,9 @@
 			</el-form-item>
 			<el-form-item label="职位等级" prop="postGrade">
 				<el-select v-model="post.postGrade">
-					<el-option label="高级" :value=3></el-option>
-					<el-option label="中级" :value=2></el-option>
-					<el-option label="初级" :value=1></el-option>
+					<el-option label="高级" :value="3"></el-option>
+					<el-option label="中级" :value="2"></el-option>
+					<el-option label="初级" :value="1"></el-option>
 				</el-select> 
 			</el-form-item>
 			<el-form-item label="上级职位" prop="postParentId">
@@ -61,7 +61,7 @@
 			</el-form-item>
 			<el-form-item>
 				<el-button @click="addPost('post')">确认</el-button>
-				<el-button @click="">取消</el-button>
+				<el-button @click="restPost">取消</el-button>
 			</el-form-item>
 		</el-form>
 	</el-dialog>
@@ -159,6 +159,7 @@
 								'system/addPost',this.post
 							).then((v)=>{
 								this.selPost(),
+								this.restPost(),
 								this.dialogVisible=false,
 								this.$message({
 								  message: '职位新增成功',
@@ -170,6 +171,7 @@
 								'system/changePost',this.post
 							).then((v)=>{
 								this.selPost(),
+								this.restPost(),
 								this.dialogVisible=false,
 								this.$message({
 								  message: '职位修改成功',
@@ -205,18 +207,28 @@
 				this.post.departmentId=val.departmentId,
 				this.dialogVisible=true
 			},
+			//重置表单
+			restPost(){
+				this.post={
+					postId:'',
+					postName:'',
+					postParentId:'',
+					postGrade:'',
+					departmentId:''
+				},
+				this.dialogVisible=false
+			},
 			handleSizeChange: function(size) {
 				this.pagesize = size;
 			},
 			handleCurrentChange: function(currentPage) {
 				this.currentPage = currentPage;
-			},
+			}
+			
 		},
 		created(){
 			this.selDepartment(),
-			this.selPost(),			
-			//console.log(JSON.parse(sessionStorage.getItem("users")))
-			console.log(this.$store.state.users)
+			this.selPost()
 		}
 	}
 </script>

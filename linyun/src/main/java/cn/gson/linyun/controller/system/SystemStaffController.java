@@ -23,10 +23,10 @@ public class SystemStaffController {
     }
     //新增用户
     @PostMapping("/addStaff")
-    public void addStaff(@RequestBody Map<String,Object> map){
+    public String addStaff(@RequestBody Map<String,Object> map){
         SystemStaff systemStaff= JSON.parseObject(JSON.toJSONString(map.get("systemStaff")), SystemStaff.class);
         List<Integer> roleIds = JSONArray.parseArray(JSON.toJSONString(map.get("roleIds")),Integer.TYPE);
-        systemStaffService.addStaff(systemStaff,roleIds);
+        return  systemStaffService.addStaff(systemStaff,roleIds);
     }
     //修改用户
     @PostMapping("/changeStaff")
@@ -39,5 +39,10 @@ public class SystemStaffController {
     @GetMapping("/selStaffByAccount")
     public List<SystemStaff> selStaffByAccount(String staffAccount){
         return systemStaffService.selStaffByAccount(staffAccount);
+    }
+    //修改用户密码
+    @PostMapping("/changeStaffCode")
+    public void changeStaffCode(@RequestBody SystemStaff systemStaff){
+        systemStaffService.changeStaffCode(systemStaff);
     }
 }

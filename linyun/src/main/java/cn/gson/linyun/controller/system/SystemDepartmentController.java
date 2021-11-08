@@ -29,7 +29,7 @@ public class SystemDepartmentController {
     }
     @RequestMapping("/delDepartment")
     //删除部门
-    public void delDepartment(int departmentId){
-        systemDepartmentService.delDepartment(departmentId);
+    public String delDepartment(int departmentId){
+        return systemDepartmentService.delDepartment(departmentId);
     }
 }

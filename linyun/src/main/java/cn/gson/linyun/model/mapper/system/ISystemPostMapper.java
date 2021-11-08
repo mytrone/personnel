@@ -15,7 +15,8 @@ public interface ISystemPostMapper {
     void changePost(SystemPost post);
     //删除职位
     void delPost(int postId);
-
+    //根据部门编号删除职位
+    void delPostByDepartmentId(int departmentId);
     /**
      * 根据编号查询
      * @param id

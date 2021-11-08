@@ -24,14 +24,27 @@ public class SystemStaffService {
         return iSystemStaffMapper.selStaffByAccount(staffAccount);
     }
     //新增用户
-    public void addStaff(SystemStaff systemStaff,List<Integer>list){
-        //新增用户
-        iSystemStaffMapper.addStaff(systemStaff);
-        //用户关联角色
-        for (Integer l:list){
-            iSystemStaffMapper.addStaffRole(systemStaff.getStaffId(),l);
+    public String addStaff(SystemStaff systemStaff,List<Integer>list){
+        //查询是否有同名账户
+        if(iSystemStaffMapper.selStaffByAccount(systemStaff.getStaffAccount()).isEmpty()){
+            //新增用户
+            iSystemStaffMapper.addStaff(systemStaff);
+            //用户关联角色
+            for (Integer l:list){
+                iSystemStaffMapper.addStaffRole(systemStaff.getStaffId(),l);
+            }
+            return "yes";
+        }else{
+            return "no";
         }
+
     }
+
+    //修改用户密码
+    public void changeStaffCode(SystemStaff systemStaff){
+        iSystemStaffMapper.changeStaffCode(systemStaff);
+    }
+
     //修改用户
     public void changeStaff(SystemStaff systemStaff,List<Integer>list){
         //修改
@@ -43,4 +56,5 @@ public class SystemStaffService {
             iSystemStaffMapper.addStaffRole(systemStaff.getStaffId(),l);
         }
     }
+
 }

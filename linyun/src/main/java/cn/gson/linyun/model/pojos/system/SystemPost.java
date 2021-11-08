@@ -18,14 +18,10 @@ public class SystemPost {
   private long postGrade;
   private SystemPost postFather;
   private SystemDepartment systemDepartment;
-  private Integer PostGrade;
 
-  public Integer getPostGrade() {
-    return PostGrade;
-  }
 
-  public void setPostGrade(Integer postGrade) {
-    PostGrade = postGrade;
+  public long getPostGrade() {
+    return postGrade;
   }
 
   private Collection<ClockinginOvertime> clockinginOvertimesBySystemPost;

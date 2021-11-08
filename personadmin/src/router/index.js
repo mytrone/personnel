@@ -155,7 +155,7 @@ let routes = [{
 				meta: {
 					title: "职位管理"
 				}
-			},
+			}, 
 			{
 				path: '/homepage',
 				name: 'homepage',
@@ -188,7 +188,7 @@ let routes = [{
 					title: "工资发放"
 				}
 
-			},
+			}, 
 			{
 				path: '/apply',
 				component: () => import('@/components/FlowApply.vue'),

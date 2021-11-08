@@ -45,4 +45,8 @@
     <select id="selRoleByStaffId" resultMap="SystemRoleMap">
         select * from system_role where role_id in (select role_id from system_staff_role where staff_id=#{staffid})
     </select>
+    <!--查询角色是否被使用-->
+    <select id="selStaffRole" resultType="integer">
+        select count(*) from system_staff_role where role_id=#{roleId}
+    </select>
 </mapper>

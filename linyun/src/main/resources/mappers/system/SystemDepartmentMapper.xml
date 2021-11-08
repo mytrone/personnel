@@ -34,4 +34,8 @@
     <select id="selectByDeptId" resultMap="deparMap">
         select department_id,department_name from system_department where department_id=#{deptId}
     </select>
+    <!--查询部门旗下是否有员工-->
+    <select id="selEmpBydeptId" resultType="integer">
+        select count(*) from archives_emp where department_id=#{departmentId}
+    </select>
 </mapper>

@@ -13,6 +13,18 @@ import VueAxios from 'vue-axios'
 import router from '@/router/index.js'
 // 引入vuex的store对象
 import store from '@/store/index.js'
+import {initMenu} from '@/router/power.js'
+//准备加载路由
+router.beforeEach((to,from,next)=>{
+    if(to.path=='/login' ){
+        return  next();
+    }
+    if(sessionStorage.getItem('users')==null || store.state.users==null){
+        return next("/login")
+    }else{
+        initMenu(router,store,to,next);
+    }
+})
 
 /* 1、创建Vue对象 */
 let app = createApp(Start)

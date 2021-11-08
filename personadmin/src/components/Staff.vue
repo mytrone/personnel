@@ -36,30 +36,30 @@
 	 :page-size="pagesize" :page-sizes="[5, 10, 15]" :total="staffs.length">
 	</el-pagination>
 	<el-dialog v-model="dialogVisible" @close="restStaff">
-		<el-form>
+		<el-form ref="staff" :rules="staffRule" :model="staff">
 			<el-row :gutter="20">
 				<el-col :span="10">
-					<el-form-item label="用户档案">
+					<el-form-item prop="empId" label="用户档案">
 						<el-input v-model="staff.empId"></el-input>
 					</el-form-item>
 				</el-col>
 				<el-col :span="10">
-					<el-form-item label="用户账号">
+					<el-form-item prop="staffAccount" label="用户账号">
 						<el-input v-model="staff.staffAccount"></el-input>
 					</el-form-item>
 				</el-col>
 			</el-row>
 			<el-row :gutter="20">
 				<el-col :span="10">
-					<el-form-item label="用户密码">
+					<el-form-item prop="staffCode" label="用户密码">
 						<el-input v-model="staff.staffCode"></el-input>
 					</el-form-item>
 				</el-col>
 				<el-col :span="10">
-					<el-form-item label="账号锁定">
+					<el-form-item label="账号锁定" prop="staffState">
 						<el-select v-model="staff.staffState">
-							<el-option label="是" :value=1></el-option>
-							<el-option label="否" :value=0></el-option>
+							<el-option label="是" :value='1'></el-option>
+							<el-option label="否" :value='0'></el-option>
 						</el-select>
 					</el-form-item>
 				</el-col>
@@ -72,8 +72,8 @@
 				</el-table>
 			</el-form-item>
 			<el-form-item>
-				<el-button @click="addStaff">确认</el-button>
-				<el-button>取消</el-button>
+				<el-button @click="addStaff('staff')">确认</el-button>
+				<el-button @click="restStaff">取消</el-button>
 			</el-form-item>
 		</el-form>
 	</el-dialog>
@@ -104,41 +104,75 @@
 				//初始页
 				currentPage: 1, 
 				 //每页的数据
-				pagesize: 5
+				pagesize: 5,
+				//表单校验
+				staffRule:{
+					empId:[{
+						required: true,
+						message: "请选择档案",
+						trigger: "blur"
+					}],
+					staffAccount:[{
+						required: true,
+						message: "请输入账号",
+						trigger: "blur"
+					}],
+					staffCode:[{
+						required: true,
+						message: "请输入密码",
+						trigger: "blur"
+					}],
+					staffState:[{
+						required: true,
+						message: "请选择状态",
+						trigger: "blur"
+					}]
+				}
 			}
 		},
 		methods:{
 			//新增或修改用户
-			addStaff(){
-				if(this.staff.staffId==''){
-					//新增用户
-					this.axios.post(
-						'system/addStaff',{
-							systemStaff:this.staff,roleIds:this.roleIds
+			addStaff(val){
+				this.$refs[val].validate(valid => {
+					if(valid){
+						if(this.staff.staffId==''){
+							//新增用户
+							this.axios.post(
+								'system/addStaff',{
+									systemStaff:this.staff,roleIds:this.roleIds
+								}
+							).then((v)=>{
+								if(v=="yes"){
+									this.restStaff(),
+									this.selStaff(),
+									this.$message({
+									  message: '用户信息新增成功',
+									  type: 'success'
+									});
+								}else{
+									this.$message({
+									  message: '当前账户名已使用',
+									  type: 'warning'
+									});
+								}								
+							})
+						}else{
+							//修改用户
+							this.axios.post(
+								'system/changeStaff',{
+									systemStaff:this.staff,roleIds:this.roleIds
+								}
+							).then((v)=>{
+								this.restStaff(),
+								this.selStaff(),
+								this.$message({
+								  message: '用户信息修改成功',
+								  type: 'success'
+								});
+							})
 						}
-					).then((v)=>{
-						this.restStaff(),
-						this.selStaff(),
-						this.$message({
-						  message: '用户信息新增成功',
-						  type: 'success'
-						});
-					})
-				}else{
-					//修改用户
-					this.axios.post(
-						'system/changeStaff',{
-							systemStaff:this.staff,roleIds:this.roleIds
-						}
-					).then((v)=>{
-						this.restStaff(),
-						this.selStaff(),
-						this.$message({
-						  message: '用户信息修改成功',
-						  type: 'success'
-						});
-					})
-				}
+					}
+				})				
 			},
 			//查看用户
 			selStaff(){
@@ -162,7 +196,6 @@
 			//获取勾选的角色
 			handleSelectionChange(val){
 				this.roleIds=[],
-				//console.log(val.fo)
 				val.forEach(f=>{
 					this.roleIds.push(f.roleId)
 				});
@@ -185,11 +218,15 @@
 					//勾选已有角色
 					v.forEach((row,item)=>{
 						this.roleIds.push(row.roleId);
-						if(row.roleId==this.roles[item].roleId){
-							this.$nextTick(function() {
-								this.$refs.multipleTable.toggleRowSelection(this.roles[item],true)
-							})
-						}												
+						console.log("记录"+this.roleIds)
+						this.roles.forEach((r,index)=>{
+							if(row.roleId==r.roleId){
+								this.$nextTick(function() {
+									this.$refs.multipleTable.toggleRowSelection(this.roles[index],true);
+									return 
+								})
+							}
+						})												
 					})					
 				})
 			},

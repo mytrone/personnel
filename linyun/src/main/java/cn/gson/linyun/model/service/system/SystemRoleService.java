@@ -27,9 +27,15 @@ public class SystemRoleService {
         }
     }
     //删除角色
-    public void delRole(int roleid){
-        iSystemRoleMapper.delRole(roleid);
-        iSystemRoleMapper.delRoleAuthority(roleid);
+    public String delRole(int roleid){
+
+        if(iSystemRoleMapper.selStaffRole(roleid)!=0){
+            return "no";
+        }else{
+            iSystemRoleMapper.delRole(roleid);
+            iSystemRoleMapper.delRoleAuthority(roleid);
+            return "yes";
+        }
     }
     //查看角色的权限
     public List<Integer> selRoleAuthority(int roleId){

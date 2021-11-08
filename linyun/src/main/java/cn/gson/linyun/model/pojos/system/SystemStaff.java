@@ -80,4 +80,13 @@ public class SystemStaff {
   public void setPost(SystemPost post) {
     this.post = post;
   }
+
+  @Override
+  public String toString() {
+    return "SystemStaff{" +
+            "staffAccount='" + staffAccount + '\'' +
+            ", staffCode='" + staffCode + '\'' +
+            ", staffState=" + staffState +
+            '}';
+  }
 }
